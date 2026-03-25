@@ -1,5 +1,13 @@
 import type { NextConfig } from 'next';
 
+// Fail fast if required env vars are missing
+const requiredEnvVars = ['MONGODB_URI', 'STEAM_API_KEY', 'STEAM_ID'];
+for (const key of requiredEnvVars) {
+  if (!process.env[key]) {
+    throw new Error(`Missing required environment variable: ${key}`);
+  }
+}
+
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [

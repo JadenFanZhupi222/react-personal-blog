@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { SteamAPI } from '@/api/steam';
 import type { SteamAchievementSchema, SteamAchievement } from '@/lib/steam/types';
 import { API_ERROR_MESSAGES, HTTP_STATUS } from '@/api/config';
+import { checkOrigin } from '@/lib/utils/checkOrigin';
 
 const steamAPI = new SteamAPI();
 
@@ -9,6 +10,9 @@ export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ appid: string }> }
 ) {
+  const originError = checkOrigin(request);
+  if (originError) return originError;
+
   try {
     const { appid } = await params;
     const appidNum = parseInt(appid, 10);

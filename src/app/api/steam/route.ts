@@ -1,8 +1,11 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { SteamAPI } from '@/api/steam';
 import { API_ERROR_MESSAGES, HTTP_STATUS } from '@/api/config';
+import { checkOrigin } from '@/lib/utils/checkOrigin';
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const originError = checkOrigin(req);
+  if (originError) return originError;
   try {
     const steamAPI = new SteamAPI();
     const stats = await steamAPI.getUserStats();
