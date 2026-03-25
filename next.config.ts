@@ -9,6 +9,8 @@ for (const key of requiredEnvVars) {
 }
 
 const nextConfig: NextConfig = {
+  // Enable Cache Components ("use cache" directive) - Next.js 16 feature
+  cacheComponents: true,
   images: {
     remotePatterns: [
       {
