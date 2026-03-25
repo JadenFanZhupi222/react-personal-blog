@@ -10,7 +10,7 @@ import { APP_NAME, APP_DESCRIPTION } from '@/config/app';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/next';
 import { getTranslations } from '@/lib/translations/server';
-import { getServerLocale } from '@/lib/utils/getServerLocale';
+import en from '@/i18n/locales/en';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,20 +20,24 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const locale = await getServerLocale();
-  const translations = await getTranslations(locale);
+  // Layout is fully static — no cookies/headers access.
+  // getTranslations is marked "use cache" so it's not "uncached data".
+  // Client-side AppClientProvider handles locale preference from cookies.
+  let translations = en;
+  try {
+    translations = await getTranslations('en');
+  } catch {
+    // fallback to static file on any error
+  }
 
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <AppClientProvider locale={locale} translations={translations}>
-          {/* ThemeProvider Used to synchronise themes during server-side and client-side rendering
-          to prevent light/dark mode flicker (FOUC) issues during hydration. */}
+        <AppClientProvider translations={translations}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <div className="relative min-h-screen">
               <Navbar ssrTranslations={translations} />
               <main>{children}</main>
-              {/* Vercel Speed Insights and Analytics */}
               <SpeedInsights />
               <Analytics />
             </div>

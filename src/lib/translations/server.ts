@@ -1,3 +1,4 @@
+import { cacheLife } from 'next/cache';
 import { dbConnect } from '@/lib/db';
 import Translation, { TranslationDoc } from '@/models/Translation';
 import type { Translations } from '@/i18n/types';
@@ -10,6 +11,8 @@ const staticTranslations = {
 };
 
 export async function getTranslations(locale: string): Promise<Translations> {
+  'use cache';
+  cacheLife('hours');
   try {
     await dbConnect();
     const doc = (await Translation.findOne({})) as TranslationDoc | null;
