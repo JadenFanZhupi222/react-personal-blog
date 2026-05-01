@@ -10,7 +10,9 @@ export async function getAllBlogs(): Promise<Record<Locale, Blog[]>> {
   cacheLife('hours');
   cacheTag('blogs');
   await dbConnect();
-  const blogs = (await BlogModel.find().sort({ date: -1 }).lean()) as unknown as Blog[];
+  const blogs = (await BlogModel.find({}, { _id: 0, __v: 0 })
+    .sort({ date: -1 })
+    .lean()) as unknown as Blog[];
   return parseBlogs(blogs);
 }
 
@@ -19,7 +21,7 @@ export async function getBlogBySlug(slug: string): Promise<Blog | null> {
   cacheLife('hours');
   cacheTag(`blog-${slug}`);
   await dbConnect();
-  return (await BlogModel.findOne({ slug }).lean()) as Blog | null;
+  return (await BlogModel.findOne({ slug }, { _id: 0, __v: 0 }).lean()) as Blog | null;
 }
 
 export async function getAllBlogSlugs() {
