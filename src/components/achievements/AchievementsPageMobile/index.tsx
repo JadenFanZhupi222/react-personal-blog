@@ -9,40 +9,50 @@ import {
 } from '@/lib/achievements/parser';
 import { formatPlaytime } from '@/lib/utils/format';
 import { useTranslations } from '@/lib/hooks/useTranslations';
-import { useSteamStore } from '@/store/steam';
-import { useFetchOnClick } from '@/lib/hooks/useFetchOnClick';
 import { AchievementsPageSkeleton } from '@/components/skeleton/AchievementsPageSkeleton';
 import { ErrorFunc } from '@/components/features/Error';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { AchievementsGameSwiper } from '../AchievementsGameSwiper';
 import { AchievementsModal } from '../AchievementsModal';
+import { useQuery } from '@tanstack/react-query';
+import {
+  steamQueryKey,
+  fetchSteamStats,
+  steamAchievementsQueryKey,
+  fetchSteamAchievements,
+} from '@/lib/queries/steam';
 
 export function AchievementsPageMobile() {
   const { t, locale } = useTranslations();
-  const { ownedGames, ownedGamesLoading, fetchOwnedGames, error, achievementDetail } =
-    useSteamStore();
+  const {
+    data: steamData,
+    isPending: ownedGamesLoading,
+    error,
+    refetch: refetchSteam,
+  } = useQuery({
+    queryKey: steamQueryKey,
+    queryFn: fetchSteamStats,
+  });
+  const ownedGames = steamData?.ownedGames ?? [];
+
   const [currentPage, setCurrentPage] = useState(1);
   const [hoveredAppId, setHoveredAppId] = useState<number | null>(null);
   const [selectedAppId, setSelectedAppId] = useState<number | null>(null);
-  const { achievementDetailLoading, achievementDetailError, fetchAchievementDetail } =
-    useSteamStore();
-  const { handleClick: fetchAchievementOnClick } = useFetchOnClick({
-    fetchData: fetchAchievementDetail,
-    loading: achievementDetailLoading,
-    error: achievementDetailError,
-  });
   const [modalPage, setModalPage] = useState(1);
 
-  useEffect(() => {
-    if (!ownedGames.length && !ownedGamesLoading) fetchOwnedGames();
-  }, [ownedGames.length, ownedGamesLoading, fetchOwnedGames]);
-
-  useEffect(() => {
-    if (selectedAppId && !achievementDetailLoading) {
-      fetchAchievementOnClick(selectedAppId);
-    }
-  }, [locale, selectedAppId, fetchAchievementOnClick, achievementDetailLoading]);
+  const {
+    data: achievementsRaw = [],
+    isFetching: achievementDetailLoading,
+    error: achievementDetailError,
+    refetch: refetchAchievements,
+  } = useQuery({
+    queryKey: selectedAppId
+      ? steamAchievementsQueryKey(selectedAppId, locale)
+      : ['steam', 'achievements', 'idle'],
+    queryFn: () => fetchSteamAchievements(selectedAppId!, locale),
+    enabled: selectedAppId !== null,
+  });
 
   useEffect(() => {
     setModalPage(1);
@@ -53,9 +63,7 @@ export function AchievementsPageMobile() {
   const currentItems = paginateGames(filteredGames, currentPage, ITEMS_PER_PAGE);
 
   const selectedGame = selectedAppId ? currentItems.find((g) => g.appid === selectedAppId) : null;
-  const achievements = selectedGame
-    ? achievementDetail[`${selectedGame.appid}_${locale}`] || []
-    : [];
+  const achievements = achievementsRaw;
   const MODAL_PAGE_SIZE = 4;
   const modalTotalPages = Math.ceil(achievements.length / MODAL_PAGE_SIZE);
 
@@ -63,7 +71,7 @@ export function AchievementsPageMobile() {
     return <AchievementsPageSkeleton />;
   }
   if (error) {
-    return <ErrorFunc onRetry={fetchOwnedGames} />;
+    return <ErrorFunc onRetry={() => refetchSteam()} />;
   }
 
   return (
@@ -104,7 +112,7 @@ export function AchievementsPageMobile() {
               hoveredAppId={hoveredAppId}
               setHoveredAppId={setHoveredAppId}
               setSelectedAppId={setSelectedAppId}
-              fetchAchievementOnClick={fetchAchievementOnClick}
+              fetchAchievementOnClick={() => {}}
               t={t}
               formatPlaytime={formatPlaytime}
             />
@@ -122,8 +130,8 @@ export function AchievementsPageMobile() {
             modalTotalPages={modalTotalPages}
             setModalPage={setModalPage}
             loading={achievementDetailLoading}
-            error={achievementDetailError}
-            onRetry={() => selectedGame && fetchAchievementOnClick(selectedGame.appid)}
+            error={achievementDetailError ? String(achievementDetailError) : null}
+            onRetry={() => refetchAchievements()}
             t={t}
             MODAL_PAGE_SIZE={MODAL_PAGE_SIZE}
           />

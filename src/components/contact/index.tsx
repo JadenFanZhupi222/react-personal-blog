@@ -1,7 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useContactStore } from '@/store/contactStore';
 import { Mail, AtSign } from 'lucide-react';
 import {
   SiTiktok,
@@ -14,10 +12,9 @@ import {
 import { FaQq } from 'react-icons/fa';
 import { useTranslations } from '@/lib/hooks/useTranslations';
 import React from 'react';
-import SkeletonContact from '@/components/skeleton/SkeletonContact';
-import { ErrorFunc } from '@/components/features/Error';
 import { LazyMotion, domAnimation, m } from 'framer-motion';
 import { ContactCard } from './contactCard';
+import type { ContactData } from '@/lib/contact/types';
 
 const emailIconMap: Record<string, React.ReactNode> = {
   gmail: <SiGmail className="text-foreground text-xl" />,
@@ -42,17 +39,8 @@ const itemVariants = {
   visible: { opacity: 1, y: 0 },
 };
 
-export default function ContactPage() {
+export default function ContactPage({ contact }: { contact: ContactData }) {
   const { t } = useTranslations();
-  const { contact, loading, error, fetchContact } = useContactStore();
-
-  useEffect(() => {
-    fetchContact();
-  }, [fetchContact]);
-
-  if (loading) return <SkeletonContact />;
-  if (error) return <ErrorFunc onRetry={fetchContact} />;
-  if (!contact) return null;
 
   return (
     <LazyMotion features={domAnimation}>

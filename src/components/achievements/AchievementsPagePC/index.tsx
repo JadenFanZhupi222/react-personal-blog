@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { AchievementsStatsCard } from '../AchievementsStatsCard';
 import { AchievementsGameCard } from '../AchievementsGameCard';
 import { Trophy, Medal } from 'lucide-react';
-import { useSteamStore } from '@/store/steam';
 import { useTranslations } from '@/lib/hooks/useTranslations';
 import type { ParsedGame } from '@/lib/steam/parser';
 import {
@@ -16,43 +15,49 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { AchievementsPageSkeleton } from '@/components/skeleton/AchievementsPageSkeleton';
 import { ErrorFunc } from '@/components/features/Error';
 import { AchievementsListCard } from '../AchievementsListCard';
-import { useFetchOnClick } from '@/lib/hooks/useFetchOnClick';
 import { Pagination } from '@/components/features/Pagination';
+import { useQuery } from '@tanstack/react-query';
+import { steamQueryKey, fetchSteamStats } from '@/lib/queries/steam';
+import {
+  steamAchievementsQueryKey,
+  fetchSteamAchievements,
+} from '@/lib/queries/steam';
 
 export function AchievementsPagePC() {
   const { t, locale } = useTranslations();
-  const { ownedGames, ownedGamesLoading, fetchOwnedGames, error } = useSteamStore();
+  const {
+    data: steamData,
+    isPending: ownedGamesLoading,
+    error,
+    refetch: refetchSteam,
+  } = useQuery({
+    queryKey: steamQueryKey,
+    queryFn: fetchSteamStats,
+  });
+  const ownedGames = steamData?.ownedGames ?? [];
+
   const [currentPage, setCurrentPage] = useState(1);
   const [hoveredAppId, setHoveredAppId] = useState<number | null>(null);
   const [selectedAppId, setSelectedAppId] = useState<number | null>(null);
+
   const {
-    achievementDetail,
-    achievementDetailLoading,
-    achievementDetailError,
-    fetchAchievementDetail,
-  } = useSteamStore();
-
-  const { handleClick: fetchAchievementOnClick } = useFetchOnClick({
-    fetchData: fetchAchievementDetail,
-    loading: achievementDetailLoading,
+    data: achievements = [],
+    isFetching: achievementDetailLoading,
     error: achievementDetailError,
+    refetch: refetchAchievements,
+  } = useQuery({
+    queryKey: selectedAppId
+      ? steamAchievementsQueryKey(selectedAppId, locale)
+      : ['steam', 'achievements', 'idle'],
+    queryFn: () => fetchSteamAchievements(selectedAppId!, locale),
+    enabled: selectedAppId !== null,
   });
-
-  useEffect(() => {
-    if (!ownedGames.length && !ownedGamesLoading) fetchOwnedGames();
-  }, [ownedGames.length, ownedGamesLoading, fetchOwnedGames]);
-
-  useEffect(() => {
-    if (selectedAppId && !achievementDetailLoading) {
-      fetchAchievementOnClick(selectedAppId);
-    }
-  }, [locale, selectedAppId, achievementDetailLoading, fetchAchievementOnClick]);
 
   if (ownedGamesLoading) {
     return <AchievementsPageSkeleton />;
   }
   if (error) {
-    return <ErrorFunc onRetry={fetchOwnedGames} />;
+    return <ErrorFunc onRetry={() => refetchSteam()} />;
   }
 
   const filteredGames: ParsedGame[] = filterGamesByPlaytime(ownedGames);
@@ -62,16 +67,9 @@ export function AchievementsPagePC() {
   const hoveredGame = currentItems.find((g) => g.appid === hoveredAppId);
   const selectedGame = selectedAppId ? currentItems.find((g) => g.appid === selectedAppId) : null;
 
-  const achievements = selectedGame
-    ? achievementDetail[`${selectedGame.appid}_${locale}`] || []
-    : [];
-
   const handleGameClick = (appid: number) => {
     setSelectedAppId(appid === selectedAppId ? null : appid);
     setHoveredAppId(appid);
-    if (appid !== selectedAppId) {
-      fetchAchievementOnClick(appid);
-    }
   };
 
   return (
@@ -177,8 +175,8 @@ export function AchievementsPagePC() {
                     selectedGame={selectedGame}
                     achievements={achievements}
                     loading={achievementDetailLoading}
-                    error={achievementDetailError}
-                    onRetry={() => selectedGame && fetchAchievementOnClick(selectedGame.appid)}
+                    error={achievementDetailError ? String(achievementDetailError) : null}
+                    onRetry={() => refetchAchievements()}
                   />
                 </motion.div>
               )}
