@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useSyncExternalStore } from 'react';
 import { Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
 
-const ThemeSwitch = () => {
-  const [mounted, setMounted] = useState(false);
-  const { setTheme, resolvedTheme } = useTheme();
+const emptySubscribe = () => () => {};
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+const ThemeSwitch = () => {
+  const mounted = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
+  const { setTheme, resolvedTheme } = useTheme();
 
   const isDark = resolvedTheme === 'dark';
 

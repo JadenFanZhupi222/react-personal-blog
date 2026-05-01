@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { AchievementsStatsCard } from '../AchievementsStatsCard';
 import { Trophy, Medal } from 'lucide-react';
 import {
@@ -41,6 +41,15 @@ export function AchievementsPageMobile() {
   const [selectedAppId, setSelectedAppId] = useState<number | null>(null);
   const [modalPage, setModalPage] = useState(1);
 
+  const selectGame = (appid: number) => {
+    setSelectedAppId(appid);
+    setModalPage(1);
+  };
+  const closeModal = () => {
+    setSelectedAppId(null);
+    setModalPage(1);
+  };
+
   const {
     data: achievementsRaw = [],
     isFetching: achievementDetailLoading,
@@ -53,10 +62,6 @@ export function AchievementsPageMobile() {
     queryFn: () => fetchSteamAchievements(selectedAppId!, locale),
     enabled: selectedAppId !== null,
   });
-
-  useEffect(() => {
-    setModalPage(1);
-  }, [selectedAppId]);
 
   const filteredGames = filterGamesByPlaytime(ownedGames);
   const totalPages = Math.ceil(filteredGames.length / ITEMS_PER_PAGE);
@@ -111,7 +116,7 @@ export function AchievementsPageMobile() {
               onPageChange={setCurrentPage}
               hoveredAppId={hoveredAppId}
               setHoveredAppId={setHoveredAppId}
-              setSelectedAppId={setSelectedAppId}
+              setSelectedAppId={selectGame}
               fetchAchievementOnClick={() => {}}
               t={t}
               formatPlaytime={formatPlaytime}
@@ -120,7 +125,7 @@ export function AchievementsPageMobile() {
           {/* 弹窗成就列表 */}
           <AchievementsModal
             open={!!selectedGame}
-            onClose={() => setSelectedAppId(null)}
+            onClose={closeModal}
             selectedGame={selectedGame ?? undefined}
             achievements={achievements.map((a) => ({
               ...a,
