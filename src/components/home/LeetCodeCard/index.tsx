@@ -1,23 +1,29 @@
+'use client';
+
 import { Trophy, Star, Award, Medal } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/Card';
 import { RefreshButton } from '@/components/ui/RefreshButton';
-import { useLeetCodeStore } from '@/store/leetcode';
 import { useTranslations } from '@/lib/hooks/useTranslations';
 import React from 'react';
 import { LeetCodeCardSkeleton } from './Skeleton';
 import { ErrorFunc } from '@/components/features/Error';
+import { useQuery } from '@tanstack/react-query';
+import { leetcodeQueryKey, fetchLeetCodeStats } from '@/lib/queries/leetcode';
 
 export function LeetCodeCard() {
   const { t } = useTranslations();
-  const { stats, loading, error, fetchStats } = useLeetCodeStore();
+  const {
+    data: stats,
+    isPending,
+    isFetching,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: leetcodeQueryKey,
+    queryFn: fetchLeetCodeStats,
+  });
 
-  React.useEffect(() => {
-    if (!stats && !loading && !error) {
-      fetchStats();
-    }
-  }, [stats, loading, error, fetchStats]);
-
-  if (loading) {
+  if (isPending) {
     return <LeetCodeCardSkeleton />;
   }
 
@@ -29,10 +35,10 @@ export function LeetCodeCard() {
             <Trophy className="h-5 w-5" />
             {t.home.activity.leetcode.title}
           </h2>
-          <RefreshButton onClick={fetchStats} isLoading={loading} />
+          <RefreshButton onClick={() => refetch()} isLoading={isFetching} />
         </div>
         {error ? (
-          <ErrorFunc onRetry={fetchStats} />
+          <ErrorFunc onRetry={() => refetch()} />
         ) : stats ? (
           <>
             <div>

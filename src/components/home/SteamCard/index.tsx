@@ -1,9 +1,7 @@
 'use client';
 
-import { useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/Card';
 import { Gamepad } from 'lucide-react';
-import { useSteamStore } from '@/store/steam';
 import { useTranslations } from '@/lib/hooks/useTranslations';
 import { RefreshButton } from '@/components/ui/RefreshButton';
 import { SteamCardSkeleton } from './Skeleton';
@@ -11,6 +9,8 @@ import { ErrorFunc } from '@/components/features/Error';
 import { ProfileSection } from './ProfileSection';
 import { RecentGamesSection } from './RecentGamesSection';
 import { AchievementsLink } from './AchievementsLink';
+import { useQuery } from '@tanstack/react-query';
+import { steamQueryKey, fetchSteamStats } from '@/lib/queries/steam';
 
 function formatPlaytime(minutes: number): string {
   const hours = Math.floor(minutes / 60);
@@ -22,20 +22,22 @@ function formatPlaytime(minutes: number): string {
 
 export function SteamCard() {
   const { t } = useTranslations();
-  const { profile, recentGames, ownedGamesLoading, fetchOwnedGames, totalPlaytime, error } =
-    useSteamStore();
-
-  useEffect(() => {
-    if (!profile && !ownedGamesLoading) {
-      fetchOwnedGames();
-    }
-  }, [profile, fetchOwnedGames, ownedGamesLoading]);
+  const {
+    data,
+    isPending,
+    isFetching,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: steamQueryKey,
+    queryFn: fetchSteamStats,
+  });
 
   const handleGameClick = (appid: number) => {
     window.open(`https://steamcommunity.com/app/${appid}`, '_blank');
   };
 
-  if (ownedGamesLoading) {
+  if (isPending) {
     return <SteamCardSkeleton />;
   }
 
@@ -47,15 +49,15 @@ export function SteamCard() {
             <Gamepad className="text-primary-foreground h-5 w-5" />
             {t.home.activity.steam.title}
           </h2>
-          {!error && <RefreshButton onClick={fetchOwnedGames} isLoading={ownedGamesLoading} />}
+          {!error && <RefreshButton onClick={() => refetch()} isLoading={isFetching} />}
         </div>
-        {error && <ErrorFunc onRetry={fetchOwnedGames} />}
+        {error && <ErrorFunc onRetry={() => refetch()} />}
         {!error &&
-          (profile ? (
+          (data?.profile ? (
             <div className="flex flex-1 flex-col space-y-6">
               <ProfileSection
-                profile={profile}
-                totalPlaytime={totalPlaytime}
+                profile={data.profile}
+                totalPlaytime={data.totalPlaytime}
                 formatPlaytime={formatPlaytime}
                 t={{
                   totalPlaytime: t.home.activity.steam.totalPlaytime,
@@ -64,7 +66,7 @@ export function SteamCard() {
                 }}
               />
               <RecentGamesSection
-                recentGames={recentGames}
+                recentGames={data.recentGames}
                 formatPlaytime={formatPlaytime}
                 onGameClick={handleGameClick}
                 t={{
