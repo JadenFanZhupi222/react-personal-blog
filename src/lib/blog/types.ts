@@ -1,5 +1,4 @@
 export interface Blog {
-  _id: string;
   slug: string;
   date: string;
   readTime: string;

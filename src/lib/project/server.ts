@@ -10,6 +10,8 @@ export async function getAllProjects(): Promise<Record<Locale, Project[]>> {
   cacheLife('hours');
   cacheTag('projects');
   await dbConnect();
-  const projects = (await ProjectModel.find().sort({ title: 1 }).lean()) as unknown as Project[];
+  const projects = (await ProjectModel.find({}, { _id: 0, __v: 0 })
+    .sort({ title: 1 })
+    .lean()) as unknown as Project[];
   return parseProjects(projects);
 }

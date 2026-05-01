@@ -11,8 +11,8 @@ export async function getAboutData(): Promise<AboutData> {
   cacheTag('about');
   await dbConnect();
   const [skills, experiences] = await Promise.all([
-    Skills.find().lean() as unknown as Promise<RawSkillsData[]>,
-    Experiences.find().lean() as unknown as Promise<RawExperiencesData[]>,
+    Skills.find({}, { _id: 0, __v: 0 }).lean() as unknown as Promise<RawSkillsData[]>,
+    Experiences.find({}, { _id: 0, __v: 0 }).lean() as unknown as Promise<RawExperiencesData[]>,
   ]);
   return parseAboutData({ skills, experiences });
 }

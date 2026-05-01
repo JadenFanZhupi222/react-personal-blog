@@ -1,7 +1,6 @@
 import { Locale } from '@/i18n/types';
 
 export interface Project {
-  _id: string;
   title: string;
   description: string;
   tags: string[];
