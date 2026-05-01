@@ -1,9 +1,11 @@
+import { connection } from 'next/server';
 import { dbConnect } from '@/lib/db';
 import Translation, { TranslationDoc } from '@/models/Translation';
 import { NextRequest } from 'next/server';
 import { API_ERROR_MESSAGES, HTTP_STATUS } from '@/api/config';
 
 export async function GET(req: NextRequest) {
+  await connection();
   await dbConnect();
   const { searchParams } = new URL(req.url);
   const lang = searchParams.get('lang');

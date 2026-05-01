@@ -1,14 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { cacheLife, cacheTag } from 'next/cache';
 import { SteamAPI } from '@/api/steam';
 import { API_ERROR_MESSAGES, HTTP_STATUS } from '@/api/config';
 import { checkOrigin } from '@/lib/utils/checkOrigin';
+
+async function getCachedSteamStats() {
+  'use cache';
+  cacheLife('hours');
+  cacheTag('steam');
+  const steamAPI = new SteamAPI();
+  return steamAPI.getUserStats();
+}
 
 export async function GET(req: NextRequest) {
   const originError = checkOrigin(req);
   if (originError) return originError;
   try {
-    const steamAPI = new SteamAPI();
-    const stats = await steamAPI.getUserStats();
+    const stats = await getCachedSteamStats();
     return NextResponse.json(stats);
   } catch (error) {
     console.error('Steam API Error:', error);

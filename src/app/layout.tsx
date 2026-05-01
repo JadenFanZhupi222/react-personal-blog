@@ -4,6 +4,7 @@ import './globals.css';
 import { ThemeProvider } from 'next-themes';
 import { Navbar } from '@/components/layout/Navbar';
 import { AppClientProvider } from '@/components/layout/AppClientLayout';
+import { QueryProvider } from '@/components/providers/QueryProvider';
 import { UpdateNotification } from '@/components/UpdateNotification';
 import { Toaster } from 'sonner';
 import { APP_NAME, APP_DESCRIPTION } from '@/config/app';
@@ -35,14 +36,16 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body className={inter.className}>
         <AppClientProvider translations={translations}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <div className="relative min-h-screen">
-              <Navbar ssrTranslations={translations} />
-              <main>{children}</main>
-              <SpeedInsights />
-              <Analytics />
-            </div>
-            <UpdateNotification />
-            <Toaster position="top-center" />
+            <QueryProvider>
+              <div className="relative min-h-screen">
+                <Navbar ssrTranslations={translations} />
+                <main>{children}</main>
+                <SpeedInsights />
+                <Analytics />
+              </div>
+              <UpdateNotification />
+              <Toaster position="top-center" />
+            </QueryProvider>
           </ThemeProvider>
         </AppClientProvider>
       </body>

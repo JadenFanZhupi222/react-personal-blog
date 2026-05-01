@@ -1,3 +1,5 @@
+'use client';
+
 import { useIsMobile } from '@/lib/hooks/useIsMobile';
 import { AchievementsPageMobile } from './AchievementsPageMobile';
 import { AchievementsPagePC } from './AchievementsPagePC';

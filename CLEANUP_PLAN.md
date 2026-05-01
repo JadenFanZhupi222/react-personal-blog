@@ -219,6 +219,26 @@ BlogSchema.index({ slug: 1, language: 1 });
 
 消除隐式 `any`，确保 `t()` 返回类型明确。
 
+### 4.6 修复 `react-hooks/set-state-in-effect` 反模式
+
+> 由 Phase 3 启动时 lint 修复暴露。eslint-plugin-react-hooks v7 新规则当前在 `eslint.config.mjs` 中降为 `warn`，本节做掉后改回 `error`。
+
+**4.6.1 `src/components/features/ControlPanel/ThemeSwitch.tsx:10`**
+
+```tsx
+useEffect(() => { setMounted(true); }, []);
+```
+
+经典 SSR mounted hack。改用 `next/dynamic({ ssr: false })` 包裹组件，或 `useSyncExternalStore` 暴露挂载状态。
+
+**4.6.2 `src/components/achievements/AchievementsPageMobile/index.tsx:48`**
+
+```tsx
+useEffect(() => { setModalPage(1); }, [selectedAppId]);
+```
+
+派生状态反模式：把 `setModalPage(1)` 移到 `selectedAppId` 变更对应的事件 handler 中（事件驱动而非 effect 驱动）。
+
 ---
 
 ## Phase 5：工程化补全 ✦ 长期收益
@@ -283,6 +303,7 @@ Push / PR 时自动执行 lint → build → test，构建失败阻断合并。
 [ ] Phase 4.3  Blog 模型复合索引
 [ ] Phase 4.4  CardImage placeholder prop
 [ ] Phase 4.5  Translation Store 类型加强
+[ ] Phase 4.6  set-state-in-effect 反模式修复（ThemeSwitch + AchievementsPageMobile），并把 lint 规则改回 error
 
 [ ] Phase 5.1  安装 Vitest
 [ ] Phase 5.2  Parser 单元测试

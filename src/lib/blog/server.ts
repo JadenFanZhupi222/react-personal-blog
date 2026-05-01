@@ -1,7 +1,18 @@
 import { cacheLife, cacheTag } from 'next/cache';
 import { dbConnect } from '@/lib/db';
 import BlogModel from '@/models/Blog';
+import type { Locale } from '@/i18n/types';
+import { parseBlogs } from './parser';
 import type { Blog } from './types';
+
+export async function getAllBlogs(): Promise<Record<Locale, Blog[]>> {
+  'use cache';
+  cacheLife('hours');
+  cacheTag('blogs');
+  await dbConnect();
+  const blogs = (await BlogModel.find().sort({ date: -1 }).lean()) as unknown as Blog[];
+  return parseBlogs(blogs);
+}
 
 export async function getBlogBySlug(slug: string): Promise<Blog | null> {
   'use cache';

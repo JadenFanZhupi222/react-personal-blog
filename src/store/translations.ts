@@ -10,7 +10,7 @@ import Cookies from 'js-cookie';
 interface TranslationsStoreState {
   locale: Locale;
   translations: Translations;
-  loaded: Record<string, Translations | undefined>;
+  loaded: Partial<Record<Locale, Translations>>;
   loading: boolean;
   error: string | null;
   setLocaleWithFetch: (locale: Locale) => Promise<void>;

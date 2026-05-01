@@ -1,3 +1,5 @@
+'use client';
+
 import { Code, User, FolderGit2 } from 'lucide-react';
 import { LeetCodeCard } from '@/components/home/LeetCodeCard';
 import { SteamCard } from '@/components/home/SteamCard';

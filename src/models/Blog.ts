@@ -14,4 +14,6 @@ const BlogSchema = new mongoose.Schema(
   { collection: 'blogs' }
 );
 
+BlogSchema.index({ slug: 1, language: 1 });
+
 export default mongoose.models.Blog || mongoose.model('Blog', BlogSchema);
