@@ -12,10 +12,9 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/next';
 import { getTranslations } from '@/lib/translations/server';
 import en from '@/i18n/locales/en';
+import { SITE_URL } from '@/lib/constants/siteUrl';
 
 const inter = Inter({ subsets: ['latin'] });
-
-const SITE_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
