@@ -3,6 +3,7 @@ import { cacheLife, cacheTag } from 'next/cache';
 import { API_CONFIG, API_ERROR_MESSAGES, HTTP_STATUS } from '@/api/config';
 import type { NextRequest } from 'next/server';
 import { checkOrigin } from '@/lib/utils/checkOrigin';
+import { checkRateLimit } from '@/lib/utils/rateLimit';
 
 interface LeetcodeRequestBody {
   query: string;
@@ -27,6 +28,8 @@ async function getCachedLeetcodeData(body: LeetcodeRequestBody) {
 export async function POST(requestObj: NextRequest) {
   const originError = checkOrigin(requestObj);
   if (originError) return originError;
+  const rateLimitError = await checkRateLimit(requestObj);
+  if (rateLimitError) return rateLimitError;
 
   try {
     const body = (await requestObj.json()) as LeetcodeRequestBody;

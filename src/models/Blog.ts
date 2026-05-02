@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
+import type { Blog } from '@/lib/blog/types';
 
-const BlogSchema = new mongoose.Schema(
+const BlogSchema = new mongoose.Schema<Blog>(
   {
     title: String,
     description: String,
@@ -16,4 +17,5 @@ const BlogSchema = new mongoose.Schema(
 
 BlogSchema.index({ slug: 1, language: 1 });
 
-export default mongoose.models.Blog || mongoose.model('Blog', BlogSchema);
+export default (mongoose.models.Blog as mongoose.Model<Blog>) ||
+  mongoose.model<Blog>('Blog', BlogSchema);

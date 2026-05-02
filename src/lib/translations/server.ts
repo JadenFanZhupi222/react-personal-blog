@@ -22,15 +22,12 @@ export async function getTranslations(locale: string): Promise<Translations> {
       return doc[locale] as Translations;
     }
 
-    // Fallback to static translations
+    // Silent fallback to static translations
     const fallbackLocale = locale in staticTranslations ? locale : 'en';
-    console.warn(
-      `No translations found in MongoDB for locale: ${locale}, using static translations from ${fallbackLocale}`
-    );
     return staticTranslations[fallbackLocale as keyof typeof staticTranslations];
   } catch (error) {
-    // If any error occurs, fallback to static translations
-    console.error('Error fetching translations from MongoDB:', error);
+    // DB error: log once and fall back
+    console.error('Failed to fetch translations from MongoDB:', error);
     const fallbackLocale = locale in staticTranslations ? locale : 'en';
     return staticTranslations[fallbackLocale as keyof typeof staticTranslations];
   }

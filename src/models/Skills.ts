@@ -1,6 +1,7 @@
-import mongoose, { Schema, model } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
+import type { RawSkillsData } from '@/lib/about/types';
 
-const SkillsSchema = new Schema(
+const SkillsSchema = new Schema<RawSkillsData>(
   {
     language: { type: String, required: true, enum: ['en', 'zh'] },
     skills: {
@@ -13,4 +14,5 @@ const SkillsSchema = new Schema(
   { collection: 'skills' }
 );
 
-export default mongoose.models.Skills || model('Skills', SkillsSchema);
+export default (mongoose.models.Skills as mongoose.Model<RawSkillsData>) ||
+  mongoose.model<RawSkillsData>('Skills', SkillsSchema);
