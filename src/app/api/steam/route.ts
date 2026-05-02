@@ -3,6 +3,7 @@ import { cacheLife, cacheTag } from 'next/cache';
 import { SteamAPI } from '@/api/steam';
 import { API_ERROR_MESSAGES, HTTP_STATUS } from '@/api/config';
 import { checkOrigin } from '@/lib/utils/checkOrigin';
+import { checkRateLimit } from '@/lib/utils/rateLimit';
 
 async function getCachedSteamStats() {
   'use cache';
@@ -15,6 +16,8 @@ async function getCachedSteamStats() {
 export async function GET(req: NextRequest) {
   const originError = checkOrigin(req);
   if (originError) return originError;
+  const rateLimitError = await checkRateLimit(req);
+  if (rateLimitError) return rateLimitError;
   try {
     const stats = await getCachedSteamStats();
     return NextResponse.json(stats);

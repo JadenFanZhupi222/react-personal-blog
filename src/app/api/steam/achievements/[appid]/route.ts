@@ -3,6 +3,7 @@ import { SteamAPI } from '@/api/steam';
 import type { SteamAchievementSchema, SteamAchievement } from '@/lib/steam/types';
 import { API_ERROR_MESSAGES, HTTP_STATUS } from '@/api/config';
 import { checkOrigin } from '@/lib/utils/checkOrigin';
+import { checkRateLimit } from '@/lib/utils/rateLimit';
 
 const steamAPI = new SteamAPI();
 
@@ -12,6 +13,8 @@ export async function GET(
 ) {
   const originError = checkOrigin(request);
   if (originError) return originError;
+  const rateLimitError = await checkRateLimit(request);
+  if (rateLimitError) return rateLimitError;
 
   try {
     const { appid } = await params;

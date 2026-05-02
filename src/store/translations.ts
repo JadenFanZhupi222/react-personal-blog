@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { Translations, Locale } from '@/i18n/types';
-import { request } from '@/api/axios';
+import { getJson } from '@/api/http';
 import en from '@/i18n/locales/en';
 import zh from '@/i18n/locales/zh';
 import { API_ERRORS } from '@/lib/constants/errors';
@@ -38,7 +38,7 @@ export const useTranslationsStore = create<TranslationsStoreState>()(
       }
       set({ error: null, loading: true });
       try {
-        const translations = await request.get<Translations>(`/api/i18n?lang=${locale}`);
+        const translations = await getJson<Translations>(`/api/i18n?lang=${locale}`);
         set((state) => ({
           locale,
           translations,

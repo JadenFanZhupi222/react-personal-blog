@@ -7,6 +7,7 @@ import { Menu, X } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { LanguageSwitch } from '@/components/features/ControlPanel/LanguageSwitch';
 import { useTranslations } from '@/lib/hooks/useTranslations';
+import { useMounted } from '@/lib/hooks/useMounted';
 import ThemeSwitch from '@/components/features/ControlPanel/ThemeSwitch';
 import { MobileMenu } from './MobileMenu';
 import { Translations } from '@/i18n/types';
@@ -14,13 +15,9 @@ import { Translations } from '@/i18n/types';
 export function Navbar({ ssrTranslations }: { ssrTranslations: Translations }) {
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = React.useState(false);
+  const mounted = useMounted();
   const [isOpen, setIsOpen] = React.useState(false);
   const { t: storeTranslations, locale, setLocale } = useTranslations();
-
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
 
   // Always use ssrTranslations as fallback
   const t = mounted && storeTranslations ? storeTranslations : ssrTranslations;

@@ -5,7 +5,7 @@ import type {
   SteamAchievement,
   SteamAchievementSchema,
 } from '@/lib/steam/types';
-import { request } from '@/api/axios';
+import { getJson } from '@/api/http';
 import { API_CONFIG, API_TIMEOUT } from './config';
 import { CONFIG_ERRORS, API_ERRORS } from '@/lib/constants/errors';
 
@@ -33,11 +33,10 @@ export class SteamAPI {
 
   async getPlayerProfile(): Promise<SteamProfile> {
     const endpoint = API_CONFIG.STEAM.ENDPOINTS.PLAYER_SUMMARIES(this.apiKey, this.steamId);
-    const data = await request.get<{
-      response: {
-        players: SteamProfile[];
-      };
-    }>(`${this.baseUrl}${endpoint}`, { timeout: this.timeout });
+    const data = await getJson<{ response: { players: SteamProfile[] } }>(
+      `${this.baseUrl}${endpoint}`,
+      { timeout: this.timeout }
+    );
 
     const profile = data.response.players[0];
     if (!profile) {
@@ -49,11 +48,8 @@ export class SteamAPI {
 
   async getRecentGames(): Promise<SteamGameStats[]> {
     const endpoint = API_CONFIG.STEAM.ENDPOINTS.RECENT_GAMES(this.apiKey, this.steamId);
-    const data = await request.get<{
-      response: {
-        total_count: number;
-        games: SteamGameStats[];
-      };
+    const data = await getJson<{
+      response: { total_count: number; games: SteamGameStats[] };
     }>(`${this.baseUrl}${endpoint}`, { timeout: this.timeout });
 
     return data.response.games || [];
@@ -61,11 +57,8 @@ export class SteamAPI {
 
   async getOwnedGames(): Promise<SteamGameStats[]> {
     const endpoint = API_CONFIG.STEAM.ENDPOINTS.OWNED_GAMES(this.apiKey, this.steamId);
-    const data = await request.get<{
-      response: {
-        game_count: number;
-        games: SteamGameStats[];
-      };
+    const data = await getJson<{
+      response: { game_count: number; games: SteamGameStats[] };
     }>(`${this.baseUrl}${endpoint}`, { timeout: this.timeout });
 
     return data.response.games || [];
@@ -81,82 +74,56 @@ export class SteamAPI {
       appid,
       lang
     );
-    try {
-      const data = await request.get<{
-        playerstats: {
-          steamID: string;
-          gameName: string;
-          achievements: SteamAchievement[];
-          success: boolean;
-        };
-      }>(`${this.baseUrl}${endpoint}`, { timeout: this.timeout });
+    const data = await getJson<{
+      playerstats: {
+        steamID: string;
+        gameName: string;
+        achievements: SteamAchievement[];
+        success: boolean;
+      };
+    }>(`${this.baseUrl}${endpoint}`, { timeout: this.timeout });
 
-      const achievements = data.playerstats.achievements || [];
-      return achievements.map((achievement) => ({
-        ...achievement,
-        gameName: data.playerstats.gameName,
-      }));
-    } catch (error) {
-      console.warn(`${API_ERRORS.STEAM_ACHIEVEMENTS_FETCH_FAILED} ${appid}:`, error);
-      throw error;
-    }
+    const achievements = data.playerstats.achievements || [];
+    return achievements.map((achievement) => ({
+      ...achievement,
+      gameName: data.playerstats.gameName,
+    }));
   }
 
   async getGameSchema(appid: number, lang: string = 'english'): Promise<SteamAchievementSchema[]> {
     const endpoint = API_CONFIG.STEAM.ENDPOINTS.GAME_SCHEMA(this.apiKey, appid, lang);
-    try {
-      const data = await request.get<{
-        game: {
-          availableGameStats: {
-            achievements: SteamAchievementSchema[];
-          };
-        };
-      }>(`${this.baseUrl}${endpoint}`, { timeout: this.timeout });
-      return data.game.availableGameStats.achievements || [];
-    } catch (error) {
-      console.warn(`${API_ERRORS.STEAM_SCHEMA_FETCH_FAILED} ${appid}:`, error);
-      throw error;
-    }
+    const data = await getJson<{
+      game: { availableGameStats: { achievements: SteamAchievementSchema[] } };
+    }>(`${this.baseUrl}${endpoint}`, { timeout: this.timeout });
+    return data.game.availableGameStats.achievements || [];
   }
 
   async getGlobalAchievementRarity(appid: number): Promise<Record<string, number>> {
     const endpoint = API_CONFIG.STEAM.ENDPOINTS.GLOBAL_ACHIEVEMENTS(appid);
-    try {
-      const data = await request.get<{
-        achievementpercentages: {
-          achievements: { name: string; percent: number }[];
-        };
-      }>(`${this.baseUrl}${endpoint}`, { timeout: this.timeout });
-      const result: Record<string, number> = {};
-      data.achievementpercentages.achievements.forEach((a) => {
-        result[a.name] = a.percent;
-      });
-      return result;
-    } catch (error) {
-      console.warn(`${API_ERRORS.STEAM_GLOBAL_ACHIEVEMENTS_FETCH_FAILED} ${appid}:`, error);
-      throw error;
-    }
+    const data = await getJson<{
+      achievementpercentages: { achievements: { name: string; percent: number }[] };
+    }>(`${this.baseUrl}${endpoint}`, { timeout: this.timeout });
+    const result: Record<string, number> = {};
+    data.achievementpercentages.achievements.forEach((a) => {
+      result[a.name] = a.percent;
+    });
+    return result;
   }
 
   async getUserStats(): Promise<SteamStats> {
-    try {
-      const [profile, recentGames, ownedGames] = await Promise.all([
-        this.getPlayerProfile(),
-        this.getRecentGames(),
-        this.getOwnedGames(),
-      ]);
+    const [profile, recentGames, ownedGames] = await Promise.all([
+      this.getPlayerProfile(),
+      this.getRecentGames(),
+      this.getOwnedGames(),
+    ]);
 
-      const totalPlaytime = ownedGames.reduce((total, game) => total + game.playtime_forever, 0);
+    const totalPlaytime = ownedGames.reduce((total, game) => total + game.playtime_forever, 0);
 
-      return {
-        profile,
-        recentGames,
-        totalPlaytime,
-        ownedGames: ownedGames.filter((game) => game.playtime_forever > 0),
-      };
-    } catch (error) {
-      console.error(API_ERRORS.STEAM_USER_STATS_FETCH_FAILED + ':', error);
-      throw error;
-    }
+    return {
+      profile,
+      recentGames,
+      totalPlaytime,
+      ownedGames: ownedGames.filter((game) => game.playtime_forever > 0),
+    };
   }
 }
