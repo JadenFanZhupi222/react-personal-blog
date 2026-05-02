@@ -1,6 +1,7 @@
 # 项目全量清理计划 (Super Cleanup)
 
 > 部署环境：Vercel (Serverless)
+> 包管理器：**pnpm**（项目 pnpm-only，所有命令使用 pnpm）
 > 执行方式：逐 Phase 推进，每步完成后验证 lint + build
 
 ---
@@ -26,18 +27,18 @@
 
 ### 1.2 卸载冗余依赖
 
-逐个 grep 确认无导入后卸载，每次 `npm run build` 验证：
+逐个 grep 确认无导入后卸载，每次 `pnpm run build` 验证：
 
-| 包 | 卸载原因 |
-|---|---|
-| `gsap` | 与 `framer-motion` 功能重叠 |
-| `swr` | 项目全部手动 fetch，未使用 |
-| `@tailwindcss/line-clamp` | Tailwind v4 已内置，此插件废弃 |
-| `postcss-theme-ui` | 项目未使用 |
-| `swiper` | 验证无导入后卸载 |
-| `recharts` | 验证无导入后卸载 |
-| `@headlessui/react` | 已用 Radix UI 替代；验证无导入后卸载 |
-| `react-spinners` | 有自定义 Loader；验证无导入后卸载 |
+| 包 | 卸载原因 | 状态 |
+|---|---|---|
+| `swr` | 项目全部手动 fetch，未使用 | ✅ 卸载（Phase 1） |
+| `@tailwindcss/line-clamp` | Tailwind v4 已内置，此插件废弃 | ✅ 卸载（Phase 1） |
+| `postcss-theme-ui` | 项目未使用 | ✅ 卸载（Phase 1） |
+| `recharts` | 验证无导入后卸载 | ✅ 卸载（Phase 1） |
+| `react-spinners` | 有自定义 Loader；验证无导入后卸载 | ✅ 卸载（Phase 1） |
+| `@headlessui/react` | 改用 `@radix-ui/react-dialog` 重写 `AchievementsModal` 后卸载 | ✅ 卸载（Phase 5 收尾） |
+| `gsap` | 与 `framer-motion` 功能重叠 | ⚠️ 保留：`ParallaxSection` 等 6 处仍在使用 |
+| `swiper` | 验证无导入后卸载 | ⚠️ 保留：成就轮播、移动端分页等 6 处仍在使用 |
 
 ---
 
@@ -98,7 +99,7 @@ for (const key of required) {
 ### 3.1 安装 TanStack Query
 
 ```bash
-npm install @tanstack/react-query @tanstack/react-query-devtools
+pnpm add @tanstack/react-query @tanstack/react-query-devtools
 ```
 
 ### 3.2 创建 QueryClient 基础设施
@@ -248,10 +249,10 @@ useEffect(() => { setModalPage(1); }, [selectedAppId]);
 ### 5.1 添加 Vitest 测试框架
 
 ```bash
-npm install -D vitest @vitejs/plugin-react jsdom @testing-library/react @testing-library/jest-dom
+pnpm add -D vitest @vitejs/plugin-react jsdom @testing-library/react @testing-library/jest-dom
 ```
 
-新建 `vitest.config.ts`，`package.json` 添加 `"test": "vitest"` 脚本。
+新建 `vitest.config.ts`、`vitest.setup.ts`，`package.json` 添加 `test` / `test:run` / `typecheck` 脚本。
 
 ### 5.2 Parser 单元测试
 
@@ -286,35 +287,38 @@ Push / PR 时自动执行 lint → build → test，构建失败阻断合并。
 ## 执行检查清单
 
 ```
-[ ] Phase 1.1  删除 .eslintrc.json，迁移规则 → npm run lint ✓
-[ ] Phase 1.2  卸载冗余依赖 → npm run build ✓
+[x] Phase 1.1  删除 .eslintrc.json，迁移规则 → pnpm run lint ✓
+[x] Phase 1.2  卸载冗余依赖 → pnpm run build ✓
+               （gsap / swiper 因实际仍被使用而保留；@headlessui/react 在 Phase 5 收尾时卸载）
 
-[ ] Phase 2.1  LeetCode 代理白名单
-[ ] Phase 2.2  next.config.ts env 启动校验
-[ ] Phase 2.3  Origin header 校验
+[x] Phase 2.1  LeetCode 代理白名单
+[x] Phase 2.2  next.config.ts env 启动校验
+[x] Phase 2.3  Origin header 校验
 
-[ ] Phase 3.1  安装 TanStack Query
-[ ] Phase 3.2  创建 QueryClient 基础设施 + QueryProvider
-[ ] Phase 3.3  Blog/Projects/About/Contact → Server Components，删除 4 个 Zustand store
-[ ] Phase 3.4  LeetCode/Steam → TanStack Query + server prefetch，删除 2 个 Zustand store
+[x] Phase 3.1  安装 TanStack Query
+[x] Phase 3.2  创建 QueryClient 基础设施 + QueryProvider
+[x] Phase 3.3  Blog/Projects/About/Contact → Server Components，删除 4 个 Zustand store
+[x] Phase 3.4  LeetCode/Steam → TanStack Query + server prefetch，删除 2 个 Zustand store
 
-[ ] Phase 4.1  Steam/LeetCode API route revalidate
-[ ] Phase 4.2  useIsMobile 初始值修复
-[ ] Phase 4.3  Blog 模型复合索引
-[ ] Phase 4.4  CardImage placeholder prop
-[ ] Phase 4.5  Translation Store 类型加强
-[ ] Phase 4.6  set-state-in-effect 反模式修复（ThemeSwitch + AchievementsPageMobile），并把 lint 规则改回 error
+[x] Phase 4.1  Steam/LeetCode API route revalidate
+[x] Phase 4.2  useIsMobile 初始值修复
+[x] Phase 4.3  Blog 模型复合索引
+[x] Phase 4.4  CardImage placeholder prop
+[x] Phase 4.5  Translation Store 类型加强
+[x] Phase 4.6  set-state-in-effect 反模式修复（ThemeSwitch + AchievementsPageMobile），并把 lint 规则改回 error
 
-[ ] Phase 5.1  安装 Vitest
-[ ] Phase 5.2  Parser 单元测试
-[ ] Phase 5.3  GitHub Actions CI
+[x] Phase 5.1  安装 Vitest（含 jsdom + @testing-library/react + jest-dom）
+[x] Phase 5.2  Parser 单元测试（blog / project / about / leetcode / achievements，共 18 个用例）
+[x] Phase 5.3  GitHub Actions CI（lint → typecheck → test → build）
+[x] Phase 5 收尾  AchievementsModal 迁移到 Radix Dialog，卸载 @headlessui/react
 ```
 
 ---
 
 ## 每步验证标准
 
-1. `npm run lint` — 无新 error
-2. `npm run build` — 构建成功
-3. 本地 `npm run dev` — 各页面正常渲染，语言/主题切换正常
-4. Phase 5 后：`npm test` — 全部通过
+1. `pnpm run lint` — 无新 error
+2. `pnpm run typecheck` — 类型干净
+3. `pnpm run build` — 构建成功
+4. 本地 `pnpm run dev` — 各页面正常渲染，语言/主题切换正常
+5. `pnpm run test:run` — 全部通过
