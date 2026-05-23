@@ -1,7 +1,7 @@
 import * as React from 'react';
-import Link from 'next/link';
 import { Moon, Sun } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { PendingLink } from '@/components/ui/PendingLink';
 import type { Translations, Locale } from '@/i18n/types';
 
 interface MobileMenuProps {
@@ -35,41 +35,41 @@ export function MobileMenu({
       >
         <div className="container py-4">
           <nav className="flex flex-col space-y-4 px-6">
-            <Link
+            <PendingLink
               href="/home"
               className="hover:text-primary-foreground text-primary-foreground/80 transition-colors"
               onClick={() => setIsOpen(false)}
             >
               {t.home.title}
-            </Link>
-            <Link
+            </PendingLink>
+            <PendingLink
               href="/about"
               className="hover:text-primary-foreground text-primary-foreground/80 transition-colors"
               onClick={() => setIsOpen(false)}
             >
               {t.about.title}
-            </Link>
-            <Link
+            </PendingLink>
+            <PendingLink
               href="/projects"
               className="hover:text-primary-foreground text-primary-foreground/80 transition-colors"
               onClick={() => setIsOpen(false)}
             >
               {t.projects.title}
-            </Link>
-            <Link
+            </PendingLink>
+            <PendingLink
               href={`/${locale}/blog`}
               className="hover:text-primary-foreground text-primary-foreground/80 transition-colors"
               onClick={() => setIsOpen(false)}
             >
               {t.blog.title}
-            </Link>
-            <Link
+            </PendingLink>
+            <PendingLink
               href="/contact"
               className="hover:text-primary-foreground text-primary-foreground/80 transition-colors"
               onClick={() => setIsOpen(false)}
             >
               {t.contact.title}
-            </Link>
+            </PendingLink>
             <div className="space-y-4 border-t pt-4">
               <div>
                 <div className="text-primary-foreground/80 mb-2 px-2 text-sm font-medium">

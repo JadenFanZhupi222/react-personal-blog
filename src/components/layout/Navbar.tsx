@@ -10,6 +10,7 @@ import { useTranslations } from '@/lib/hooks/useTranslations';
 import { useMounted } from '@/lib/hooks/useMounted';
 import ThemeSwitch from '@/components/features/ControlPanel/ThemeSwitch';
 import { MobileMenu } from './MobileMenu';
+import { PendingLink } from '@/components/ui/PendingLink';
 import { Translations } from '@/i18n/types';
 
 export function Navbar({ ssrTranslations }: { ssrTranslations: Translations }) {
@@ -35,36 +36,36 @@ export function Navbar({ ssrTranslations }: { ssrTranslations: Translations }) {
             <span className="font-bold">Zhupi222</span>
           </Link>
           <nav className="hidden items-center space-x-6 text-sm font-medium md:flex">
-            <Link
+            <PendingLink
               href="/home"
               className="hover:text-primary-foreground text-primary-foreground/80 transition-colors"
             >
               {t.home.title}
-            </Link>
-            <Link
+            </PendingLink>
+            <PendingLink
               href="/about"
               className="hover:text-primary-foreground text-primary-foreground/80 transition-colors"
             >
               {t.about.title}
-            </Link>
-            <Link
+            </PendingLink>
+            <PendingLink
               href="/projects"
               className="hover:text-primary-foreground text-primary-foreground/80 transition-colors"
             >
               {t.projects.title}
-            </Link>
-            <Link
+            </PendingLink>
+            <PendingLink
               href={`/${locale}/blog`}
               className="hover:text-primary-foreground text-primary-foreground/80 transition-colors"
             >
               {t.blog.title}
-            </Link>
-            <Link
+            </PendingLink>
+            <PendingLink
               href="/contact"
               className="hover:text-primary-foreground text-primary-foreground/80 transition-colors"
             >
               {t.contact.title}
-            </Link>
+            </PendingLink>
           </nav>
         </div>
         <div className="flex flex-1 items-center justify-end">
