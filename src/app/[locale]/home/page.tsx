@@ -12,17 +12,22 @@ async function PrefetchedHome() {
   await connection();
   const queryClient = makeQueryClient();
 
-  await Promise.all([
+  // Race prefetches against a hard timeout. If an upstream (Steam, LeetCode)
+  // is slow or silently blackholed, we'd rather ship the shell — client
+  // useQuery will retry and the cards have their own isPending skeletons —
+  // than hang the whole Suspense boundary on a stuck fetch.
+  const PREFETCH_BUDGET_MS = 1500;
+  const prefetches = Promise.all([
     queryClient
       .prefetchQuery({ queryKey: leetcodeQueryKey, queryFn: getLeetCodeStats })
-      .catch(() => {
-        /* swallow — client useQuery will surface error */
-      }),
+      .catch(() => {}),
     queryClient
       .prefetchQuery({ queryKey: steamQueryKey, queryFn: getSteamStats })
-      .catch(() => {
-        /* swallow — client useQuery will surface error */
-      }),
+      .catch(() => {}),
+  ]);
+  await Promise.race([
+    prefetches,
+    new Promise<void>((resolve) => setTimeout(resolve, PREFETCH_BUDGET_MS)),
   ]);
 
   return (
@@ -34,8 +39,16 @@ async function PrefetchedHome() {
 
 export default function Home() {
   return (
-    <Suspense>
+    <Suspense fallback={<HomeShellFallback />}>
       <PrefetchedHome />
     </Suspense>
+  );
+}
+
+function HomeShellFallback() {
+  return (
+    <div className="flex min-h-[60dvh] items-center justify-center" aria-hidden>
+      <div className="border-primary/30 border-t-primary h-10 w-10 animate-spin rounded-full border-[3px]" />
+    </div>
   );
 }
