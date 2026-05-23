@@ -8,6 +8,8 @@ import { Navbar } from '@/components/layout/Navbar';
 import { AppClientProvider } from '@/components/layout/AppClientLayout';
 import { QueryProvider } from '@/components/providers/QueryProvider';
 import { UpdateNotification } from '@/components/UpdateNotification';
+import { TopProgressBar } from '@/components/ui/TopProgressBar';
+import { NavigationPendingProvider } from '@/contexts/NavigationPendingContext';
 import { Toaster } from 'sonner';
 import { APP_NAME, APP_DESCRIPTION } from '@/config/app';
 import { SpeedInsights } from '@vercel/speed-insights/next';
@@ -98,15 +100,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <QueryProvider>
-            <Suspense
-              fallback={
-                <LocalizedSection locale="en" translations={en}>
-                  {children}
-                </LocalizedSection>
-              }
-            >
-              <LocalizedRoot>{children}</LocalizedRoot>
-            </Suspense>
+            <NavigationPendingProvider>
+              <TopProgressBar />
+              <Suspense
+                fallback={
+                  <LocalizedSection locale="en" translations={en}>
+                    {children}
+                  </LocalizedSection>
+                }
+              >
+                <LocalizedRoot>{children}</LocalizedRoot>
+              </Suspense>
+            </NavigationPendingProvider>
             <SpeedInsights />
             <Analytics />
             <Toaster position="top-center" />

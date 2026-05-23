@@ -1,19 +1,19 @@
 'use client';
 
+import { useEffect } from 'react';
 import Link from 'next/link';
 import { useLinkStatus } from 'next/link';
 import { LazyMotion, domAnimation, m } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { useNavigationPending } from '@/contexts/NavigationPendingContext';
 import type { ComponentProps } from 'react';
 
 /**
- * Link variant that shows a Apple-style filling underline while the click is
- * pending (RSC payload in flight). When the route resolves, the line collapses
- * back to zero width in 200ms. Renders nothing extra when idle.
- *
- * Use for primary nav targets where the user wants instant feedback on click.
- * For text/inline links inside content, prefer the raw <Link>: the route's
- * loading.tsx skeleton will take over fast enough.
+ * Link variant that gives instant click feedback: a 2px Apple-style filling
+ * underline appears under the clicked link while the new route's RSC payload
+ * is in flight. The same pending signal is also reported up to the global
+ * NavigationPendingContext, so a viewport-wide TopProgressBar can show even
+ * for users looking elsewhere on the page.
  */
 export function PendingLink({
   href,
@@ -34,13 +34,20 @@ export function PendingLink({
       {...rest}
     >
       {children}
-      <PendingUnderline className={indicatorClassName} />
+      <PendingHooks className={indicatorClassName} />
     </Link>
   );
 }
 
-function PendingUnderline({ className }: { className?: string }) {
+function PendingHooks({ className }: { className?: string }) {
   const { pending } = useLinkStatus();
+  const ctx = useNavigationPending();
+
+  useEffect(() => {
+    if (!pending || !ctx) return;
+    ctx.report(true);
+    return () => ctx.report(false);
+  }, [pending, ctx]);
 
   return (
     <LazyMotion features={domAnimation}>
