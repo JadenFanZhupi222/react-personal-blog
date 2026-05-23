@@ -59,7 +59,7 @@ export function AchievementDetailPage({ appid }: { appid: number }) {
       {/* Full-bleed hero — breaks out of the standard max-w-7xl page container.
           Library_hero artwork fills the viewport width; a downward gradient
           fades into the page background so the transition is seamless. */}
-      <div className="relative aspect-[1920/620] w-full overflow-hidden">
+      <div className="relative aspect-[1920/620] min-h-[240px] w-full overflow-hidden">
         {game && (
           <Image
             src={`https://cdn.cloudflare.steamstatic.com/steam/apps/${appid}/library_hero.jpg`}
