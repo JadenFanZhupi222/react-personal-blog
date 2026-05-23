@@ -2,46 +2,37 @@
 
 import { useRef, useEffect } from 'react';
 import { useTranslationsStore } from '@/store/translations';
-import { useTranslations } from '@/lib/hooks/useTranslations';
 import type { Translations, Locale } from '@/i18n/types';
-import { GlobalLoading } from '@/components/layout/GlobalLoading';
 import Cookies from 'js-cookie';
 
 export function AppClientProvider({
   translations,
+  locale,
   children,
 }: {
   translations: Translations;
+  locale: Locale;
   children: React.ReactNode;
 }) {
-  const { loading } = useTranslations();
   const hydrated = useRef(false);
 
-  // Synchronously hydrate store with server-rendered English translations
+  // Hydrate the zustand store with the locale/translations the server already
+  // resolved (from the preferred_locale cookie). This must happen synchronously
+  // during the first render so descendant components see the correct locale on
+  // their very first paint — no English flash for ZH users.
   if (!hydrated.current) {
-    useTranslationsStore.setState({
-      locale: 'en',
-      translations,
-      loaded: { en: translations },
-      loading: false,
-      error: null,
-    });
+    useTranslationsStore.setState({ locale, translations });
     hydrated.current = true;
   }
 
-  // On mount: read preferred locale from cookie and switch if needed.
-  // The existing setLocale() handles fetching + caching translations.
+  // Defensive cookie sync: if the client somehow has a stale or missing cookie,
+  // bring it in line with what the server used. Cheap idempotent write.
   useEffect(() => {
-    const preferred = Cookies.get('preferred_locale') as Locale | undefined;
-    if (preferred && preferred !== 'en') {
-      useTranslationsStore.getState().setLocaleWithFetch(preferred);
+    const current = Cookies.get('preferred_locale');
+    if (current !== locale) {
+      Cookies.set('preferred_locale', locale, { path: '/', expires: 365 });
     }
-  }, []);
+  }, [locale]);
 
-  return (
-    <>
-      {loading && <GlobalLoading />}
-      {children}
-    </>
-  );
+  return <>{children}</>;
 }

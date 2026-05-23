@@ -12,7 +12,7 @@ interface MobileMenuProps {
   mounted: boolean;
   t: Translations;
   locale: Locale;
-  setLocale: (locale: Locale) => Promise<void>;
+  setLocale: (locale: Locale) => void;
 }
 
 export function MobileMenu({

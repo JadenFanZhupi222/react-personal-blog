@@ -7,7 +7,7 @@ import { useTranslations } from '@/lib/hooks/useTranslations';
 const POLL_INTERVAL = 5 * 60 * 1000; // 5min
 
 export function UpdateNotification() {
-  const { t, locale, loading } = useTranslations();
+  const { t, locale } = useTranslations();
   const hasShown = useRef(false);
   const [version, setVersion] = useState<string | null>(null);
 
@@ -24,7 +24,7 @@ export function UpdateNotification() {
   }, []);
 
   useEffect(() => {
-    if (loading || !version) return;
+    if (!version) return;
 
     const lastVersion = localStorage.getItem('app-version');
 
@@ -38,7 +38,7 @@ export function UpdateNotification() {
         onAction: () => window.location.reload(),
       });
     }
-  }, [version, locale, loading, t.common.update.title, t.common.update.message, t.common.update.refresh]);
+  }, [version, locale, t.common.update.title, t.common.update.message, t.common.update.refresh]);
 
   return null;
 }

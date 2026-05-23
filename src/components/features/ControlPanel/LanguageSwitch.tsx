@@ -24,10 +24,11 @@ export function LanguageSwitch() {
   const router = useRouter();
   const pathname = usePathname();
 
-  const handleLanguageChange = async (newLocale: Locale) => {
-    await setLocale(newLocale);
+  const handleLanguageChange = (newLocale: Locale) => {
+    setLocale(newLocale);
     // If we're on a locale-prefixed route (e.g. /en/blog/foo), swap the prefix
-    // so the URL stays the source of truth for locale. Otherwise just refresh.
+    // so the URL stays the source of truth for locale. Otherwise just refresh
+    // so the server re-renders the layout with the new cookie locale.
     const match = pathname.match(LOCALE_PREFIX);
     if (match) {
       const rest = match[2] ?? '';
