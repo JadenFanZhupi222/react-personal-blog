@@ -59,7 +59,7 @@ export function AchievementDetailPage({ appid }: { appid: number }) {
       {/* Full-bleed hero — breaks out of the standard max-w-7xl page container.
           Library_hero artwork fills the viewport width; a downward gradient
           fades into the page background so the transition is seamless. */}
-      <div className="relative aspect-[1920/620] w-full overflow-hidden">
+      <div className="relative aspect-[1920/620] min-h-[240px] w-full overflow-hidden">
         {game && (
           <Image
             src={`https://cdn.cloudflare.steamstatic.com/steam/apps/${appid}/library_hero.jpg`}
@@ -70,16 +70,21 @@ export function AchievementDetailPage({ appid }: { appid: number }) {
             priority
           />
         )}
-        {/* Vertical scrim — strong at bottom for legibility, top stays clear */}
-        <div className="from-background via-background/60 absolute inset-0 bg-gradient-to-t to-transparent" />
+        {/* Vertical scrim — bottom 30% is solid background so the title sits
+            on a clean backing AND the boundary to the page below is seamless
+            (no mid-opacity color band where image leaks through). */}
+        <div className="absolute inset-0 bg-gradient-to-t from-background from-30% to-transparent" />
         {/* Side scrim — left side darkened for title legibility */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent" />
 
-        {/* Back link, top-left, floating chip */}
+        {/* Back link, top-left, floating chip. Uses fixed dark-glass styling
+            (not theme-aware) because it sits over the hero image in both
+            themes — matches the page-title's text-white and GameGridCard's
+            featured badge. */}
         <div className="absolute top-6 left-4 sm:left-6 lg:left-8">
           <Link
             href={`/${locale}/achievements`}
-            className="bg-background/40 text-foreground hover:bg-background/60 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium backdrop-blur-md transition-colors"
+            className="bg-black/50 text-white hover:bg-black/70 hover:-translate-x-0.5 active:translate-x-0 active:duration-75 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium shadow-lg backdrop-blur-md transition-all duration-200"
           >
             <ArrowLeft className="h-4 w-4" />
             {t.achievements.title}
