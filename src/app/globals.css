@@ -145,6 +145,15 @@
     --table-border: #e5e7eb;
     --table-header-bg: #f9fafb;
     --table-row-hover: #f3f4f6;
+    /* highlight.js tokens — github light */
+    --hljs-fg: #24292e;
+    --hljs-keyword: #d73a49;
+    --hljs-entity: #6f42c1;
+    --hljs-constant: #005cc5;
+    --hljs-string: #032f62;
+    --hljs-variable: #e36209;
+    --hljs-comment: #6a737d;
+    --hljs-tag: #22863a;
   }
 
   .dark {
@@ -220,6 +229,15 @@
     --table-border: #32275a;
     --table-header-bg: #2a2340;
     --table-row-hover: #2f2447;
+    /* highlight.js tokens — github dark */
+    --hljs-fg: #c9d1d9;
+    --hljs-keyword: #ff7b72;
+    --hljs-entity: #d2a8ff;
+    --hljs-constant: #79c0ff;
+    --hljs-string: #a5d6ff;
+    --hljs-variable: #ffa657;
+    --hljs-comment: #8b949e;
+    --hljs-tag: #7ee787;
   }
 }
 
@@ -238,4 +256,71 @@
 }
 .hide-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome/Safari/Webkit */
+}
+
+/* Theme-aware highlight.js styling. Tokens come from --hljs-* CSS variables
+   defined per theme above, so syntax colors swap with no JS / no FOUC. */
+.hljs {
+  color: var(--hljs-fg);
+  background: transparent;
+}
+.hljs-doctag,
+.hljs-keyword,
+.hljs-meta .hljs-keyword,
+.hljs-template-tag,
+.hljs-template-variable,
+.hljs-type,
+.hljs-variable.language_ {
+  color: var(--hljs-keyword);
+}
+.hljs-title,
+.hljs-title.class_,
+.hljs-title.class_.inherited__,
+.hljs-title.function_ {
+  color: var(--hljs-entity);
+}
+.hljs-attr,
+.hljs-attribute,
+.hljs-literal,
+.hljs-meta,
+.hljs-number,
+.hljs-operator,
+.hljs-variable,
+.hljs-selector-attr,
+.hljs-selector-class,
+.hljs-selector-id {
+  color: var(--hljs-constant);
+}
+.hljs-regexp,
+.hljs-string,
+.hljs-meta .hljs-string {
+  color: var(--hljs-string);
+}
+.hljs-built_in,
+.hljs-symbol {
+  color: var(--hljs-variable);
+}
+.hljs-comment,
+.hljs-code,
+.hljs-formula {
+  color: var(--hljs-comment);
+}
+.hljs-name,
+.hljs-quote,
+.hljs-selector-tag,
+.hljs-selector-pseudo {
+  color: var(--hljs-tag);
+}
+.hljs-subst {
+  color: var(--hljs-fg);
+}
+.hljs-section {
+  color: var(--hljs-constant);
+  font-weight: bold;
+}
+.hljs-emphasis {
+  font-style: italic;
+}
+.hljs-strong {
+  font-weight: bold;
 }

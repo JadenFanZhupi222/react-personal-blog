@@ -38,6 +38,11 @@ export const metadata: Metadata = {
   },
   robots: { index: true, follow: true },
   icons: { icon: '/favicon.ico' },
+  alternates: {
+    types: {
+      'application/rss+xml': [{ url: '/rss.xml', title: `${APP_NAME} RSS Feed` }],
+    },
+  },
 };
 
 export const viewport: Viewport = {

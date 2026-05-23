@@ -8,7 +8,7 @@ import { useTranslations } from '@/lib/hooks/useTranslations';
 import { LazyMotion, m, domAnimation } from 'framer-motion';
 
 export function HomePage() {
-  const { t } = useTranslations();
+  const { t, locale } = useTranslations();
   const featureCards = [
     {
       href: '/about',
@@ -25,7 +25,7 @@ export function HomePage() {
       actionText: t.home.features.projects.action,
     },
     {
-      href: '/blog',
+      href: `/${locale}/blog`,
       icon: Code,
       title: t.home.features.blog.title,
       description: t.home.features.blog.description,

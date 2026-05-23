@@ -1,11 +1,8 @@
-'use client';
-
-import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import type { Components } from 'react-markdown';
 import rehypeHighlight from 'rehype-highlight';
 import remarkGfm from 'remark-gfm';
-import { useTheme } from 'next-themes';
+import { CodeBlock } from './CodeBlock';
 
 const markdownComponents: Components = {
   h1: ({ children }) => (
@@ -21,7 +18,6 @@ const markdownComponents: Components = {
   ul: ({ children }) => <ul className="mb-4 list-disc pl-6">{children}</ul>,
   ol: ({ children }) => <ol className="mb-4 list-decimal pl-6">{children}</ol>,
   li: ({ children }) => <li className="mb-1">{children}</li>,
-  // 内联代码样式
   code: ({ children, className, ...props }) => {
     const match = /language-(\w+)/.exec(className || '');
     const isInline = !match;
@@ -43,18 +39,12 @@ const markdownComponents: Components = {
       </code>
     );
   },
-  // 代码块样式 - 根据主题动态调整
-  pre: ({ children }) => (
-    <pre className="bg-code-block-bg border-code-block-border text-foreground [&_.hljs]:color-inherit mb-6 overflow-x-auto rounded-xl border p-4 text-sm shadow-lg transition-colors duration-200 [&_.hljs]:bg-transparent [&_code]:bg-transparent [&_code]:text-inherit">
-      <div className="relative">{children}</div>
-    </pre>
-  ),
+  pre: ({ children }) => <CodeBlock>{children}</CodeBlock>,
   blockquote: ({ children }) => (
     <blockquote className="border-primary text-muted-foreground bg-muted/30 mb-4 rounded-r-md border-l-4 py-2 pl-4 italic">
       {children}
     </blockquote>
   ),
-  // 表格相关组件 - 使用项目配色系统
   table: ({ children }) => (
     <div className="mb-6 overflow-x-auto">
       <table className="bg-table-bg border-table-border w-full border-collapse rounded-lg border">
@@ -71,9 +61,7 @@ const markdownComponents: Components = {
     </th>
   ),
   td: ({ children }) => <td className="text-foreground px-4 py-3 text-sm">{children}</td>,
-  // 分割线
   hr: () => <hr className="border-border my-8 border-dashed" />,
-  // 链接样式
   a: ({ children, href }) => (
     <a
       href={href}
@@ -90,41 +78,7 @@ interface MarkdownProps {
   children: string;
 }
 
-function MarkdownContent({ children }: MarkdownProps) {
-  const { resolvedTheme } = useTheme();
-
-  // 动态设置代码高亮主题
-  React.useEffect(() => {
-    // 移除之前的主题样式
-    const existingStyle = document.querySelector('#hljs-theme');
-    if (existingStyle) {
-      existingStyle.remove();
-    }
-
-    // 根据主题加载对应的样式
-    const link = document.createElement('link');
-    link.id = 'hljs-theme';
-    link.rel = 'stylesheet';
-
-    // 使用CDN链接，更可靠
-    if (resolvedTheme === 'dark') {
-      link.href =
-        'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css';
-    } else {
-      link.href =
-        'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css';
-    }
-
-    document.head.appendChild(link);
-
-    return () => {
-      const styleEl = document.querySelector('#hljs-theme');
-      if (styleEl) {
-        styleEl.remove();
-      }
-    };
-  }, [resolvedTheme]);
-
+export default function Markdown({ children }: MarkdownProps) {
   return (
     <ReactMarkdown
       rehypePlugins={[rehypeHighlight]}
@@ -134,26 +88,4 @@ function MarkdownContent({ children }: MarkdownProps) {
       {children}
     </ReactMarkdown>
   );
-}
-
-export default function Markdown({ children }: MarkdownProps) {
-  const [mounted, setMounted] = React.useState(false);
-
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return (
-      <ReactMarkdown
-        rehypePlugins={[rehypeHighlight]}
-        remarkPlugins={[remarkGfm]}
-        components={markdownComponents}
-      >
-        {children}
-      </ReactMarkdown>
-    );
-  }
-
-  return <MarkdownContent>{children}</MarkdownContent>;
 }

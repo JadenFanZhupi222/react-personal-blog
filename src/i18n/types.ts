@@ -120,6 +120,14 @@ export interface Translations {
     title: string;
     description: string;
     readMore: string;
+    prev: string;
+    next: string;
+    related: string;
+    backToList: string;
+    taggedWith: string;
+    noPostsForTag: string;
+    copy: string;
+    copied: string;
   };
   contact: {
     title: string;

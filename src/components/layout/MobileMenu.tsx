@@ -57,7 +57,7 @@ export function MobileMenu({
               {t.projects.title}
             </Link>
             <Link
-              href="/blog"
+              href={`/${locale}/blog`}
               className="hover:text-primary-foreground text-primary-foreground/80 transition-colors"
               onClick={() => setIsOpen(false)}
             >
