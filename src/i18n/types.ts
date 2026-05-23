@@ -71,21 +71,17 @@ export interface Translations {
       title: string;
       leetcode: {
         title: string;
-        status: string;
         placeholder: string;
-        statsTitle: string;
         totalSolved: string;
         easy: string;
         medium: string;
         hard: string;
-        acceptanceRate: string;
         ranking: string;
         completion: string;
         reputation: string;
       };
       steam: {
         title: string;
-        status: string;
         placeholder: string;
         viewAchievements: string;
         totalPlaytime: string;

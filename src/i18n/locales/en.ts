@@ -50,7 +50,7 @@ const en: Translations = {
   home: {
     title: 'Home',
     welcome: 'Welcome to My Space',
-    description: 'Full-stack developer passionate about creating meaningful digital experiences.',
+    description: 'Full-stack developer. I build things on the web and write about them here.',
     enter: 'Enter',
     role: {
       fullstack: 'Full-stack Developer',
@@ -60,7 +60,7 @@ const en: Translations = {
     features: {
       about: {
         title: 'About Me',
-        description: 'Learn more about my journey, skills, and experiences.',
+        description: 'Background, skills, and what I have been working on.',
         action: 'View Profile',
       },
       projects: {
@@ -78,22 +78,18 @@ const en: Translations = {
       title: 'Activity Tracking',
       leetcode: {
         title: 'LeetCode Stats',
-        status: 'Coming Soon',
-        placeholder: 'LeetCode statistics will be displayed here',
-        statsTitle: 'Statistics',
+        placeholder: 'Loading LeetCode stats...',
         totalSolved: 'Total Solved',
         easy: 'Easy',
         medium: 'Medium',
         hard: 'Hard',
-        acceptanceRate: 'Acceptance Rate',
         ranking: 'Ranking',
         completion: 'Completion',
         reputation: 'Reputation',
       },
       steam: {
         title: 'Steam Achievements',
-        status: 'Coming Soon',
-        placeholder: 'Steam achievements will be displayed here',
+        placeholder: 'Loading Steam data...',
         viewAchievements: 'View Achievements',
         totalPlaytime: 'Total Playtime',
         recentGames: 'Recent Games',
@@ -104,7 +100,7 @@ const en: Translations = {
   },
   about: {
     title: 'About Me',
-    description: 'Full-stack developer passionate about creating meaningful digital experiences.',
+    description: 'A bit more about me — what I work on, what I am learning, and how I got here.',
     skills: {
       title: 'Skills',
       categories: {
@@ -131,7 +127,7 @@ const en: Translations = {
     next: 'Next',
     related: 'Related posts',
     backToList: 'All posts',
-    taggedWith: 'Posts tagged with',
+    taggedWith: 'Tagged',
     noPostsForTag: 'No posts found for this tag.',
     copy: 'Copy',
     copied: 'Copied',

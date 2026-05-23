@@ -30,7 +30,7 @@ export function BlogTagPage({ tag, locale, blogs }: BlogTagPageProps) {
       <BlogListPage
         blogs={blogs}
         locale={locale}
-        heading={`${t.blog.taggedWith}: ${tag}`}
+        heading={`${t.blog.taggedWith}: #${tag}`}
         text=""
         emptyText={t.blog.noPostsForTag}
       />

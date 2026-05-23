@@ -50,7 +50,7 @@ const zh: Translations = {
   home: {
     title: '首页',
     welcome: '欢迎来到我的空间',
-    description: '热衷于创造有意义的数字体验的全栈开发者',
+    description: '一个全栈开发者，在这里折腾代码、写点东西。',
     enter: '进入',
     role: {
       fullstack: '全栈开发者',
@@ -78,22 +78,18 @@ const zh: Translations = {
       title: '业余活动',
       leetcode: {
         title: 'LeetCode 统计',
-        status: '即将推出',
-        placeholder: '这里将显示 LeetCode 统计信息',
-        statsTitle: '统计信息',
+        placeholder: '正在加载 LeetCode 数据...',
         totalSolved: '已解总数',
         easy: '简单',
         medium: '中等',
         hard: '困难',
-        acceptanceRate: '完成率',
         ranking: '排名',
         completion: '完成率',
         reputation: '声望',
       },
       steam: {
         title: 'Steam 成就',
-        status: '即将推出',
-        placeholder: 'Steam 成就将在这里显示',
+        placeholder: '正在加载 Steam 数据...',
         viewAchievements: '查看成就',
         totalPlaytime: '总游戏时间',
         recentGames: '最近游戏',
@@ -104,7 +100,7 @@ const zh: Translations = {
   },
   about: {
     title: '关于我',
-    description: '热衷于创造有意义的数字体验的全栈开发者',
+    description: '关于我自己 —— 在做什么、在学什么、怎么走到这一步。',
     skills: {
       title: '技能',
       categories: {
@@ -131,7 +127,7 @@ const zh: Translations = {
     next: '下一篇',
     related: '相关文章',
     backToList: '全部文章',
-    taggedWith: '标签',
+    taggedWith: '按标签筛选',
     noPostsForTag: '该标签下暂无文章。',
     copy: '复制',
     copied: '已复制',
