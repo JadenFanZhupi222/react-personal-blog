@@ -44,12 +44,6 @@ export interface Translations {
     title: string;
     welcome: string;
     description: string;
-    enter: string;
-    role: {
-      fullstack: string;
-      tech: string;
-      game: string;
-    };
     features: {
       about: {
         title: string;

@@ -51,12 +51,6 @@ const en: Translations = {
     title: 'Home',
     welcome: 'Welcome to My Space',
     description: 'Full-stack developer. I build things on the web and write about them here.',
-    enter: 'Step inside',
-    role: {
-      fullstack: 'Full-stack Developer',
-      tech: 'Tech Enthusiast',
-      game: 'Gamer',
-    },
     features: {
       about: {
         title: 'About Me',

@@ -51,12 +51,6 @@ const zh: Translations = {
     title: '首页',
     welcome: '欢迎来到我的空间',
     description: '一个全栈开发者，在这里折腾代码、写点东西。',
-    enter: '进来看看',
-    role: {
-      fullstack: '全栈开发者',
-      tech: '技术爱好者',
-      game: '游戏玩家',
-    },
     features: {
       about: {
         title: '关于我',
