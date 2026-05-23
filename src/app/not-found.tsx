@@ -34,7 +34,7 @@ export default function NotFound() {
         >
           <Link
             href="/"
-            className="text-primary-foreground bg-primary inline-flex items-center rounded-lg px-6 py-3 text-base font-medium transition-opacity hover:opacity-90"
+            className="text-primary-foreground bg-primary hover:bg-primary-hover hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/30 active:translate-y-0 active:shadow active:duration-75 inline-flex items-center rounded-lg px-6 py-3 text-base font-medium shadow transition-all duration-200"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             {t.notFound.backHome}

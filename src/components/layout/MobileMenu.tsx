@@ -37,35 +37,35 @@ export function MobileMenu({
           <nav className="flex flex-col space-y-4 px-6">
             <PendingLink
               href={`/${locale}/home`}
-              className="text-foreground/70 hover:text-foreground transition-colors"
+              className="text-foreground/70 hover:text-primary transition-colors duration-200"
               onClick={() => setIsOpen(false)}
             >
               {t.home.title}
             </PendingLink>
             <PendingLink
               href={`/${locale}/about`}
-              className="text-foreground/70 hover:text-foreground transition-colors"
+              className="text-foreground/70 hover:text-primary transition-colors duration-200"
               onClick={() => setIsOpen(false)}
             >
               {t.about.title}
             </PendingLink>
             <PendingLink
               href={`/${locale}/projects`}
-              className="text-foreground/70 hover:text-foreground transition-colors"
+              className="text-foreground/70 hover:text-primary transition-colors duration-200"
               onClick={() => setIsOpen(false)}
             >
               {t.projects.title}
             </PendingLink>
             <PendingLink
               href={`/${locale}/blog`}
-              className="text-foreground/70 hover:text-foreground transition-colors"
+              className="text-foreground/70 hover:text-primary transition-colors duration-200"
               onClick={() => setIsOpen(false)}
             >
               {t.blog.title}
             </PendingLink>
             <PendingLink
               href={`/${locale}/contact`}
-              className="text-foreground/70 hover:text-foreground transition-colors"
+              className="text-foreground/70 hover:text-primary transition-colors duration-200"
               onClick={() => setIsOpen(false)}
             >
               {t.contact.title}

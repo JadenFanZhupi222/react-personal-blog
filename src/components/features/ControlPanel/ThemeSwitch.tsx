@@ -11,7 +11,7 @@ const ThemeSwitch = () => {
   return (
     <button
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
-      className="text-foreground hover:bg-primary-hover/30 inline-flex items-center justify-center rounded-md p-1.5"
+      className="text-foreground hover:bg-primary-hover/30 hover:scale-110 active:scale-95 active:duration-75 transition-transform duration-200 inline-flex items-center justify-center rounded-md p-1.5"
       aria-label="Toggle theme"
     >
       {mounted ? isDark ? <Sun size={20} /> : <Moon size={20} /> : null}

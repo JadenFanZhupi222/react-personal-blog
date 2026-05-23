@@ -18,7 +18,10 @@ export function RefreshButton({ onClick, isLoading, className }: RefreshButtonPr
       size="icon"
       onClick={onClick}
       disabled={isLoading}
-      className={cn('hover:bg-primary-hover/30 h-8 w-8 cursor-pointer', className)}
+      className={cn(
+        'hover:bg-primary-hover/30 hover:scale-110 active:scale-95 active:duration-75 transition-transform duration-200 h-8 w-8 cursor-pointer',
+        className
+      )}
     >
       <RefreshCw className={cn('h-4 w-4', isLoading && 'animate-spin')} />
       <span className="sr-only">{t.common.refresh}</span>
