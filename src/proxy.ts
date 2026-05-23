@@ -9,7 +9,7 @@ const LOCALIZED_TOP_LEVEL = ['home', 'about', 'projects', 'contact', 'blog', 'ac
  * redirects to /{preferred_locale ?? 'en'}/about. Real /[locale]/... requests
  * pass through untouched.
  */
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const segments = pathname.split('/').filter(Boolean);
 
