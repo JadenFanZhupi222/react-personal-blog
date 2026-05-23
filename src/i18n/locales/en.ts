@@ -22,7 +22,7 @@ const en: Translations = {
       tech: 'Tech Enthusiast',
       game: 'Gamer',
     },
-    enter: 'Enter',
+    enter: 'Step inside',
     techStack: {
       title: 'Tech Stack',
       items: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS'],
@@ -51,11 +51,11 @@ const en: Translations = {
     title: 'Home',
     welcome: 'Welcome to My Space',
     description: 'Full-stack developer. I build things on the web and write about them here.',
-    enter: 'Enter',
+    enter: 'Step inside',
     role: {
       fullstack: 'Full-stack Developer',
       tech: 'Tech Enthusiast',
-      game: 'Game Lover',
+      game: 'Gamer',
     },
     features: {
       about: {
@@ -69,13 +69,13 @@ const en: Translations = {
         action: 'View Projects',
       },
       blog: {
-        title: 'Code Blog',
+        title: 'Blog',
         description: 'Technical articles, tutorials, and code snippets.',
         action: 'Read Posts',
       },
     },
     activity: {
-      title: 'Activity Tracking',
+      title: 'What I am up to',
       leetcode: {
         title: 'LeetCode Stats',
         placeholder: 'Loading LeetCode stats...',
@@ -116,7 +116,7 @@ const en: Translations = {
   },
   projects: {
     title: 'Projects',
-    description: 'A collection of my recent work and personal projects.',
+    description: 'Recent work and side projects.',
     highlights: 'Key Highlights',
   },
   blog: {
@@ -140,7 +140,7 @@ const en: Translations = {
   },
   notFound: {
     title: '404',
-    description: 'Sorry, the page you are looking for might have been moved or does not exist.',
+    description: 'This page does not exist.',
     backHome: 'Back to Home',
   },
   achievements: {

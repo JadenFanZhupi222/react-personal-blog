@@ -22,7 +22,7 @@ const zh: Translations = {
       tech: '技术爱好者',
       game: '游戏玩家',
     },
-    enter: '进入',
+    enter: '进来看看',
     techStack: {
       title: '技术栈',
       items: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS'],
@@ -51,7 +51,7 @@ const zh: Translations = {
     title: '首页',
     welcome: '欢迎来到我的空间',
     description: '一个全栈开发者，在这里折腾代码、写点东西。',
-    enter: '进入',
+    enter: '进来看看',
     role: {
       fullstack: '全栈开发者',
       tech: '技术爱好者',
@@ -69,13 +69,13 @@ const zh: Translations = {
         action: '查看项目',
       },
       blog: {
-        title: '技术博客',
+        title: '博客',
         description: '技术文章、教程和代码片段',
         action: '阅读文章',
       },
     },
     activity: {
-      title: '业余活动',
+      title: '最近在做的事',
       leetcode: {
         title: 'LeetCode 统计',
         placeholder: '正在加载 LeetCode 数据...',
@@ -116,7 +116,7 @@ const zh: Translations = {
   },
   projects: {
     title: '项目',
-    description: '我最近的工作和个人项目集合',
+    description: '最近做的项目和一些个人作品',
     highlights: '主要亮点',
   },
   blog: {
@@ -133,14 +133,14 @@ const zh: Translations = {
     copied: '已复制',
   },
   contact: {
-    title: '联系',
+    title: '联系我',
     github: 'GitHub',
     emails: '邮箱',
-    socials: '社交网站',
+    socials: '社交媒体',
   },
   notFound: {
     title: '404',
-    description: '抱歉，您要找的页面可能已经被移动或不存在',
+    description: '这个页面不存在。',
     backHome: '返回首页',
   },
   achievements: {
