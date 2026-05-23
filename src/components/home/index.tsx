@@ -6,6 +6,7 @@ import { SteamCard } from '@/components/home/SteamCard';
 import { FeatureCard } from '@/components/features/FeatureCard';
 import { useTranslations } from '@/lib/hooks/useTranslations';
 import { LazyMotion, m, domAnimation } from 'framer-motion';
+import { containerVariants, itemVariants } from '@/lib/animations';
 
 export function HomePage() {
   const { t, locale } = useTranslations();
@@ -32,21 +33,6 @@ export function HomePage() {
       actionText: t.home.features.blog.action,
     },
   ];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 },
-  };
 
   return (
     <LazyMotion features={domAnimation}>

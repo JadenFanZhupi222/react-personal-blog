@@ -15,6 +15,7 @@ import React from 'react';
 import { LazyMotion, domAnimation, m } from 'framer-motion';
 import { ContactCard } from './contactCard';
 import type { ContactData } from '@/lib/contact/types';
+import { containerVariants, itemVariants } from '@/lib/animations';
 
 const emailIconMap: Record<string, React.ReactNode> = {
   gmail: <SiGmail className="text-foreground text-xl" />,
@@ -25,18 +26,6 @@ const socialIconMap: Record<string, React.ReactNode> = {
   tiktok: <SiTiktok className="text-foreground text-xl" />,
   xiaohongshu: <SiXiaohongshu className="text-foreground text-xl" />,
   bilibili: <SiBilibili className="text-foreground text-xl" />,
-};
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1 },
-  },
-};
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 },
 };
 
 export default function ContactPage({ contact }: { contact: ContactData }) {

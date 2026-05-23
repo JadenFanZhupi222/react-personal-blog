@@ -9,24 +9,7 @@ import { useTranslations } from '@/lib/hooks/useTranslations';
 import Link from 'next/link';
 import type { Locale } from '@/i18n/types';
 import type { Blog } from '@/lib/blog/types';
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-  },
-};
+import { containerVariants, itemVariants } from '@/lib/animations';
 
 interface BlogListPageProps {
   blogs: Blog[];
