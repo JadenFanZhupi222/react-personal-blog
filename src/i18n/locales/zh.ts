@@ -139,6 +139,10 @@ const zh: Translations = {
   },
   achievements: {
     title: '成就进度',
+    summary: {
+      games: '个游戏',
+      played: '累计游玩',
+    },
     stats: {
       totalGames: {
         title: '游戏总数',

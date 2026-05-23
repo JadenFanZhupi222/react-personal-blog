@@ -139,6 +139,10 @@ const en: Translations = {
   },
   achievements: {
     title: 'Achievement Progress',
+    summary: {
+      games: 'games',
+      played: 'played',
+    },
     stats: {
       totalGames: {
         title: 'Total Games',

@@ -132,6 +132,10 @@ export interface Translations {
   };
   achievements: {
     title: string;
+    summary: {
+      games: string;
+      played: string;
+    };
     stats: {
       totalGames: {
         title: string;
