@@ -1,7 +1,5 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
-import { cookies } from 'next/headers';
-import { Suspense } from 'react';
 import './globals.css';
 import { ThemeProvider } from 'next-themes';
 import { Navbar } from '@/components/layout/Navbar';
@@ -14,9 +12,7 @@ import { Toaster } from 'sonner';
 import { APP_NAME, APP_DESCRIPTION } from '@/config/app';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/next';
-import { getTranslations } from '@/lib/translations/server';
 import en from '@/i18n/locales/en';
-import type { Locale, Translations } from '@/i18n/types';
 import { SITE_URL } from '@/lib/constants/siteUrl';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -59,42 +55,12 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-// Locale-dependent UI lives here. Rendered once inside Suspense, once as the
-// fallback. Provider-bearing pieces that emit scripts (next-themes) or hold
-// state (react-query) live OUTSIDE this boundary so they don't get duplicated.
-function LocalizedSection({
-  locale,
-  translations,
-  children,
-}: {
-  locale: Locale;
-  translations: Translations;
-  children: React.ReactNode;
-}) {
-  return (
-    <AppClientProvider translations={translations} locale={locale}>
-      <div className="relative min-h-screen">
-        <Navbar ssrTranslations={translations} />
-        <main>{children}</main>
-      </div>
-      <UpdateNotification />
-    </AppClientProvider>
-  );
-}
-
-async function LocalizedRoot({ children }: { children: React.ReactNode }) {
-  const cookieStore = await cookies();
-  const preferred = cookieStore.get('preferred_locale')?.value;
-  const locale: Locale = preferred === 'zh' ? 'zh' : 'en';
-  const translations = getTranslations(locale);
-  return (
-    <LocalizedSection locale={locale} translations={translations}>
-      {children}
-    </LocalizedSection>
-  );
-}
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  // Layout is fully static — no cookies()/headers() at this level, so PPR can
+  // prerender the whole shell. Locale is resolved client-side inside
+  // TranslationsProvider (reads preferred_locale cookie on mount). ZH users
+  // see a brief English flash on first paint/refresh; the trade-off is a
+  // dynamic-free layout that doesn't block navigation.
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
@@ -102,15 +68,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <QueryProvider>
             <NavigationPendingProvider>
               <TopProgressBar />
-              <Suspense
-                fallback={
-                  <LocalizedSection locale="en" translations={en}>
-                    {children}
-                  </LocalizedSection>
-                }
-              >
-                <LocalizedRoot>{children}</LocalizedRoot>
-              </Suspense>
+              <AppClientProvider>
+                <div className="relative min-h-screen">
+                  <Navbar ssrTranslations={en} />
+                  <main>{children}</main>
+                </div>
+                <UpdateNotification />
+              </AppClientProvider>
             </NavigationPendingProvider>
             <SpeedInsights />
             <Analytics />

@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useCallback, useContext, useState } from 'react';
+import { createContext, useCallback, useContext, useSyncExternalStore } from 'react';
 import Cookies from 'js-cookie';
 import en from '@/i18n/locales/en';
 import zh from '@/i18n/locales/zh';
@@ -16,30 +16,41 @@ interface TranslationsContextValue {
 
 const TranslationsContext = createContext<TranslationsContextValue | null>(null);
 
+// Module-level pub/sub so that setLocale anywhere in the tree forces every
+// consumer to re-read the cookie. No useEffect/useState dance, no setState
+// during render — useSyncExternalStore handles the SSR boundary cleanly.
+const listeners = new Set<() => void>();
+function subscribe(cb: () => void) {
+  listeners.add(cb);
+  return () => {
+    listeners.delete(cb);
+  };
+}
+function readCookieLocale(): Locale {
+  if (typeof document === 'undefined') return 'en';
+  return Cookies.get('preferred_locale') === 'zh' ? 'zh' : 'en';
+}
+function serverLocale(): Locale {
+  return 'en';
+}
+
 /**
- * Provides the active locale + translations to descendants. Server resolves the
- * locale (from the preferred_locale cookie) and passes it in as initial state,
- * so the very first paint is already correct — no English flash for ZH users.
+ * Provides locale + translations. The SSR snapshot is always English so the
+ * server-rendered shell is fully static (Next.js 16 PPR friendly). Once
+ * hydration completes, useSyncExternalStore reads the preferred_locale cookie
+ * — ZH users see a brief EN→ZH transition on first paint, but client-side
+ * navigations don't flash since the value is stable across renders.
  *
- * Mutations (LanguageSwitch) flow through setLocale, which updates Context
- * state and writes the cookie. No global store, no setState during render.
+ * Blog routes (locale in URL) call setLocale via BlogLocaleSync to align the
+ * context with the URL.
  */
-export function TranslationsProvider({
-  initialLocale,
-  initialTranslations,
-  children,
-}: {
-  initialLocale: Locale;
-  initialTranslations: Translations;
-  children: React.ReactNode;
-}) {
-  const [locale, setLocaleState] = useState<Locale>(initialLocale);
-  const [translations, setTranslations] = useState<Translations>(initialTranslations);
+export function TranslationsProvider({ children }: { children: React.ReactNode }) {
+  const locale = useSyncExternalStore(subscribe, readCookieLocale, serverLocale);
+  const translations = TRANSLATIONS[locale];
 
   const setLocale = useCallback((next: Locale) => {
-    setLocaleState(next);
-    setTranslations(TRANSLATIONS[next]);
     Cookies.set('preferred_locale', next, { path: '/', expires: 365 });
+    listeners.forEach((l) => l());
   }, []);
 
   return (
