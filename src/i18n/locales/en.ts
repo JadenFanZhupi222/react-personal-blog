@@ -22,7 +22,7 @@ const en: Translations = {
       tech: 'Tech Enthusiast',
       game: 'Gamer',
     },
-    enter: 'Enter',
+    enter: 'Step inside',
     techStack: {
       title: 'Tech Stack',
       items: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS'],
@@ -50,17 +50,11 @@ const en: Translations = {
   home: {
     title: 'Home',
     welcome: 'Welcome to My Space',
-    description: 'Full-stack developer passionate about creating meaningful digital experiences.',
-    enter: 'Enter',
-    role: {
-      fullstack: 'Full-stack Developer',
-      tech: 'Tech Enthusiast',
-      game: 'Game Lover',
-    },
+    description: 'Full-stack developer. I build things on the web and write about them here.',
     features: {
       about: {
         title: 'About Me',
-        description: 'Learn more about my journey, skills, and experiences.',
+        description: 'Background, skills, and what I have been working on.',
         action: 'View Profile',
       },
       projects: {
@@ -69,31 +63,27 @@ const en: Translations = {
         action: 'View Projects',
       },
       blog: {
-        title: 'Code Blog',
+        title: 'Blog',
         description: 'Technical articles, tutorials, and code snippets.',
         action: 'Read Posts',
       },
     },
     activity: {
-      title: 'Activity Tracking',
+      title: 'What I am up to',
       leetcode: {
         title: 'LeetCode Stats',
-        status: 'Coming Soon',
-        placeholder: 'LeetCode statistics will be displayed here',
-        statsTitle: 'Statistics',
+        placeholder: 'Loading LeetCode stats...',
         totalSolved: 'Total Solved',
         easy: 'Easy',
         medium: 'Medium',
         hard: 'Hard',
-        acceptanceRate: 'Acceptance Rate',
         ranking: 'Ranking',
         completion: 'Completion',
         reputation: 'Reputation',
       },
       steam: {
         title: 'Steam Achievements',
-        status: 'Coming Soon',
-        placeholder: 'Steam achievements will be displayed here',
+        placeholder: 'Loading Steam data...',
         viewAchievements: 'View Achievements',
         totalPlaytime: 'Total Playtime',
         recentGames: 'Recent Games',
@@ -104,7 +94,7 @@ const en: Translations = {
   },
   about: {
     title: 'About Me',
-    description: 'Full-stack developer passionate about creating meaningful digital experiences.',
+    description: 'A bit more about me — what I work on, what I am learning, and how I got here.',
     skills: {
       title: 'Skills',
       categories: {
@@ -120,13 +110,21 @@ const en: Translations = {
   },
   projects: {
     title: 'Projects',
-    description: 'A collection of my recent work and personal projects.',
+    description: 'Recent work and side projects.',
     highlights: 'Key Highlights',
   },
   blog: {
     title: 'Blog',
     description: 'Technical articles, tutorials, and code snippets to help you learn and grow.',
     readMore: 'Read More',
+    prev: 'Previous',
+    next: 'Next',
+    related: 'Related posts',
+    backToList: 'All posts',
+    taggedWith: 'Tagged',
+    noPostsForTag: 'No posts found for this tag.',
+    copy: 'Copy',
+    copied: 'Copied',
   },
   contact: {
     title: 'Contact',
@@ -136,11 +134,23 @@ const en: Translations = {
   },
   notFound: {
     title: '404',
-    description: 'Sorry, the page you are looking for might have been moved or does not exist.',
+    description: 'This page does not exist.',
     backHome: 'Back to Home',
   },
   achievements: {
     title: 'Achievement Progress',
+    summary: {
+      games: 'games',
+      played: 'played',
+    },
+    sort: {
+      label: 'Sort',
+      playtime: 'Most played',
+      name: 'A → Z',
+    },
+    searchPlaceholder: 'Search games...',
+    noResults: 'No games match your search.',
+    mostPlayed: 'Most played',
     stats: {
       totalGames: {
         title: 'Total Games',
@@ -155,17 +165,14 @@ const en: Translations = {
         subtitle: '{percentage} completed',
       },
     },
-    gameCard: {
-      achievements: '{achieved}/{total} achievements',
-    },
     pagination: {
       page: 'Page {current} of {total}',
       prev: 'Prev',
       next: 'Next',
       goTo: 'Go to',
     },
-    clickToView: 'Click on a game card to view achievements',
     achieved: 'Achieved',
+    locked: 'Locked',
     noAchievements: 'No achievements yet.',
     ownedByPercent: 'Rarity: {percent}%',
   },

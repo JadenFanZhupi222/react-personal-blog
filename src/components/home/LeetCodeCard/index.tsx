@@ -31,8 +31,8 @@ export function LeetCodeCard() {
     <Card className="bg-card text-card-foreground border-border border shadow-lg">
       <CardContent className="pt-6">
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-primary-foreground flex items-center gap-2 text-2xl font-bold">
-            <Trophy className="h-5 w-5" />
+          <h2 className="text-foreground flex items-center gap-2 text-2xl font-bold">
+            <Trophy className="text-primary h-5 w-5" />
             {t.home.activity.leetcode.title}
           </h2>
           <RefreshButton onClick={() => refetch()} isLoading={isFetching} />
@@ -52,7 +52,7 @@ export function LeetCodeCard() {
               </div>
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
-                  <span className="text-primary-foreground font-medium">
+                  <span className="text-foreground font-medium">
                     {t.home.activity.leetcode.easy}
                   </span>
                   <span className="text-leetcode-easy ml-auto text-sm font-semibold">
@@ -68,7 +68,7 @@ export function LeetCodeCard() {
                   />
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-primary-foreground font-medium">
+                  <span className="text-foreground font-medium">
                     {t.home.activity.leetcode.medium}
                   </span>
                   <span className="text-leetcode-medium ml-auto text-sm font-semibold">
@@ -84,7 +84,7 @@ export function LeetCodeCard() {
                   />
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-primary-foreground font-medium">
+                  <span className="text-foreground font-medium">
                     {t.home.activity.leetcode.hard}
                   </span>
                   <span className="text-leetcode-hard ml-auto text-sm font-semibold">

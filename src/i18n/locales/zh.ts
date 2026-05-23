@@ -22,7 +22,7 @@ const zh: Translations = {
       tech: '技术爱好者',
       game: '游戏玩家',
     },
-    enter: '进入',
+    enter: '进来看看',
     techStack: {
       title: '技术栈',
       items: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS'],
@@ -50,13 +50,7 @@ const zh: Translations = {
   home: {
     title: '首页',
     welcome: '欢迎来到我的空间',
-    description: '热衷于创造有意义的数字体验的全栈开发者',
-    enter: '进入',
-    role: {
-      fullstack: '全栈开发者',
-      tech: '技术爱好者',
-      game: '游戏玩家',
-    },
+    description: '一个全栈开发者，在这里折腾代码、写点东西。',
     features: {
       about: {
         title: '关于我',
@@ -69,31 +63,27 @@ const zh: Translations = {
         action: '查看项目',
       },
       blog: {
-        title: '技术博客',
+        title: '博客',
         description: '技术文章、教程和代码片段',
         action: '阅读文章',
       },
     },
     activity: {
-      title: '业余活动',
+      title: '最近在做的事',
       leetcode: {
         title: 'LeetCode 统计',
-        status: '即将推出',
-        placeholder: '这里将显示 LeetCode 统计信息',
-        statsTitle: '统计信息',
+        placeholder: '正在加载 LeetCode 数据...',
         totalSolved: '已解总数',
         easy: '简单',
         medium: '中等',
         hard: '困难',
-        acceptanceRate: '完成率',
         ranking: '排名',
         completion: '完成率',
         reputation: '声望',
       },
       steam: {
         title: 'Steam 成就',
-        status: '即将推出',
-        placeholder: 'Steam 成就将在这里显示',
+        placeholder: '正在加载 Steam 数据...',
         viewAchievements: '查看成就',
         totalPlaytime: '总游戏时间',
         recentGames: '最近游戏',
@@ -104,7 +94,7 @@ const zh: Translations = {
   },
   about: {
     title: '关于我',
-    description: '热衷于创造有意义的数字体验的全栈开发者',
+    description: '关于我自己 —— 在做什么、在学什么、怎么走到这一步。',
     skills: {
       title: '技能',
       categories: {
@@ -120,27 +110,47 @@ const zh: Translations = {
   },
   projects: {
     title: '项目',
-    description: '我最近的工作和个人项目集合',
+    description: '最近做的项目和一些个人作品',
     highlights: '主要亮点',
   },
   blog: {
     title: '博客',
     description: '技术文章、经验和实用代码片段',
     readMore: '阅读更多',
+    prev: '上一篇',
+    next: '下一篇',
+    related: '相关文章',
+    backToList: '全部文章',
+    taggedWith: '按标签筛选',
+    noPostsForTag: '该标签下暂无文章。',
+    copy: '复制',
+    copied: '已复制',
   },
   contact: {
-    title: '联系',
+    title: '联系我',
     github: 'GitHub',
     emails: '邮箱',
-    socials: '社交网站',
+    socials: '社交媒体',
   },
   notFound: {
     title: '404',
-    description: '抱歉，您要找的页面可能已经被移动或不存在',
+    description: '这个页面不存在。',
     backHome: '返回首页',
   },
   achievements: {
     title: '成就进度',
+    summary: {
+      games: '个游戏',
+      played: '累计游玩',
+    },
+    sort: {
+      label: '排序',
+      playtime: '游玩时长',
+      name: '字母顺序',
+    },
+    searchPlaceholder: '搜索游戏...',
+    noResults: '没有匹配的游戏。',
+    mostPlayed: '最常玩',
     stats: {
       totalGames: {
         title: '游戏总数',
@@ -155,17 +165,14 @@ const zh: Translations = {
         subtitle: '完成度 {percentage}',
       },
     },
-    gameCard: {
-      achievements: '成就 {achieved}/{total}',
-    },
     pagination: {
       page: '第 {current} 页，共 {total} 页',
       prev: '上一页',
       next: '下一页',
       goTo: '跳转到',
     },
-    clickToView: '点击游戏卡片可查看成就',
     achieved: '已达成',
+    locked: '未解锁',
     noAchievements: '暂无成就',
     ownedByPercent: '稀有度：{percent}%',
   },

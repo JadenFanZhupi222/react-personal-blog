@@ -7,19 +7,7 @@ import { useTranslations } from '@/lib/hooks/useTranslations';
 import { Badge } from '@/components/ui/Badge';
 import type { Locale } from '@/i18n/types';
 import type { Project } from '@/lib/project/types';
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1 },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 },
-};
+import { containerVariants, itemVariants } from '@/lib/animations';
 
 export function ProjectListPage({ projects }: { projects: Record<Locale, Project[]> }) {
   const { t, locale } = useTranslations();

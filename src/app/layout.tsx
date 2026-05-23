@@ -2,16 +2,13 @@ import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from 'next-themes';
-import { Navbar } from '@/components/layout/Navbar';
-import { AppClientProvider } from '@/components/layout/AppClientLayout';
 import { QueryProvider } from '@/components/providers/QueryProvider';
-import { UpdateNotification } from '@/components/UpdateNotification';
+import { TopProgressBar } from '@/components/ui/TopProgressBar';
+import { NavigationPendingProvider } from '@/contexts/NavigationPendingContext';
 import { Toaster } from 'sonner';
 import { APP_NAME, APP_DESCRIPTION } from '@/config/app';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/next';
-import { getTranslations } from '@/lib/translations/server';
-import en from '@/i18n/locales/en';
 import { SITE_URL } from '@/lib/constants/siteUrl';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -38,45 +35,41 @@ export const metadata: Metadata = {
   },
   robots: { index: true, follow: true },
   icons: { icon: '/favicon.ico' },
+  alternates: {
+    types: {
+      'application/rss+xml': [{ url: '/rss.xml', title: `${APP_NAME} RSS Feed` }],
+    },
+  },
 };
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#0a0a0a' },
+    { media: '(prefers-color-scheme: light)', color: '#f7f7f8' },
+    { media: '(prefers-color-scheme: dark)', color: '#1a1d22' },
   ],
   width: 'device-width',
   initialScale: 1,
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  // Layout is fully static — no cookies/headers access.
-  // getTranslations is marked "use cache" so it's not "uncached data".
-  // Client-side AppClientProvider handles locale preference from cookies.
-  let translations = en;
-  try {
-    translations = await getTranslations('en');
-  } catch {
-    // fallback to static file on any error
-  }
-
+// Root layout is fully static. Locale lives in the URL ([locale] segment),
+// so the locale-aware UI (Navbar, UpdateNotification, TranslationsProvider)
+// is set up in src/app/[locale]/layout.tsx — not here. The bare welcome page
+// at / has its own TranslationsProvider wrapper (cookie-based).
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <AppClientProvider translations={translations}>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <QueryProvider>
-              <div className="relative min-h-screen">
-                <Navbar ssrTranslations={translations} />
-                <main>{children}</main>
-                <SpeedInsights />
-                <Analytics />
-              </div>
-              <UpdateNotification />
-              <Toaster position="top-center" />
-            </QueryProvider>
-          </ThemeProvider>
-        </AppClientProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <QueryProvider>
+            <NavigationPendingProvider>
+              <TopProgressBar />
+              {children}
+            </NavigationPendingProvider>
+            <SpeedInsights />
+            <Analytics />
+            <Toaster position="top-center" />
+          </QueryProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -45,8 +45,8 @@ export function SteamCard() {
     <Card className="bg-card text-card-foreground border-border border shadow-lg">
       <CardContent className="relative flex h-full min-h-[320px] flex-col pt-6">
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-primary-foreground flex items-center gap-2 text-2xl font-bold">
-            <Gamepad className="text-primary-foreground h-5 w-5" />
+          <h2 className="text-foreground flex items-center gap-2 text-2xl font-bold">
+            <Gamepad className="text-primary h-5 w-5" />
             {t.home.activity.steam.title}
           </h2>
           {!error && <RefreshButton onClick={() => refetch()} isLoading={isFetching} />}

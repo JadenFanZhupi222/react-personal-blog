@@ -10,6 +10,7 @@ import { useTranslations } from '@/lib/hooks/useTranslations';
 import { useMounted } from '@/lib/hooks/useMounted';
 import ThemeSwitch from '@/components/features/ControlPanel/ThemeSwitch';
 import { MobileMenu } from './MobileMenu';
+import { PendingLink } from '@/components/ui/PendingLink';
 import { Translations } from '@/i18n/types';
 
 export function Navbar({ ssrTranslations }: { ssrTranslations: Translations }) {
@@ -28,43 +29,46 @@ export function Navbar({ ssrTranslations }: { ssrTranslations: Translations }) {
   }
 
   return (
-    <nav className="border-border bg-card text-primary-foreground sticky top-0 z-50 w-full border-b backdrop-blur transition-colors">
+    <nav className="border-border bg-card text-foreground sticky top-0 z-50 w-full border-b backdrop-blur transition-colors">
       <div className="container flex h-14 items-center px-6 pr-1">
         <div className="flex items-center gap-8">
-          <Link href="/" className="text-primary-foreground flex items-center">
+          <Link
+            href="/"
+            className="text-foreground hover:text-primary flex items-center transition-colors duration-200"
+          >
             <span className="font-bold">Zhupi222</span>
           </Link>
           <nav className="hidden items-center space-x-6 text-sm font-medium md:flex">
-            <Link
-              href="/home"
-              className="hover:text-primary-foreground text-primary-foreground/80 transition-colors"
+            <PendingLink
+              href={`/${locale}/home`}
+              className="text-foreground/70 hover:text-primary transition-colors duration-200"
             >
               {t.home.title}
-            </Link>
-            <Link
-              href="/about"
-              className="hover:text-primary-foreground text-primary-foreground/80 transition-colors"
+            </PendingLink>
+            <PendingLink
+              href={`/${locale}/about`}
+              className="text-foreground/70 hover:text-primary transition-colors duration-200"
             >
               {t.about.title}
-            </Link>
-            <Link
-              href="/projects"
-              className="hover:text-primary-foreground text-primary-foreground/80 transition-colors"
+            </PendingLink>
+            <PendingLink
+              href={`/${locale}/projects`}
+              className="text-foreground/70 hover:text-primary transition-colors duration-200"
             >
               {t.projects.title}
-            </Link>
-            <Link
-              href="/blog"
-              className="hover:text-primary-foreground text-primary-foreground/80 transition-colors"
+            </PendingLink>
+            <PendingLink
+              href={`/${locale}/blog`}
+              className="text-foreground/70 hover:text-primary transition-colors duration-200"
             >
               {t.blog.title}
-            </Link>
-            <Link
-              href="/contact"
-              className="hover:text-primary-foreground text-primary-foreground/80 transition-colors"
+            </PendingLink>
+            <PendingLink
+              href={`/${locale}/contact`}
+              className="text-foreground/70 hover:text-primary transition-colors duration-200"
             >
               {t.contact.title}
-            </Link>
+            </PendingLink>
           </nav>
         </div>
         <div className="flex flex-1 items-center justify-end">
@@ -75,7 +79,7 @@ export function Navbar({ ssrTranslations }: { ssrTranslations: Translations }) {
           </nav>
           {/* Mobile menu button */}
           <button
-            className="text-primary-foreground inline-flex items-center justify-center rounded-md p-2.5 md:hidden"
+            className="text-foreground hover:bg-primary-hover/30 hover:scale-110 active:scale-95 active:duration-75 transition-transform duration-200 inline-flex items-center justify-center rounded-md p-2.5 md:hidden"
             onClick={() => setIsOpen(!isOpen)}
           >
             {isOpen ? <X size={20} /> : <Menu size={20} />}

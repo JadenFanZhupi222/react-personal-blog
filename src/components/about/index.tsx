@@ -6,24 +6,7 @@ import { useTranslations } from '@/lib/hooks/useTranslations';
 import { SkillCardList } from './SkillCard';
 import { ExperienceCard } from './ExperienceCard';
 import type { AboutData } from '@/lib/about/types';
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-  },
-};
+import { containerVariants, itemVariants } from '@/lib/animations';
 
 export function AboutContent({ data }: { data: AboutData }) {
   const { t, locale } = useTranslations();

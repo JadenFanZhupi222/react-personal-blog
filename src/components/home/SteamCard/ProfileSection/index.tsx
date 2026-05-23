@@ -27,7 +27,7 @@ export function ProfileSection({ profile, totalPlaytime, formatPlaytime, t }: Pr
         />
       </div>
       <div>
-        <h3 className="text-primary-foreground font-semibold">{profile.personaname}</h3>
+        <h3 className="text-foreground font-semibold">{profile.personaname}</h3>
         <p
           className="text-sm"
           style={{
@@ -42,7 +42,7 @@ export function ProfileSection({ profile, totalPlaytime, formatPlaytime, t }: Pr
           <Clock className="text-muted-foreground h-4 w-4" />
           <span className="text-sm">{t.totalPlaytime}</span>
         </div>
-        <p className="text-primary-foreground font-semibold">{formatPlaytime(totalPlaytime)}</p>
+        <p className="text-foreground font-semibold">{formatPlaytime(totalPlaytime)}</p>
       </div>
     </div>
   );

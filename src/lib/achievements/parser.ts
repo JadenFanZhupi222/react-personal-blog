@@ -1,7 +1,9 @@
 import type { ParsedGame } from '@/lib/steam/parser';
 
 export const MIN_PLAYTIME_HOURS = 2;
-export const ITEMS_PER_PAGE = 5;
+// 12 plays nicely with the responsive grid: 4 cols × 3 rows on xl,
+// 3 × 4 on lg, 2 × 6 on sm/md, 1 × 12 on mobile — no orphaned cards.
+export const ITEMS_PER_PAGE = 12;
 
 export function filterGamesByPlaytime(
   games: ParsedGame[],

@@ -44,12 +44,6 @@ export interface Translations {
     title: string;
     welcome: string;
     description: string;
-    enter: string;
-    role: {
-      fullstack: string;
-      tech: string;
-      game: string;
-    };
     features: {
       about: {
         title: string;
@@ -71,21 +65,17 @@ export interface Translations {
       title: string;
       leetcode: {
         title: string;
-        status: string;
         placeholder: string;
-        statsTitle: string;
         totalSolved: string;
         easy: string;
         medium: string;
         hard: string;
-        acceptanceRate: string;
         ranking: string;
         completion: string;
         reputation: string;
       };
       steam: {
         title: string;
-        status: string;
         placeholder: string;
         viewAchievements: string;
         totalPlaytime: string;
@@ -120,6 +110,14 @@ export interface Translations {
     title: string;
     description: string;
     readMore: string;
+    prev: string;
+    next: string;
+    related: string;
+    backToList: string;
+    taggedWith: string;
+    noPostsForTag: string;
+    copy: string;
+    copied: string;
   };
   contact: {
     title: string;
@@ -134,6 +132,18 @@ export interface Translations {
   };
   achievements: {
     title: string;
+    summary: {
+      games: string;
+      played: string;
+    };
+    sort: {
+      label: string;
+      playtime: string;
+      name: string;
+    };
+    searchPlaceholder: string;
+    noResults: string;
+    mostPlayed: string;
     stats: {
       totalGames: {
         title: string;
@@ -148,17 +158,14 @@ export interface Translations {
         subtitle: string;
       };
     };
-    gameCard: {
-      achievements: string;
-    };
     pagination: {
       page: string;
       prev: string;
       next: string;
       goTo: string;
     };
-    clickToView: string;
     achieved: string;
+    locked: string;
     noAchievements: string;
     ownedByPercent: string;
   };

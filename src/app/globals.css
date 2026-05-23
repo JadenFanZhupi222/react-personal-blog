@@ -86,27 +86,32 @@
 @layer base {
   :root {
     --radius: 0.5rem;
-    --primary: #f9f9fb;
-    --primary-foreground: #18122b;
-    --primary-hover: #13104d;
-    --background: #f3f4f6;
-    --foreground: #18122b;
-    --muted-foreground: #888;
-    --muted: #ececec;
-    --card: #f9f9fb;
-    --card-30: rgba(249, 249, 251, 0.3);
-    --card-foreground: #18122b;
-    --border: #e5e7eb;
-    --input: #e5e7eb;
-    --popover: #fff;
-    --popover-foreground: #18122b;
-    --secondary: #f179b3;
-    --secondary-foreground: #18122b;
-    --accent: oklch(0.95 0 0);
-    --accent-foreground: oklch(0.2 0 0);
-    --destructive: oklch(0.6 0.25 27);
-    --destructive-foreground: oklch(0.98 0 0);
-    --ring: oklch(0.2 0 0);
+    /* Brand — signature indigo (Tailwind indigo-500 / indigo-600). Lives at the
+       same hex in both themes so brand recognition is consistent. */
+    --primary: #6366f1;
+    --primary-foreground: #ffffff;
+    --primary-hover: #4f46e5;
+    /* Surfaces — refined neutral slate (no purple cast). Card is pure white
+       for a stronger surface hierarchy against the warm-gray background. */
+    --background: #f7f7f8;
+    --foreground: #0f1115;
+    --muted-foreground: #6b7280;
+    --muted: #ececef;
+    --card: #ffffff;
+    --card-30: rgba(255, 255, 255, 0.3);
+    --card-foreground: #0f1115;
+    --border: #e4e4e7;
+    --input: #e4e4e7;
+    --popover: #ffffff;
+    --popover-foreground: #0f1115;
+    /* Secondary — refined rose (Tailwind pink-500). Complements indigo. */
+    --secondary: #ec4899;
+    --secondary-foreground: #ffffff;
+    --accent: oklch(0.96 0 0);
+    --accent-foreground: oklch(0.18 0 0);
+    --destructive: oklch(0.6 0.21 27);
+    --destructive-foreground: oklch(0.99 0 0);
+    --ring: #4f46e5;
     --leetcode-easy: #4caf50;
     --leetcode-medium: #ff9800;
     --leetcode-hard: #f44336;
@@ -129,8 +134,8 @@
     --design-button-text: #ffffff;
     --design-leetcode-card: linear-gradient(135deg, #9c1b8c 0%, #4a1b9c 100%);
     --design-steam-card: #1b2b9c;
-    --welcome-gradient-foreground: #18122b;
-    --steam-achievement: #f9f9fb;
+    --welcome-gradient-foreground: #0f1115;
+    --steam-achievement: #ffffff;
     --achievement-green: #22c55e;
     --achievement-gray: #9ca3af;
     --achievement-darkgreen: #15803d;
@@ -138,59 +143,72 @@
     --achievement-rare-glow-strong: #ffd700;
     --achievement-rare-text-shadow: #fffbe6;
     --code-block-bg: transparent;
-    --code-block-border: #e2e8f0;
-    --code-inline-bg: #f1f5f9;
-    --code-inline-border: #cbd5e1;
-    --table-bg: #fff;
-    --table-border: #e5e7eb;
-    --table-header-bg: #f9fafb;
-    --table-row-hover: #f3f4f6;
+    --code-block-border: #e4e4e7;
+    --code-inline-bg: #f1f3f5;
+    --code-inline-border: #d4d4d8;
+    --table-bg: #ffffff;
+    --table-border: #e4e4e7;
+    --table-header-bg: #fafafa;
+    --table-row-hover: #f4f4f5;
+    /* highlight.js tokens — github light */
+    --hljs-fg: #24292e;
+    --hljs-keyword: #d73a49;
+    --hljs-entity: #6f42c1;
+    --hljs-constant: #005cc5;
+    --hljs-string: #032f62;
+    --hljs-variable: #e36209;
+    --hljs-comment: #6a737d;
+    --hljs-tag: #22863a;
   }
 
   .dark {
-    --primary: #4b2996;
-    --primary-foreground: #fff;
-    --primary-hover: #4b2996;
-    --background: #18122b;
-    --foreground: #fff;
-    --muted-foreground: #bdbdbd;
-    --muted: #2a2340;
-    --card: #241b3a;
-    --card-30: rgba(36, 27, 58, 0.3);
-    --card-foreground: #fff;
-    --border: #32275a;
-    --input: #32275a;
-    --popover: #241b3a;
-    --popover-foreground: #fff;
-    --secondary: #d9467e;
-    --secondary-foreground: #fff;
-    --accent: oklch(0.2 0.02 240);
-    --accent-foreground: oklch(0.85 0 0);
-    --destructive: oklch(0.3 0.25 0);
-    --destructive-foreground: oklch(0.85 0 0);
-    --ring: oklch(0.7 0 0);
-    --chart-1: oklch(0.488 0.243 264.376);
-    --chart-2: oklch(0.696 0.17 162.48);
-    --chart-3: oklch(0.769 0.188 70.08);
-    --chart-4: oklch(0.627 0.265 303.9);
-    --chart-5: oklch(0.645 0.246 16.439);
-    --sidebar: oklch(0.205 0 0);
-    --sidebar-foreground: oklch(0.885 0 0);
-    --sidebar-primary: oklch(0.488 0.243 264.376);
-    --sidebar-primary-foreground: oklch(0.885 0 0);
-    --sidebar-accent: oklch(0.269 0 0);
-    --sidebar-accent-foreground: oklch(0.885 0 0);
-    --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.556 0 0);
+    /* Brand — same indigo identity as light. Sits beautifully on dark slate. */
+    --primary: #6366f1;
+    --primary-foreground: #ffffff;
+    --primary-hover: #818cf8;
+    /* Surfaces — Premium Slate (cool neutral, no purple cast). Hierarchical
+       elevation: background < card < muted/border, each step a perceptual
+       OKLCH lightness bump so layering reads naturally. */
+    --background: oklch(0.16 0.005 250);
+    --foreground: oklch(0.965 0.003 250);
+    --muted-foreground: oklch(0.66 0.006 250);
+    --muted: oklch(0.245 0.006 250);
+    --card: oklch(0.205 0.006 250);
+    --card-30: rgba(37, 40, 48, 0.35);
+    --card-foreground: oklch(0.965 0.003 250);
+    --border: oklch(0.285 0.008 250);
+    --input: oklch(0.285 0.008 250);
+    --popover: oklch(0.205 0.006 250);
+    --popover-foreground: oklch(0.965 0.003 250);
+    --secondary: #ec4899;
+    --secondary-foreground: #ffffff;
+    --accent: oklch(0.285 0.008 250);
+    --accent-foreground: oklch(0.965 0.003 250);
+    --destructive: oklch(0.62 0.22 22);
+    --destructive-foreground: oklch(0.99 0 0);
+    --ring: #818cf8;
+    --chart-1: oklch(0.62 0.16 252);
+    --chart-2: oklch(0.7 0.15 350);
+    --chart-3: oklch(0.75 0.15 90);
+    --chart-4: oklch(0.7 0.16 180);
+    --chart-5: oklch(0.65 0.2 30);
+    --sidebar: oklch(0.205 0.006 250);
+    --sidebar-foreground: oklch(0.92 0.002 250);
+    --sidebar-primary: oklch(0.62 0.16 252);
+    --sidebar-primary-foreground: oklch(0.99 0 0);
+    --sidebar-accent: oklch(0.285 0.008 250);
+    --sidebar-accent-foreground: oklch(0.92 0.002 250);
+    --sidebar-border: oklch(1 0 0 / 8%);
+    --sidebar-ring: oklch(0.62 0.16 252);
     --leetcode-easy: #22c55e;
     --leetcode-medium: #f59e42;
     --leetcode-hard: #ef4444;
     --leetcode-completion: #fde047;
     --leetcode-ranking: #60a5fa;
     --leetcode-reputation: #c084fc;
-    --steam-card: oklch(0.18 0 0);
-    --steam-title: oklch(0.85 0 0);
-    --steam-playtime: oklch(0.65 0 0);
+    --steam-card: oklch(0.205 0.006 250);
+    --steam-title: oklch(0.92 0.003 250);
+    --steam-playtime: oklch(0.68 0.005 250);
     --steam-achievement: #fde047;
     --steam-online: #4ade80;
     --steam-offline: #9ca3af;
@@ -204,22 +222,31 @@
     --design-button-text: #ffffff;
     --design-leetcode-card: linear-gradient(135deg, #9c1b8c 0%, #4a1b9c 100%);
     --design-steam-card: #1b2b9c;
-    --welcome-gradient-foreground: #fff;
-    --steam-achievement: #2a2340;
+    --welcome-gradient-foreground: #ffffff;
+    --steam-achievement: oklch(0.245 0.006 250);
     --achievement-green: #4ade80;
     --achievement-gray: #bdbdbd;
     --achievement-darkgreen: #166534;
     --achievement-rare-glow: #bfa940;
     --achievement-rare-glow-strong: #e6c200;
     --achievement-rare-text-shadow: #5a4a1a;
-    --code-block-bg: var(--card);
-    --code-block-border: #2a2340;
-    --code-inline-bg: #2a2340;
-    --code-inline-border: #3d3558;
-    --table-bg: #241b3a;
-    --table-border: #32275a;
-    --table-header-bg: #2a2340;
-    --table-row-hover: #2f2447;
+    --code-block-bg: oklch(0.185 0.005 250);
+    --code-block-border: oklch(0.285 0.008 250);
+    --code-inline-bg: oklch(0.245 0.006 250);
+    --code-inline-border: oklch(0.32 0.008 250);
+    --table-bg: oklch(0.205 0.006 250);
+    --table-border: oklch(0.285 0.008 250);
+    --table-header-bg: oklch(0.245 0.006 250);
+    --table-row-hover: oklch(0.27 0.007 250);
+    /* highlight.js tokens — github dark */
+    --hljs-fg: #c9d1d9;
+    --hljs-keyword: #ff7b72;
+    --hljs-entity: #d2a8ff;
+    --hljs-constant: #79c0ff;
+    --hljs-string: #a5d6ff;
+    --hljs-variable: #ffa657;
+    --hljs-comment: #8b949e;
+    --hljs-tag: #7ee787;
   }
 }
 
@@ -238,4 +265,95 @@
 }
 .hide-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome/Safari/Webkit */
+}
+
+/* Subtle Ken Burns drift — slow scale + pan ping-pong loop. Used on hero
+   imagery to give static artwork a cinematic, "living" quality. */
+@keyframes ken-burns {
+  0% {
+    transform: scale(1) translate(0%, 0%);
+  }
+  50% {
+    transform: scale(1.08) translate(-1.5%, 1%);
+  }
+  100% {
+    transform: scale(1) translate(0%, 0%);
+  }
+}
+.animate-ken-burns {
+  animation: ken-burns 30s ease-in-out infinite;
+  transform-origin: center;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-ken-burns {
+    animation: none;
+  }
+}
+
+/* Theme-aware highlight.js styling. Tokens come from --hljs-* CSS variables
+   defined per theme above, so syntax colors swap with no JS / no FOUC. */
+.hljs {
+  color: var(--hljs-fg);
+  background: transparent;
+}
+.hljs-doctag,
+.hljs-keyword,
+.hljs-meta .hljs-keyword,
+.hljs-template-tag,
+.hljs-template-variable,
+.hljs-type,
+.hljs-variable.language_ {
+  color: var(--hljs-keyword);
+}
+.hljs-title,
+.hljs-title.class_,
+.hljs-title.class_.inherited__,
+.hljs-title.function_ {
+  color: var(--hljs-entity);
+}
+.hljs-attr,
+.hljs-attribute,
+.hljs-literal,
+.hljs-meta,
+.hljs-number,
+.hljs-operator,
+.hljs-variable,
+.hljs-selector-attr,
+.hljs-selector-class,
+.hljs-selector-id {
+  color: var(--hljs-constant);
+}
+.hljs-regexp,
+.hljs-string,
+.hljs-meta .hljs-string {
+  color: var(--hljs-string);
+}
+.hljs-built_in,
+.hljs-symbol {
+  color: var(--hljs-variable);
+}
+.hljs-comment,
+.hljs-code,
+.hljs-formula {
+  color: var(--hljs-comment);
+}
+.hljs-name,
+.hljs-quote,
+.hljs-selector-tag,
+.hljs-selector-pseudo {
+  color: var(--hljs-tag);
+}
+.hljs-subst {
+  color: var(--hljs-fg);
+}
+.hljs-section {
+  color: var(--hljs-constant);
+  font-weight: bold;
+}
+.hljs-emphasis {
+  font-style: italic;
+}
+.hljs-strong {
+  font-weight: bold;
 }
