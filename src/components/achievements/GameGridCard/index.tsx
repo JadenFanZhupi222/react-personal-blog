@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { Clock, Trophy } from 'lucide-react';
 import { PendingLink } from '@/components/ui/PendingLink';
+import { useTranslations } from '@/lib/hooks/useTranslations';
 import { cn } from '@/lib/utils';
 import type { ParsedGame } from '@/lib/steam/parser';
 
@@ -20,9 +21,10 @@ export function GameGridCard({
   featured = false,
   featuredLabel,
 }: GameGridCardProps) {
+  const { locale } = useTranslations();
   return (
     <PendingLink
-      href={`/achievements/${game.appid}`}
+      href={`/${locale}/achievements/${game.appid}`}
       className={cn(
         'group ring-primary/40 relative block aspect-[460/215] overflow-hidden rounded-xl ring-0 transition-shadow duration-300 hover:shadow-2xl hover:ring-2',
         featured && 'h-full lg:aspect-auto'

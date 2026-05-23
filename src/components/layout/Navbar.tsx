@@ -37,19 +37,19 @@ export function Navbar({ ssrTranslations }: { ssrTranslations: Translations }) {
           </Link>
           <nav className="hidden items-center space-x-6 text-sm font-medium md:flex">
             <PendingLink
-              href="/home"
+              href={`/${locale}/home`}
               className="hover:text-primary-foreground text-primary-foreground/80 transition-colors"
             >
               {t.home.title}
             </PendingLink>
             <PendingLink
-              href="/about"
+              href={`/${locale}/about`}
               className="hover:text-primary-foreground text-primary-foreground/80 transition-colors"
             >
               {t.about.title}
             </PendingLink>
             <PendingLink
-              href="/projects"
+              href={`/${locale}/projects`}
               className="hover:text-primary-foreground text-primary-foreground/80 transition-colors"
             >
               {t.projects.title}
@@ -61,7 +61,7 @@ export function Navbar({ ssrTranslations }: { ssrTranslations: Translations }) {
               {t.blog.title}
             </PendingLink>
             <PendingLink
-              href="/contact"
+              href={`/${locale}/contact`}
               className="hover:text-primary-foreground text-primary-foreground/80 transition-colors"
             >
               {t.contact.title}

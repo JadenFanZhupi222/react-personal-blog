@@ -12,14 +12,14 @@ export function HomePage() {
   const { t, locale } = useTranslations();
   const featureCards = [
     {
-      href: '/about',
+      href: `/${locale}/about`,
       icon: User,
       title: t.home.features.about.title,
       description: t.home.features.about.description,
       actionText: t.home.features.about.action,
     },
     {
-      href: '/projects',
+      href: `/${locale}/projects`,
       icon: FolderGit2,
       title: t.home.features.projects.title,
       description: t.home.features.projects.description,

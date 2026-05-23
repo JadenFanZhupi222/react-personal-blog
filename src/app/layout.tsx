@@ -2,17 +2,13 @@ import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from 'next-themes';
-import { Navbar } from '@/components/layout/Navbar';
-import { AppClientProvider } from '@/components/layout/AppClientLayout';
 import { QueryProvider } from '@/components/providers/QueryProvider';
-import { UpdateNotification } from '@/components/UpdateNotification';
 import { TopProgressBar } from '@/components/ui/TopProgressBar';
 import { NavigationPendingProvider } from '@/contexts/NavigationPendingContext';
 import { Toaster } from 'sonner';
 import { APP_NAME, APP_DESCRIPTION } from '@/config/app';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/next';
-import en from '@/i18n/locales/en';
 import { SITE_URL } from '@/lib/constants/siteUrl';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -55,12 +51,11 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
+// Root layout is fully static. Locale lives in the URL ([locale] segment),
+// so the locale-aware UI (Navbar, UpdateNotification, TranslationsProvider)
+// is set up in src/app/[locale]/layout.tsx — not here. The bare welcome page
+// at / has its own TranslationsProvider wrapper (cookie-based).
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  // Layout is fully static — no cookies()/headers() at this level, so PPR can
-  // prerender the whole shell. Locale is resolved client-side inside
-  // TranslationsProvider (reads preferred_locale cookie on mount). ZH users
-  // see a brief English flash on first paint/refresh; the trade-off is a
-  // dynamic-free layout that doesn't block navigation.
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
@@ -68,13 +63,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <QueryProvider>
             <NavigationPendingProvider>
               <TopProgressBar />
-              <AppClientProvider>
-                <div className="relative min-h-screen">
-                  <Navbar ssrTranslations={en} />
-                  <main>{children}</main>
-                </div>
-                <UpdateNotification />
-              </AppClientProvider>
+              {children}
             </NavigationPendingProvider>
             <SpeedInsights />
             <Analytics />

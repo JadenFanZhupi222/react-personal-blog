@@ -36,21 +36,21 @@ export function MobileMenu({
         <div className="container py-4">
           <nav className="flex flex-col space-y-4 px-6">
             <PendingLink
-              href="/home"
+              href={`/${locale}/home`}
               className="hover:text-primary-foreground text-primary-foreground/80 transition-colors"
               onClick={() => setIsOpen(false)}
             >
               {t.home.title}
             </PendingLink>
             <PendingLink
-              href="/about"
+              href={`/${locale}/about`}
               className="hover:text-primary-foreground text-primary-foreground/80 transition-colors"
               onClick={() => setIsOpen(false)}
             >
               {t.about.title}
             </PendingLink>
             <PendingLink
-              href="/projects"
+              href={`/${locale}/projects`}
               className="hover:text-primary-foreground text-primary-foreground/80 transition-colors"
               onClick={() => setIsOpen(false)}
             >
@@ -64,7 +64,7 @@ export function MobileMenu({
               {t.blog.title}
             </PendingLink>
             <PendingLink
-              href="/contact"
+              href={`/${locale}/contact`}
               className="hover:text-primary-foreground text-primary-foreground/80 transition-colors"
               onClick={() => setIsOpen(false)}
             >

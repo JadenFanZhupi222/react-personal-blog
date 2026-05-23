@@ -25,16 +25,16 @@ export function LanguageSwitch() {
   const pathname = usePathname();
 
   const handleLanguageChange = (newLocale: Locale) => {
+    // Always write the cookie so non-localized entry points (welcome /)
+    // remember the preference for next visit.
     setLocale(newLocale);
-    // If we're on a locale-prefixed route (e.g. /en/blog/foo), swap the prefix
-    // so the URL stays the source of truth for locale. Otherwise just refresh
-    // so the server re-renders the layout with the new cookie locale.
+
+    // Swap the locale prefix in the URL when applicable; on / (welcome) just
+    // re-render via setLocale's notify path — no navigation needed.
     const match = pathname.match(LOCALE_PREFIX);
     if (match) {
       const rest = match[2] ?? '';
       router.push(`/${newLocale}${rest}`);
-    } else {
-      router.refresh();
     }
   };
 

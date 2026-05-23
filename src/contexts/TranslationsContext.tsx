@@ -16,9 +16,9 @@ interface TranslationsContextValue {
 
 const TranslationsContext = createContext<TranslationsContextValue | null>(null);
 
-// Module-level pub/sub so that setLocale anywhere in the tree forces every
-// consumer to re-read the cookie. No useEffect/useState dance, no setState
-// during render — useSyncExternalStore handles the SSR boundary cleanly.
+// Module-level pub/sub. setLocale writes the cookie and notifies subscribers
+// so useSyncExternalStore re-reads. Keeps the cookie path working for
+// non-locale-prefixed routes (e.g. the welcome page at /).
 const listeners = new Set<() => void>();
 function subscribe(cb: () => void) {
   listeners.add(cb);
@@ -34,18 +34,27 @@ function serverLocale(): Locale {
   return 'en';
 }
 
+interface ProviderProps {
+  children: React.ReactNode;
+  /**
+   * Authoritative locale from the URL ([locale] segment). When provided, the
+   * cookie is ignored for the displayed locale — SSR + hydration both use this
+   * value, so there's no flash. setLocale still writes the cookie so it acts
+   * as a 'last seen preference' for non-localized entry points like /.
+   */
+  forcedLocale?: Locale;
+}
+
 /**
- * Provides locale + translations. The SSR snapshot is always English so the
- * server-rendered shell is fully static (Next.js 16 PPR friendly). Once
- * hydration completes, useSyncExternalStore reads the preferred_locale cookie
- * — ZH users see a brief EN→ZH transition on first paint, but client-side
- * navigations don't flash since the value is stable across renders.
- *
- * Blog routes (locale in URL) call setLocale via BlogLocaleSync to align the
- * context with the URL.
+ * Provides locale + translations. Two modes:
+ * - URL-localized (forcedLocale set): server renders with the right locale,
+ *   client hydrates without re-rendering. Used everywhere under /[locale]/.
+ * - Cookie-based (no forcedLocale): server renders EN, client switches to
+ *   cookie locale via useSyncExternalStore. Used by the bare-/ welcome page.
  */
-export function TranslationsProvider({ children }: { children: React.ReactNode }) {
-  const locale = useSyncExternalStore(subscribe, readCookieLocale, serverLocale);
+export function TranslationsProvider({ children, forcedLocale }: ProviderProps) {
+  const cookieLocale = useSyncExternalStore(subscribe, readCookieLocale, serverLocale);
+  const locale = forcedLocale ?? cookieLocale;
   const translations = TRANSLATIONS[locale];
 
   const setLocale = useCallback((next: Locale) => {

@@ -78,7 +78,7 @@ export function AchievementDetailPage({ appid }: { appid: number }) {
         {/* Back link, top-left, floating chip */}
         <div className="absolute top-6 left-4 sm:left-6 lg:left-8">
           <Link
-            href="/achievements"
+            href={`/${locale}/achievements`}
             className="bg-background/40 text-foreground hover:bg-background/60 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium backdrop-blur-md transition-colors"
           >
             <ArrowLeft className="h-4 w-4" />

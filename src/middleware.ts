@@ -1,20 +1,39 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-// Redirect legacy /blog and /blog/* URLs (no locale segment) to /{cookieLocale}/blog/...
-// Keeps existing bookmarks/sitemap entries working after the locale-prefixed restructure.
+const SUPPORTED_LOCALES = ['en', 'zh'] as const;
+const LOCALIZED_TOP_LEVEL = ['home', 'about', 'projects', 'contact', 'blog', 'achievements'];
+
+/**
+ * Locale-aware redirect for bare paths. The site's actual routes live under
+ * /[locale]/..., but we keep legacy/un-prefixed URLs working: e.g. /about
+ * redirects to /{preferred_locale ?? 'en'}/about. Real /[locale]/... requests
+ * pass through untouched.
+ */
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const isBlog = pathname === '/blog' || pathname.startsWith('/blog/');
-  if (!isBlog) return NextResponse.next();
+  const segments = pathname.split('/').filter(Boolean);
 
-  const cookieLocale = request.cookies.get('preferred_locale')?.value;
-  const locale = cookieLocale === 'zh' ? 'zh' : 'en';
+  // Already locale-prefixed — pass through.
+  if (
+    segments.length > 0 &&
+    (SUPPORTED_LOCALES as readonly string[]).includes(segments[0])
+  ) {
+    return NextResponse.next();
+  }
 
-  const url = request.nextUrl.clone();
-  url.pathname = `/${locale}${pathname}`;
-  return NextResponse.redirect(url);
+  // Bare top-level localizable segment — redirect to localized variant.
+  if (segments.length > 0 && LOCALIZED_TOP_LEVEL.includes(segments[0])) {
+    const cookieLocale = request.cookies.get('preferred_locale')?.value;
+    const locale = cookieLocale === 'zh' ? 'zh' : 'en';
+    const url = request.nextUrl.clone();
+    url.pathname = `/${locale}${pathname}`;
+    return NextResponse.redirect(url);
+  }
+
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/blog', '/blog/:path*'],
+  // Skip Next internals, API routes, static files, RSS/sitemap.
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|rss.xml|sitemap.xml|robots.txt).*)'],
 };

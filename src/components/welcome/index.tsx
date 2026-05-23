@@ -10,7 +10,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 export function Welcome() {
-  const { t } = useTranslations();
+  const { t, locale } = useTranslations();
 
   return (
     <LazyMotion features={domAnimation}>
@@ -60,7 +60,7 @@ export function Welcome() {
               className="pt-4"
             >
               <Link
-                href="/home"
+                href={`/${locale}/home`}
                 className="bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:ring-primary inline-flex h-12 items-center justify-center rounded-lg px-8 text-lg font-semibold shadow-md transition-all hover:scale-105 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
               >
                 {t.welcome.enter}
