@@ -30,9 +30,9 @@ export function FeatureCard({
         <Card className="bg-card text-card-foreground border-border group h-full min-w-[362px] border transition-colors">
           <CardContent className="pt-6">
             <div className="flex flex-col items-center space-y-4 text-center">
-              <Icon className="text-primary-foreground h-8 w-8" />
+              <Icon className="text-primary h-8 w-8" />
               <div className="space-y-2">
-                <h3 className="text-primary-foreground text-xl font-semibold">{title}</h3>
+                <h3 className="text-foreground text-xl font-semibold">{title}</h3>
                 <p className="text-muted-foreground">{description}</p>
                 <motion.p
                   className="text-foreground/80 text-sm font-medium"

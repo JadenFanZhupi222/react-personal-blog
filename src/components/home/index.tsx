@@ -46,7 +46,7 @@ export function HomePage() {
           {/* Welcome Section */}
           <section className="mx-auto mb-8 w-full max-w-6xl text-center md:mb-16">
             <m.div variants={itemVariants}>
-              <h1 className="text-primary-foreground mb-4 text-6xl font-bold">{t.home.welcome}</h1>
+              <h1 className="text-foreground mb-4 text-6xl font-bold">{t.home.welcome}</h1>
               <p className="text-muted-foreground text-xl">{t.home.description}</p>
             </m.div>
           </section>

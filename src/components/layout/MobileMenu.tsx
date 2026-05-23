@@ -37,42 +37,42 @@ export function MobileMenu({
           <nav className="flex flex-col space-y-4 px-6">
             <PendingLink
               href={`/${locale}/home`}
-              className="hover:text-primary-foreground text-primary-foreground/80 transition-colors"
+              className="text-foreground/70 hover:text-foreground transition-colors"
               onClick={() => setIsOpen(false)}
             >
               {t.home.title}
             </PendingLink>
             <PendingLink
               href={`/${locale}/about`}
-              className="hover:text-primary-foreground text-primary-foreground/80 transition-colors"
+              className="text-foreground/70 hover:text-foreground transition-colors"
               onClick={() => setIsOpen(false)}
             >
               {t.about.title}
             </PendingLink>
             <PendingLink
               href={`/${locale}/projects`}
-              className="hover:text-primary-foreground text-primary-foreground/80 transition-colors"
+              className="text-foreground/70 hover:text-foreground transition-colors"
               onClick={() => setIsOpen(false)}
             >
               {t.projects.title}
             </PendingLink>
             <PendingLink
               href={`/${locale}/blog`}
-              className="hover:text-primary-foreground text-primary-foreground/80 transition-colors"
+              className="text-foreground/70 hover:text-foreground transition-colors"
               onClick={() => setIsOpen(false)}
             >
               {t.blog.title}
             </PendingLink>
             <PendingLink
               href={`/${locale}/contact`}
-              className="hover:text-primary-foreground text-primary-foreground/80 transition-colors"
+              className="text-foreground/70 hover:text-foreground transition-colors"
               onClick={() => setIsOpen(false)}
             >
               {t.contact.title}
             </PendingLink>
             <div className="space-y-4 border-t pt-4">
               <div>
-                <div className="text-primary-foreground/80 mb-2 px-2 text-sm font-medium">
+                <div className="text-foreground/70 mb-2 px-2 text-sm font-medium">
                   Language
                 </div>
                 <div className="space-y-1">
@@ -89,7 +89,7 @@ export function MobileMenu({
                       className={`flex w-full items-center rounded-md px-2 py-2 transition-colors ${
                         locale === lang.code
                           ? 'bg-primary/80 text-primary-foreground/90'
-                          : 'hover:bg-primary-hover/30 text-primary-foreground hover:text-primary'
+                          : 'hover:bg-primary-hover/30 text-foreground hover:text-primary'
                       }`}
                     >
                       {lang.name}
@@ -98,7 +98,7 @@ export function MobileMenu({
                 </div>
               </div>
               <div>
-                <div className="text-primary-foreground/80 mb-2 px-2 text-sm font-medium">
+                <div className="text-foreground/70 mb-2 px-2 text-sm font-medium">
                   Theme
                 </div>
                 <button
@@ -106,7 +106,7 @@ export function MobileMenu({
                     setTheme(theme === 'light' ? 'dark' : 'light');
                     setIsOpen(false);
                   }}
-                  className="hover:bg-primary-hover/30 text-primary-foreground hover:text-primary flex w-full items-center space-x-2 rounded-md px-2 py-2 transition-colors"
+                  className="hover:bg-primary-hover/30 text-foreground hover:text-primary flex w-full items-center space-x-2 rounded-md px-2 py-2 transition-colors"
                 >
                   {mounted ? (
                     theme === 'light' ? (

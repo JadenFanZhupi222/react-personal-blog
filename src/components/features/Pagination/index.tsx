@@ -80,7 +80,7 @@ export const Pagination: React.FC<PaginationProps> = ({
         <div className="flex flex-col items-center">
           <input
             type="text"
-            className="focus:text-primary-foreground w-12 rounded border px-2 py-1 text-sm focus:outline-none"
+            className="text-foreground focus:ring-primary w-12 rounded border px-2 py-1 text-sm focus:ring-2 focus:outline-none"
             value={input}
             onChange={handleInputChange}
             onBlur={handleInputGo}
@@ -172,7 +172,7 @@ export const Pagination: React.FC<PaginationProps> = ({
       </button>
       <input
         type="text"
-        className="focus:text-primary-foreground mx-2 w-12 rounded border px-2 py-1 text-sm focus:outline-none"
+        className="text-foreground focus:ring-primary mx-2 w-12 rounded border px-2 py-1 text-sm focus:ring-2 focus:outline-none"
         value={input}
         onChange={handleInputChange}
         onBlur={handleInputGo}

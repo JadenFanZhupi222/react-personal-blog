@@ -29,40 +29,40 @@ export function Navbar({ ssrTranslations }: { ssrTranslations: Translations }) {
   }
 
   return (
-    <nav className="border-border bg-card text-primary-foreground sticky top-0 z-50 w-full border-b backdrop-blur transition-colors">
+    <nav className="border-border bg-card text-foreground sticky top-0 z-50 w-full border-b backdrop-blur transition-colors">
       <div className="container flex h-14 items-center px-6 pr-1">
         <div className="flex items-center gap-8">
-          <Link href="/" className="text-primary-foreground flex items-center">
+          <Link href="/" className="text-foreground flex items-center">
             <span className="font-bold">Zhupi222</span>
           </Link>
           <nav className="hidden items-center space-x-6 text-sm font-medium md:flex">
             <PendingLink
               href={`/${locale}/home`}
-              className="hover:text-primary-foreground text-primary-foreground/80 transition-colors"
+              className="text-foreground/70 hover:text-foreground transition-colors"
             >
               {t.home.title}
             </PendingLink>
             <PendingLink
               href={`/${locale}/about`}
-              className="hover:text-primary-foreground text-primary-foreground/80 transition-colors"
+              className="text-foreground/70 hover:text-foreground transition-colors"
             >
               {t.about.title}
             </PendingLink>
             <PendingLink
               href={`/${locale}/projects`}
-              className="hover:text-primary-foreground text-primary-foreground/80 transition-colors"
+              className="text-foreground/70 hover:text-foreground transition-colors"
             >
               {t.projects.title}
             </PendingLink>
             <PendingLink
               href={`/${locale}/blog`}
-              className="hover:text-primary-foreground text-primary-foreground/80 transition-colors"
+              className="text-foreground/70 hover:text-foreground transition-colors"
             >
               {t.blog.title}
             </PendingLink>
             <PendingLink
               href={`/${locale}/contact`}
-              className="hover:text-primary-foreground text-primary-foreground/80 transition-colors"
+              className="text-foreground/70 hover:text-foreground transition-colors"
             >
               {t.contact.title}
             </PendingLink>
@@ -76,7 +76,7 @@ export function Navbar({ ssrTranslations }: { ssrTranslations: Translations }) {
           </nav>
           {/* Mobile menu button */}
           <button
-            className="text-primary-foreground inline-flex items-center justify-center rounded-md p-2.5 md:hidden"
+            className="text-foreground inline-flex items-center justify-center rounded-md p-2.5 md:hidden"
             onClick={() => setIsOpen(!isOpen)}
           >
             {isOpen ? <X size={20} /> : <Menu size={20} />}
