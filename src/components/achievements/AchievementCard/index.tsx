@@ -1,7 +1,9 @@
 'use client';
 
 import Image from 'next/image';
+import { CalendarCheck, Sparkles } from 'lucide-react';
 import { useTranslations } from '@/lib/hooks/useTranslations';
+import { cn } from '@/lib/utils';
 
 export interface Achievement {
   name?: string;
@@ -14,21 +16,32 @@ export interface Achievement {
   rarity?: number;
 }
 
-function formatUnlockTime(unlocktime: number) {
+const RARE_THRESHOLD = 10;
+
+function formatUnlockTime(unlocktime: number, locale: string) {
   if (!unlocktime) return '';
-  return new Date(unlocktime * 1000).toLocaleDateString();
+  return new Date(unlocktime * 1000).toLocaleDateString(
+    locale === 'zh' ? 'zh-CN' : 'en-US',
+    { year: 'numeric', month: 'short', day: 'numeric' }
+  );
 }
 
 export function AchievementCard({ achievement: ach }: { achievement: Achievement }) {
-  const { t } = useTranslations();
+  const { locale } = useTranslations();
   const achieved = !!ach.achieved;
-  const isRare = typeof ach.rarity === 'number' && ach.rarity < 10;
+  const hasRarity = typeof ach.rarity === 'number';
+  const isRare = hasRarity && (ach.rarity as number) < RARE_THRESHOLD;
 
   return (
     <div
-      className={`flex items-start gap-3 rounded-lg p-3 transition-colors ${
-        achieved ? 'bg-card hover:bg-accent/40' : 'bg-muted/30 hover:bg-muted/50'
-      }`}
+      className={cn(
+        'group flex items-start gap-3 rounded-xl p-3.5 transition-all duration-300',
+        achieved
+          ? 'bg-card hover:bg-accent/40'
+          : 'bg-muted/20 opacity-70 hover:opacity-100',
+        isRare && achieved && 'ring-achievement-rare-glow shadow-[0_0_16px_-2px_var(--achievement-rare-glow)] ring-1',
+        isRare && !achieved && 'ring-achievement-rare-glow/40 ring-1'
+      )}
     >
       <div className="relative h-12 w-12 flex-shrink-0">
         <Image
@@ -36,35 +49,39 @@ export function AchievementCard({ achievement: ach }: { achievement: Achievement
           alt={ach.displayName}
           fill
           sizes="48px"
-          className={`rounded-md object-cover ${
-            isRare ? 'ring-achievement-rare-glow ring-2' : ''
-          }`}
+          className="rounded-lg object-cover"
         />
       </div>
       <div className="min-w-0 flex-1">
         <div
-          className={`font-semibold ${
+          className={cn(
+            'font-semibold leading-tight',
             achieved ? 'text-foreground' : 'text-muted-foreground'
-          }`}
+          )}
         >
           {ach.displayName}
         </div>
         {ach.description && (
-          <p className="text-muted-foreground mt-0.5 text-xs leading-relaxed">
+          <p className="text-muted-foreground mt-1 text-xs leading-relaxed">
             {ach.description}
           </p>
         )}
-        <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
+        <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
           {achieved && ach.unlocktime > 0 && (
-            <span className="text-achievement-green">
-              ✓ {t.achievements.achieved} {formatUnlockTime(ach.unlocktime)}
+            <span className="text-achievement-green inline-flex items-center gap-1 tabular-nums">
+              <CalendarCheck className="h-3 w-3" />
+              {formatUnlockTime(ach.unlocktime, locale)}
             </span>
           )}
-          {typeof ach.rarity === 'number' && (
+          {hasRarity && (
             <span
-              className={isRare ? 'text-achievement-rare-glow-strong font-semibold' : 'text-muted-foreground'}
+              className={cn(
+                'inline-flex items-center gap-1 tabular-nums',
+                isRare ? 'text-achievement-rare-glow-strong font-semibold' : 'text-muted-foreground'
+              )}
             >
-              {t.achievements.ownedByPercent.replace('{percent}', ach.rarity.toFixed(1))}
+              <Sparkles className="h-3 w-3" />
+              {(ach.rarity as number).toFixed(1)}%
             </span>
           )}
         </div>

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { LazyMotion, domAnimation, m } from 'framer-motion';
 import { GameGridCard } from '@/components/achievements/GameGridCard';
 import { ErrorFunc } from '@/components/features/Error';
 import { AchievementsPageSkeleton } from '@/components/skeleton/AchievementsPageSkeleton';
@@ -14,6 +15,7 @@ import {
   ITEMS_PER_PAGE,
 } from '@/lib/achievements/parser';
 import { formatPlaytime } from '@/lib/utils/format';
+import { containerVariants, itemVariants } from '@/lib/animations';
 
 export function AchievementsOverview() {
   const { t } = useTranslations();
@@ -51,11 +53,21 @@ export function AchievementsOverview() {
         {t.achievements.summary.played}
       </p>
 
-      <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {currentItems.map((game) => (
-          <GameGridCard key={game.appid} game={game} formatPlaytime={formatPlaytime} />
-        ))}
-      </div>
+      <LazyMotion features={domAnimation}>
+        <m.div
+          key={currentPage}
+          className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          {currentItems.map((game) => (
+            <m.div key={game.appid} variants={itemVariants}>
+              <GameGridCard game={game} formatPlaytime={formatPlaytime} />
+            </m.div>
+          ))}
+        </m.div>
+      </LazyMotion>
 
       {totalPages > 1 && (
         <div className="mt-12 flex justify-center">

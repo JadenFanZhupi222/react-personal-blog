@@ -4,10 +4,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
+import { LazyMotion, domAnimation, m } from 'framer-motion';
 import { useTranslations } from '@/lib/hooks/useTranslations';
-import { AchievementCard } from '@/components/achievements/AchievementCard';
+import { AchievementCard, type Achievement } from '@/components/achievements/AchievementCard';
 import { AchievementsCardSkeleton } from '@/components/skeleton/AchievementsCardSkeleton';
 import { ErrorFunc } from '@/components/features/Error';
+import { containerVariants, itemVariants } from '@/lib/animations';
 import {
   steamQueryKey,
   fetchSteamStats,
@@ -122,39 +124,59 @@ export function AchievementDetailPage({ appid }: { appid: number }) {
         ) : (
           <>
             {achievedAchs.length > 0 && (
-              <section>
-                <div className="mb-4 flex items-baseline gap-3">
-                  <h2 className="text-foreground text-xl font-bold">{t.achievements.achieved}</h2>
-                  <span className="text-muted-foreground text-sm tabular-nums">
-                    {achievedAchs.length}
-                  </span>
-                </div>
-                <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-                  {achievedAchs.map((ach, idx) => (
-                    <AchievementCard key={ach.name ?? `a-${idx}`} achievement={ach} />
-                  ))}
-                </div>
-              </section>
+              <AchievementSection
+                title={t.achievements.achieved}
+                count={achievedAchs.length}
+                items={achievedAchs}
+                idPrefix="a"
+              />
             )}
-
             {lockedAchs.length > 0 && (
-              <section>
-                <div className="mb-4 flex items-baseline gap-3">
-                  <h2 className="text-foreground text-xl font-bold">{t.achievements.locked}</h2>
-                  <span className="text-muted-foreground text-sm tabular-nums">
-                    {lockedAchs.length}
-                  </span>
-                </div>
-                <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-                  {lockedAchs.map((ach, idx) => (
-                    <AchievementCard key={ach.name ?? `l-${idx}`} achievement={ach} />
-                  ))}
-                </div>
-              </section>
+              <AchievementSection
+                title={t.achievements.locked}
+                count={lockedAchs.length}
+                items={lockedAchs}
+                idPrefix="l"
+              />
             )}
           </>
         )}
       </div>
     </div>
+  );
+}
+
+function AchievementSection({
+  title,
+  count,
+  items,
+  idPrefix,
+}: {
+  title: string;
+  count: number;
+  items: Achievement[];
+  idPrefix: string;
+}) {
+  return (
+    <section>
+      <div className="mb-4 flex items-baseline gap-3">
+        <h2 className="text-foreground text-xl font-bold">{title}</h2>
+        <span className="text-muted-foreground text-sm tabular-nums">{count}</span>
+      </div>
+      <LazyMotion features={domAnimation}>
+        <m.div
+          className="grid grid-cols-1 gap-3 md:grid-cols-2"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          {items.map((ach, idx) => (
+            <m.div key={ach.name ?? `${idPrefix}-${idx}`} variants={itemVariants}>
+              <AchievementCard achievement={ach} />
+            </m.div>
+          ))}
+        </m.div>
+      </LazyMotion>
+    </section>
   );
 }
