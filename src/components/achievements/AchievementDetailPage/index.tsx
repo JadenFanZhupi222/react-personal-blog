@@ -70,8 +70,10 @@ export function AchievementDetailPage({ appid }: { appid: number }) {
             priority
           />
         )}
-        {/* Vertical scrim — strong at bottom for legibility, top stays clear */}
-        <div className="from-background via-background/60 absolute inset-0 bg-gradient-to-t to-transparent" />
+        {/* Vertical scrim — bottom 30% is solid background so the title sits
+            on a clean backing AND the boundary to the page below is seamless
+            (no mid-opacity color band where image leaks through). */}
+        <div className="absolute inset-0 bg-gradient-to-t from-background from-30% to-transparent" />
         {/* Side scrim — left side darkened for title legibility */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent" />
 
