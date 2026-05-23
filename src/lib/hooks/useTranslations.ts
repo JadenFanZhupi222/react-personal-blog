@@ -1,7 +1,7 @@
-import { useTranslationsStore } from '@/store/translations';
+import { useTranslationsContext } from '@/contexts/TranslationsContext';
 
 export function useTranslations() {
-  const { locale, translations, setLocale } = useTranslationsStore();
+  const { locale, translations, setLocale } = useTranslationsContext();
   return {
     t: translations,
     locale,
