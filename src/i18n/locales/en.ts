@@ -143,6 +143,14 @@ const en: Translations = {
       games: 'games',
       played: 'played',
     },
+    sort: {
+      label: 'Sort',
+      playtime: 'Most played',
+      name: 'A → Z',
+    },
+    searchPlaceholder: 'Search games...',
+    noResults: 'No games match your search.',
+    mostPlayed: 'Most played',
     stats: {
       totalGames: {
         title: 'Total Games',

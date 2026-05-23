@@ -143,6 +143,14 @@ const zh: Translations = {
       games: '个游戏',
       played: '累计游玩',
     },
+    sort: {
+      label: '排序',
+      playtime: '游玩时长',
+      name: '字母顺序',
+    },
+    searchPlaceholder: '搜索游戏...',
+    noResults: '没有匹配的游戏。',
+    mostPlayed: '最常玩',
     stats: {
       totalGames: {
         title: '游戏总数',

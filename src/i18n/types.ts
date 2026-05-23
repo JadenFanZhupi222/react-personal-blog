@@ -136,6 +136,14 @@ export interface Translations {
       games: string;
       played: string;
     };
+    sort: {
+      label: string;
+      playtime: string;
+      name: string;
+    };
+    searchPlaceholder: string;
+    noResults: string;
+    mostPlayed: string;
     stats: {
       totalGames: {
         title: string;

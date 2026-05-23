@@ -66,7 +66,7 @@ export function AchievementDetailPage({ appid }: { appid: number }) {
             alt={game.name}
             fill
             sizes="100vw"
-            className="object-cover"
+            className="animate-ken-burns object-cover"
             priority
           />
         )}

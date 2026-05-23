@@ -35,7 +35,7 @@ export function AchievementCard({ achievement: ach }: { achievement: Achievement
   return (
     <div
       className={cn(
-        'group flex items-start gap-3 rounded-xl p-3.5 transition-all duration-300',
+        'group flex h-full items-start gap-3 rounded-xl p-3.5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg',
         achieved
           ? 'bg-card hover:bg-accent/40'
           : 'bg-muted/20 opacity-70 hover:opacity-100',
@@ -52,21 +52,23 @@ export function AchievementCard({ achievement: ach }: { achievement: Achievement
           className="rounded-lg object-cover"
         />
       </div>
-      <div className="min-w-0 flex-1">
+      {/* Vertical flex so the meta row can be pushed to the bottom — keeps
+          cards in the same row visually aligned even when descriptions vary. */}
+      <div className="flex min-w-0 flex-1 flex-col">
         <div
           className={cn(
-            'font-semibold leading-tight',
+            'leading-tight font-semibold',
             achieved ? 'text-foreground' : 'text-muted-foreground'
           )}
         >
           {ach.displayName}
         </div>
         {ach.description && (
-          <p className="text-muted-foreground mt-1 text-xs leading-relaxed">
+          <p className="text-muted-foreground mt-1 line-clamp-2 text-xs leading-relaxed">
             {ach.description}
           </p>
         )}
-        <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
+        <div className="mt-auto flex flex-wrap items-center gap-x-3 gap-y-1 pt-2 text-xs">
           {achieved && ach.unlocktime > 0 && (
             <span className="text-achievement-green inline-flex items-center gap-1 tabular-nums">
               <CalendarCheck className="h-3 w-3" />

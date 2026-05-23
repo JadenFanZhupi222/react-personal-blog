@@ -258,6 +258,30 @@
   display: none; /* Chrome/Safari/Webkit */
 }
 
+/* Subtle Ken Burns drift — slow scale + pan ping-pong loop. Used on hero
+   imagery to give static artwork a cinematic, "living" quality. */
+@keyframes ken-burns {
+  0% {
+    transform: scale(1) translate(0%, 0%);
+  }
+  50% {
+    transform: scale(1.08) translate(-1.5%, 1%);
+  }
+  100% {
+    transform: scale(1) translate(0%, 0%);
+  }
+}
+.animate-ken-burns {
+  animation: ken-burns 30s ease-in-out infinite;
+  transform-origin: center;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-ken-burns {
+    animation: none;
+  }
+}
+
 /* Theme-aware highlight.js styling. Tokens come from --hljs-* CSS variables
    defined per theme above, so syntax colors swap with no JS / no FOUC. */
 .hljs {
