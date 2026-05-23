@@ -7,7 +7,14 @@ import { makeQueryClient } from '@/lib/queryClient';
 import { steamQueryKey } from '@/lib/queries/steam';
 import { getSteamStats } from '@/lib/steam/server';
 
-async function PrefetchedDetail({ appid }: { appid: number }) {
+async function PrefetchedDetail({ params }: { params: Promise<{ appid: string }> }) {
+  // params access lives inside the Suspense boundary so the route's static
+  // shell (root layout + LocaleLayout + Navbar) can prerender without needing
+  // the appid value — required by Next.js 16 Cache Components.
+  const { appid: rawAppid } = await params;
+  const appid = Number(rawAppid);
+  if (!Number.isFinite(appid)) return notFound();
+
   await connection();
   const queryClient = makeQueryClient();
 
@@ -25,13 +32,10 @@ async function PrefetchedDetail({ appid }: { appid: number }) {
   );
 }
 
-export default async function Page({ params }: { params: Promise<{ appid: string }> }) {
-  const { appid: rawAppid } = await params;
-  const appid = Number(rawAppid);
-  if (!Number.isFinite(appid)) return notFound();
+export default function Page({ params }: { params: Promise<{ appid: string }> }) {
   return (
     <Suspense>
-      <PrefetchedDetail appid={appid} />
+      <PrefetchedDetail params={params} />
     </Suspense>
   );
 }
