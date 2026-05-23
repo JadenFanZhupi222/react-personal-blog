@@ -14,7 +14,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/next';
 import { getTranslations } from '@/lib/translations/server';
 import en from '@/i18n/locales/en';
-import type { Locale } from '@/i18n/types';
+import type { Locale, Translations } from '@/i18n/types';
 import { SITE_URL } from '@/lib/constants/siteUrl';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -57,46 +57,38 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-// The locale-aware subtree reads cookies(), which is runtime data. Next.js 16
-// requires this to live inside a <Suspense> boundary so the outer html/body
-// shell can still be prerendered. We render an English fallback so the first
-// paint is meaningful even before the cookie has been resolved.
+// Locale-dependent UI lives here. Rendered once inside Suspense, once as the
+// fallback. Provider-bearing pieces that emit scripts (next-themes) or hold
+// state (react-query) live OUTSIDE this boundary so they don't get duplicated.
+function LocalizedSection({
+  locale,
+  translations,
+  children,
+}: {
+  locale: Locale;
+  translations: Translations;
+  children: React.ReactNode;
+}) {
+  return (
+    <AppClientProvider translations={translations} locale={locale}>
+      <div className="relative min-h-screen">
+        <Navbar ssrTranslations={translations} />
+        <main>{children}</main>
+      </div>
+      <UpdateNotification />
+    </AppClientProvider>
+  );
+}
+
 async function LocalizedRoot({ children }: { children: React.ReactNode }) {
   const cookieStore = await cookies();
   const preferred = cookieStore.get('preferred_locale')?.value;
   const locale: Locale = preferred === 'zh' ? 'zh' : 'en';
   const translations = getTranslations(locale);
-
   return (
-    <AppClientProvider translations={translations} locale={locale}>
-      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <QueryProvider>
-          <div className="relative min-h-screen">
-            <Navbar ssrTranslations={translations} />
-            <main>{children}</main>
-            <SpeedInsights />
-            <Analytics />
-          </div>
-          <UpdateNotification />
-          <Toaster position="top-center" />
-        </QueryProvider>
-      </ThemeProvider>
-    </AppClientProvider>
-  );
-}
-
-function LocalizedRootFallback({ children }: { children: React.ReactNode }) {
-  return (
-    <AppClientProvider translations={en} locale="en">
-      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <QueryProvider>
-          <div className="relative min-h-screen">
-            <Navbar ssrTranslations={en} />
-            <main>{children}</main>
-          </div>
-        </QueryProvider>
-      </ThemeProvider>
-    </AppClientProvider>
+    <LocalizedSection locale={locale} translations={translations}>
+      {children}
+    </LocalizedSection>
   );
 }
 
@@ -104,9 +96,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <Suspense fallback={<LocalizedRootFallback>{children}</LocalizedRootFallback>}>
-          <LocalizedRoot>{children}</LocalizedRoot>
-        </Suspense>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <QueryProvider>
+            <Suspense
+              fallback={
+                <LocalizedSection locale="en" translations={en}>
+                  {children}
+                </LocalizedSection>
+              }
+            >
+              <LocalizedRoot>{children}</LocalizedRoot>
+            </Suspense>
+            <SpeedInsights />
+            <Analytics />
+            <Toaster position="top-center" />
+          </QueryProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
