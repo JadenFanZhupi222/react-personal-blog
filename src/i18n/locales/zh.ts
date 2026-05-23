@@ -153,16 +153,12 @@ const zh: Translations = {
         subtitle: '完成度 {percentage}',
       },
     },
-    gameCard: {
-      achievements: '成就 {achieved}/{total}',
-    },
     pagination: {
       page: '第 {current} 页，共 {total} 页',
       prev: '上一页',
       next: '下一页',
       goTo: '跳转到',
     },
-    clickToView: '点击游戏卡片可查看成就',
     achieved: '已达成',
     noAchievements: '暂无成就',
     ownedByPercent: '稀有度：{percent}%',

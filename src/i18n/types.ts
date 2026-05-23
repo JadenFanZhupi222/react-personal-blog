@@ -146,16 +146,12 @@ export interface Translations {
         subtitle: string;
       };
     };
-    gameCard: {
-      achievements: string;
-    };
     pagination: {
       page: string;
       prev: string;
       next: string;
       goTo: string;
     };
-    clickToView: string;
     achieved: string;
     noAchievements: string;
     ownedByPercent: string;

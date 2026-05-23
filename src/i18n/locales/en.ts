@@ -153,16 +153,12 @@ const en: Translations = {
         subtitle: '{percentage} completed',
       },
     },
-    gameCard: {
-      achievements: '{achieved}/{total} achievements',
-    },
     pagination: {
       page: 'Page {current} of {total}',
       prev: 'Prev',
       next: 'Next',
       goTo: 'Go to',
     },
-    clickToView: 'Click on a game card to view achievements',
     achieved: 'Achieved',
     noAchievements: 'No achievements yet.',
     ownedByPercent: 'Rarity: {percent}%',

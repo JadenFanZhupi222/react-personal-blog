@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { connection } from 'next/server';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
-import AchievementsPage from '@/components/achievements';
+import { AchievementsOverview } from '@/components/achievements/AchievementsOverview';
 import { makeQueryClient } from '@/lib/queryClient';
 import { steamQueryKey } from '@/lib/queries/steam';
 import { getSteamStats } from '@/lib/steam/server';
@@ -18,7 +18,7 @@ async function PrefetchedAchievements() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <AchievementsPage />
+      <AchievementsOverview />
     </HydrationBoundary>
   );
 }
