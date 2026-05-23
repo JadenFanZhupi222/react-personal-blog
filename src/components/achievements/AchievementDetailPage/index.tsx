@@ -75,11 +75,14 @@ export function AchievementDetailPage({ appid }: { appid: number }) {
         {/* Side scrim — left side darkened for title legibility */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent" />
 
-        {/* Back link, top-left, floating chip */}
+        {/* Back link, top-left, floating chip. Uses fixed dark-glass styling
+            (not theme-aware) because it sits over the hero image in both
+            themes — matches the page-title's text-white and GameGridCard's
+            featured badge. */}
         <div className="absolute top-6 left-4 sm:left-6 lg:left-8">
           <Link
             href={`/${locale}/achievements`}
-            className="bg-background/40 text-foreground hover:bg-background/60 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium backdrop-blur-md transition-colors"
+            className="bg-black/50 text-white hover:bg-black/70 hover:-translate-x-0.5 active:translate-x-0 active:duration-75 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium shadow-lg backdrop-blur-md transition-all duration-200"
           >
             <ArrowLeft className="h-4 w-4" />
             {t.achievements.title}
