@@ -64,7 +64,6 @@ export function AchievementsPagePC() {
   const totalPages = Math.ceil(filteredGames.length / ITEMS_PER_PAGE);
   const currentItems = paginateGames(filteredGames, currentPage, ITEMS_PER_PAGE);
 
-  const hoveredGame = currentItems.find((g) => g.appid === hoveredAppId);
   const selectedGame = selectedAppId ? currentItems.find((g) => g.appid === selectedAppId) : null;
 
   const handleGameClick = (appid: number) => {
@@ -74,18 +73,19 @@ export function AchievementsPagePC() {
 
   return (
     <div className="relative container mx-auto py-8">
-      {/* 背景层 */}
+      {/* 背景层：只在选中游戏时显示，用 header.jpg（~50KB）而不是 library_hero.jpg
+          （~1MB+），因为反正会被高斯模糊糊成色块，分辨率高也看不出来。 */}
       <AnimatePresence mode="wait">
-        {hoveredGame && (
+        {selectedGame && (
           <motion.div
-            key={hoveredGame.appid}
+            key={selectedGame.appid}
             className="pointer-events-none fixed inset-0 z-0"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5, ease: 'easeInOut' }}
             style={{
-              backgroundImage: `url(https://cdn.cloudflare.steamstatic.com/steam/apps/${hoveredGame.appid}/library_hero.jpg)`,
+              backgroundImage: `url(https://cdn.cloudflare.steamstatic.com/steam/apps/${selectedGame.appid}/header.jpg)`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               filter: 'blur(8px) brightness(0.6)',
