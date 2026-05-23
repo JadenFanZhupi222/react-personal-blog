@@ -157,6 +157,7 @@ export interface Translations {
       goTo: string;
     };
     achieved: string;
+    locked: string;
     noAchievements: string;
     ownedByPercent: string;
   };

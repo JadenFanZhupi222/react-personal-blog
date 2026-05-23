@@ -164,6 +164,7 @@ const en: Translations = {
       goTo: 'Go to',
     },
     achieved: 'Achieved',
+    locked: 'Locked',
     noAchievements: 'No achievements yet.',
     ownedByPercent: 'Rarity: {percent}%',
   },

@@ -164,6 +164,7 @@ const zh: Translations = {
       goTo: '跳转到',
     },
     achieved: '已达成',
+    locked: '未解锁',
     noAchievements: '暂无成就',
     ownedByPercent: '稀有度：{percent}%',
   },
