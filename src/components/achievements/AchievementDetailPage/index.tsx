@@ -1,15 +1,19 @@
 'use client';
 
+import { useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
-import { LazyMotion, domAnimation, m } from 'framer-motion';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
 import { useTranslations } from '@/lib/hooks/useTranslations';
 import { AchievementCard, type Achievement } from '@/components/achievements/AchievementCard';
 import { AchievementsCardSkeleton } from '@/components/skeleton/AchievementsCardSkeleton';
 import { ErrorFunc } from '@/components/features/Error';
-import { containerVariants, itemVariants } from '@/lib/animations';
+import { splitChars } from '@/components/welcome/lib/splitChars';
+import { useReducedMotion } from '@/components/welcome/lib/useReducedMotion';
 import {
   steamQueryKey,
   fetchSteamStats,
@@ -18,8 +22,13 @@ import {
 } from '@/lib/queries/steam';
 import { formatPlaytime } from '@/lib/utils/format';
 
+gsap.registerPlugin(ScrollTrigger, useGSAP);
+
 export function AchievementDetailPage({ appid }: { appid: number }) {
   const { t, locale } = useTranslations();
+  const heroRef = useRef<HTMLDivElement>(null);
+  const parallaxRef = useRef<HTMLDivElement>(null);
+  const reduced = useReducedMotion();
 
   const { data: steamData, error: steamError } = useQuery({
     queryKey: steamQueryKey,
@@ -37,6 +46,41 @@ export function AchievementDetailPage({ appid }: { appid: number }) {
     queryKey: steamAchievementsQueryKey(appid, locale),
     queryFn: () => fetchSteamAchievements(appid, locale),
   });
+
+  // Hero: parallax on the image wrapper + split-char reveal on the title.
+  // Game-name dep ensures the title animation fires once data lands.
+  useGSAP(
+    () => {
+      if (reduced) return;
+      const hero = heroRef.current;
+      const parallax = parallaxRef.current;
+      if (!hero || !parallax) return;
+
+      gsap.to(parallax, {
+        yPercent: -15,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: hero,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+        },
+      });
+
+      const chars = hero.querySelectorAll('[data-anim="hero-title"] [data-char]');
+      if (chars.length > 0) {
+        gsap.from(chars, {
+          yPercent: 100,
+          opacity: 0,
+          stagger: 0.025,
+          duration: 0.7,
+          ease: 'expo.out',
+          delay: 0.1,
+        });
+      }
+    },
+    { scope: heroRef, dependencies: [reduced, steamData?.ownedGames?.length] },
+  );
 
   if (steamError) return <ErrorFunc />;
 
@@ -59,17 +103,25 @@ export function AchievementDetailPage({ appid }: { appid: number }) {
       {/* Full-bleed hero — breaks out of the standard max-w-7xl page container.
           Library_hero artwork fills the viewport width; a downward gradient
           fades into the page background so the transition is seamless. */}
-      <div className="relative aspect-[1920/620] min-h-[240px] w-full overflow-hidden">
-        {game && (
-          <Image
-            src={`https://cdn.cloudflare.steamstatic.com/steam/apps/${appid}/library_hero.jpg`}
-            alt={game.name}
-            fill
-            sizes="100vw"
-            className="animate-ken-burns object-cover"
-            priority
-          />
-        )}
+      <div
+        ref={heroRef}
+        className="relative aspect-[1920/620] min-h-[240px] w-full overflow-hidden"
+      >
+        {/* Image wrapped in a parallax-target div so GSAP can transform
+            the wrapper without fighting the Ken Burns CSS animation on
+            the image itself. */}
+        <div ref={parallaxRef} className="absolute inset-0">
+          {game && (
+            <Image
+              src={`https://cdn.cloudflare.steamstatic.com/steam/apps/${appid}/library_hero.jpg`}
+              alt={game.name}
+              fill
+              sizes="100vw"
+              className="animate-ken-burns object-cover"
+              priority
+            />
+          )}
+        </div>
         {/* Vertical scrim — bottom 30% is solid background so the title sits
             on a clean backing AND the boundary to the page below is seamless
             (no mid-opacity color band where image leaks through). */}
@@ -96,8 +148,11 @@ export function AchievementDetailPage({ appid }: { appid: number }) {
           <div className="mx-auto max-w-7xl px-4 pb-8 sm:px-6 sm:pb-10 lg:px-8 lg:pb-14">
             {game && (
               <>
-                <h1 className="text-3xl leading-tight font-bold tracking-tight text-white drop-shadow-lg sm:text-5xl lg:text-6xl">
-                  {game.name}
+                <h1
+                  data-anim="hero-title"
+                  className="overflow-hidden text-3xl leading-tight font-bold tracking-tight text-white drop-shadow-lg sm:text-5xl lg:text-6xl"
+                >
+                  {splitChars(game.name)}
                 </h1>
                 <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-base text-white/85 drop-shadow-md sm:text-lg">
                   <span className="tabular-nums">{formatPlaytime(game.playtime)}</span>
@@ -162,26 +217,48 @@ function AchievementSection({
   items: Achievement[];
   idPrefix: string;
 }) {
+  const sectionRef = useRef<HTMLElement>(null);
+  const reduced = useReducedMotion();
+
+  useGSAP(
+    () => {
+      if (reduced) return;
+      const section = sectionRef.current;
+      if (!section) return;
+
+      const cards = section.querySelectorAll<HTMLElement>('[data-ach-card]');
+      gsap.set(cards, { opacity: 0, y: 30 });
+
+      ScrollTrigger.batch(cards, {
+        start: 'top 90%',
+        onEnter: (els) => {
+          gsap.to(els, {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            stagger: 0.05,
+            ease: 'power2.out',
+            overwrite: true,
+          });
+        },
+      });
+    },
+    { scope: sectionRef, dependencies: [reduced, items.length] },
+  );
+
   return (
-    <section>
+    <section ref={sectionRef}>
       <div className="mb-4 flex items-baseline gap-3">
         <h2 className="text-foreground text-xl font-bold">{title}</h2>
         <span className="text-muted-foreground text-sm tabular-nums">{count}</span>
       </div>
-      <LazyMotion features={domAnimation}>
-        <m.div
-          className="grid grid-cols-1 gap-3 md:grid-cols-2"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          {items.map((ach, idx) => (
-            <m.div key={ach.name ?? `${idPrefix}-${idx}`} variants={itemVariants}>
-              <AchievementCard achievement={ach} />
-            </m.div>
-          ))}
-        </m.div>
-      </LazyMotion>
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+        {items.map((ach, idx) => (
+          <div key={ach.name ?? `${idPrefix}-${idx}`} data-ach-card>
+            <AchievementCard achievement={ach} />
+          </div>
+        ))}
+      </div>
     </section>
   );
 }
