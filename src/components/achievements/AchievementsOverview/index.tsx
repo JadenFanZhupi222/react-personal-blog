@@ -1,12 +1,12 @@
 'use client';
 
-import { useMemo, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { LazyMotion, domAnimation, m } from 'framer-motion';
+import { useMemo, useRef, useState } from 'react';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { Search } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
 import { GameGridCard } from '@/components/achievements/GameGridCard';
-import { ErrorFunc } from '@/components/features/Error';
-import { AchievementsPageSkeleton } from '@/components/skeleton/AchievementsPageSkeleton';
 import { Pagination } from '@/components/features/Pagination';
 import { useTranslations } from '@/lib/hooks/useTranslations';
 import { steamQueryKey, fetchSteamStats } from '@/lib/queries/steam';
@@ -15,9 +15,11 @@ import {
   ITEMS_PER_PAGE,
 } from '@/lib/achievements/parser';
 import { formatPlaytime } from '@/lib/utils/format';
-import { containerVariants, itemVariants } from '@/lib/animations';
+import { useReducedMotion } from '@/components/welcome/lib/useReducedMotion';
 import { cn } from '@/lib/utils';
 import type { ParsedGame } from '@/lib/steam/parser';
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 type SortKey = 'playtime' | 'name';
 
@@ -32,23 +34,25 @@ export function AchievementsOverview() {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortKey, setSortKey] = useState<SortKey>('playtime');
   const [searchTerm, setSearchTerm] = useState('');
+  const gridRef = useRef<HTMLDivElement>(null);
+  const reduced = useReducedMotion();
 
-  const { data, isPending, error, refetch } = useQuery({
+  // Steam stats is prefetched in page.tsx and the page is wrapped in a
+  // Suspense boundary (with AchievementsPageSkeleton as fallback) and an
+  // error.tsx boundary. useSuspenseQuery guarantees data here.
+  const { data } = useSuspenseQuery({
     queryKey: steamQueryKey,
     queryFn: fetchSteamStats,
   });
 
   const filteredGames = useMemo(() => {
-    const all = filterGamesByPlaytime(data?.ownedGames ?? []);
+    const all = filterGamesByPlaytime(data.ownedGames);
     const trimmed = searchTerm.trim().toLowerCase();
     const filtered = trimmed
       ? all.filter((g) => g.name.toLowerCase().includes(trimmed))
       : all;
     return sortGames(filtered, sortKey);
-  }, [data?.ownedGames, sortKey, searchTerm]);
-
-  if (isPending) return <AchievementsPageSkeleton />;
-  if (error) return <ErrorFunc onRetry={() => refetch()} />;
+  }, [data.ownedGames, sortKey, searchTerm]);
 
   const totalGames = filteredGames.length;
   const totalPlaytime = filteredGames.reduce((sum, g) => sum + g.playtime, 0);
@@ -62,6 +66,53 @@ export function AchievementsOverview() {
   const showFeatured = safePage === 1 && sortKey === 'playtime' && !searchTerm.trim();
   const featuredGame = showFeatured ? currentItems[0] : null;
   const restItems = showFeatured ? currentItems.slice(1) : currentItems;
+
+  // Featured card gets a hero-style mount reveal; regular cards batch in
+  // as they scroll into view. Re-runs whenever the visible set changes.
+  useGSAP(
+    () => {
+      if (reduced) return;
+      const grid = gridRef.current;
+      if (!grid) return;
+
+      const featured = grid.querySelectorAll<HTMLElement>('[data-card="featured"]');
+      const regular = grid.querySelectorAll<HTMLElement>('[data-card="regular"]');
+
+      // Use gsap.from (not set+to) so cards default to visible. If onEnter
+      // misses for cards already in the viewport at creation, they fall back
+      // to "visible without animation" instead of staying invisible forever.
+      if (featured.length > 0) {
+        gsap.from(featured, {
+          opacity: 0,
+          y: 30,
+          duration: 0.9,
+          ease: 'power3.out',
+          delay: 0.1,
+        });
+      }
+
+      ScrollTrigger.batch(regular, {
+        start: 'top 90%',
+        onEnter: (els) =>
+          gsap.from(els, {
+            opacity: 0,
+            y: 30,
+            duration: 0.6,
+            stagger: 0.07,
+            ease: 'power2.out',
+            overwrite: true,
+          }),
+      });
+    },
+    {
+      scope: gridRef,
+      dependencies: [reduced, safePage, sortKey, searchTerm, currentItems.length],
+      revertOnUpdate: true,
+    },
+  );
+
+  // Loading + error: handled by the Suspense + error.tsx boundary in
+  // page.tsx — no inline isPending/error branches needed.
 
   const handleSortChange = (next: SortKey) => {
     setSortKey(next);
@@ -123,34 +174,26 @@ export function AchievementsOverview() {
       {currentItems.length === 0 ? (
         <p className="text-muted-foreground mt-12">{t.achievements.noResults}</p>
       ) : (
-        <LazyMotion features={domAnimation}>
-          <m.div
-            key={`${safePage}-${sortKey}-${searchTerm}`}
-            className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            {featuredGame && (
-              <m.div
-                variants={itemVariants}
-                className="lg:col-span-2 lg:row-span-2"
-              >
-                <GameGridCard
-                  game={featuredGame}
-                  formatPlaytime={formatPlaytime}
-                  featured
-                  featuredLabel={t.achievements.mostPlayed}
-                />
-              </m.div>
-            )}
-            {restItems.map((game) => (
-              <m.div key={game.appid} variants={itemVariants}>
-                <GameGridCard game={game} formatPlaytime={formatPlaytime} />
-              </m.div>
-            ))}
-          </m.div>
-        </LazyMotion>
+        <div
+          ref={gridRef}
+          className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
+        >
+          {featuredGame && (
+            <div data-card="featured" className="lg:col-span-2 lg:row-span-2">
+              <GameGridCard
+                game={featuredGame}
+                formatPlaytime={formatPlaytime}
+                featured
+                featuredLabel={t.achievements.mostPlayed}
+              />
+            </div>
+          )}
+          {restItems.map((game) => (
+            <div key={game.appid} data-card="regular">
+              <GameGridCard game={game} formatPlaytime={formatPlaytime} />
+            </div>
+          ))}
+        </div>
       )}
 
       {totalPages > 1 && (
