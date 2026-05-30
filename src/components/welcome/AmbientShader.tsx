@@ -137,6 +137,6 @@ export default function AmbientShader() {
 
   if (reduced) return null;
   return (
-    <div ref={containerRef} aria-hidden className="pointer-events-none fixed inset-0 -z-10" />
+    <div ref={containerRef} aria-hidden className="pointer-events-none fixed inset-0 z-0" />
   );
 }

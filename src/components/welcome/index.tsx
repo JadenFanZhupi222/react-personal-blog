@@ -12,10 +12,10 @@ const AmbientShader = dynamic(() => import('./AmbientShader'), { ssr: false });
 export function Welcome() {
   return (
     <>
-      <div aria-hidden className="fixed inset-0 -z-20 bg-[#0a0a0f]" />
+      <div aria-hidden className="fixed inset-0 z-0 bg-[#0a0a0f]" />
       <AmbientShader />
       <ControlPanel />
-      <main className="relative text-white">
+      <main className="relative z-10 text-white">
         <HeroScene />
         <TechScene />
         <ProjectsScene />
