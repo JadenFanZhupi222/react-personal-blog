@@ -1,14 +1,12 @@
 'use client';
 
 import { useMemo, useRef, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { Search } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { GameGridCard } from '@/components/achievements/GameGridCard';
-import { ErrorFunc } from '@/components/features/Error';
-import { AchievementsPageSkeleton } from '@/components/skeleton/AchievementsPageSkeleton';
 import { Pagination } from '@/components/features/Pagination';
 import { useTranslations } from '@/lib/hooks/useTranslations';
 import { steamQueryKey, fetchSteamStats } from '@/lib/queries/steam';
@@ -39,19 +37,22 @@ export function AchievementsOverview() {
   const gridRef = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
 
-  const { data, isPending, error, refetch } = useQuery({
+  // Steam stats is prefetched in page.tsx and the page is wrapped in a
+  // Suspense boundary (with AchievementsPageSkeleton as fallback) and an
+  // error.tsx boundary. useSuspenseQuery guarantees data here.
+  const { data } = useSuspenseQuery({
     queryKey: steamQueryKey,
     queryFn: fetchSteamStats,
   });
 
   const filteredGames = useMemo(() => {
-    const all = filterGamesByPlaytime(data?.ownedGames ?? []);
+    const all = filterGamesByPlaytime(data.ownedGames);
     const trimmed = searchTerm.trim().toLowerCase();
     const filtered = trimmed
       ? all.filter((g) => g.name.toLowerCase().includes(trimmed))
       : all;
     return sortGames(filtered, sortKey);
-  }, [data?.ownedGames, sortKey, searchTerm]);
+  }, [data.ownedGames, sortKey, searchTerm]);
 
   const totalGames = filteredGames.length;
   const totalPlaytime = filteredGames.reduce((sum, g) => sum + g.playtime, 0);
@@ -110,8 +111,8 @@ export function AchievementsOverview() {
     },
   );
 
-  if (isPending) return <AchievementsPageSkeleton />;
-  if (error) return <ErrorFunc onRetry={() => refetch()} />;
+  // Loading + error: handled by the Suspense + error.tsx boundary in
+  // page.tsx — no inline isPending/error branches needed.
 
   const handleSortChange = (next: SortKey) => {
     setSortKey(next);
@@ -175,7 +176,7 @@ export function AchievementsOverview() {
       ) : (
         <div
           ref={gridRef}
-          className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+          className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
         >
           {featuredGame && (
             <div data-card="featured" className="lg:col-span-2 lg:row-span-2">

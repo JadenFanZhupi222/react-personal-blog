@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
@@ -30,12 +30,15 @@ export function AchievementDetailPage({ appid }: { appid: number }) {
   const parallaxRef = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
 
-  const { data: steamData, error: steamError } = useQuery({
+  // Steam stats is prefetched in page.tsx and the page is wrapped in a
+  // Suspense boundary, so useSuspenseQuery guarantees data here — no
+  // boolean loading checks needed.
+  const { data: steamData } = useSuspenseQuery({
     queryKey: steamQueryKey,
     queryFn: fetchSteamStats,
   });
 
-  const game = steamData?.ownedGames.find((g) => g.appid === appid);
+  const game = steamData.ownedGames.find((g) => g.appid === appid);
 
   const {
     data: achievements = [],
@@ -79,10 +82,13 @@ export function AchievementDetailPage({ appid }: { appid: number }) {
         });
       }
     },
-    { scope: heroRef, dependencies: [reduced, steamData?.ownedGames?.length] },
+    { scope: heroRef, dependencies: [reduced, steamData.ownedGames.length] },
   );
 
-  if (steamError) return <ErrorFunc />;
+  // Steam errors surface to the route's error.tsx via useSuspenseQuery
+  // (it throws on error and gets caught by the nearest error boundary).
+  // Achievements errors are still handled inline below since that query
+  // stays as useQuery — it's per-locale and not prefetched on the server.
 
   const achievedAchs = achievements
     .filter((a) => a.achieved)
