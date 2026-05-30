@@ -16,46 +16,52 @@ precision highp float;
 uniform vec2 uResolution;
 uniform float uTime;
 uniform vec3 uColorBase;
-uniform vec3 uColorGlow;
+uniform vec3 uColorOrbA;
+uniform vec3 uColorOrbB;
 
-// 2D value noise — cheap, smooth enough for slow drift
+// Single hash for the film grain — kills color banding, adds tactile feel
 float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
-float noise(vec2 p) {
-  vec2 i = floor(p), f = fract(p);
-  float a = hash(i);
-  float b = hash(i + vec2(1.0, 0.0));
-  float c = hash(i + vec2(0.0, 1.0));
-  float d = hash(i + vec2(1.0, 1.0));
-  vec2 u = f * f * (3.0 - 2.0 * f);
-  return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
-}
 
-// FBM — layered noise for a more painterly, less "stamped" feel
-float fbm(vec2 p) {
-  float v = 0.0;
-  float amp = 0.5;
-  for (int i = 0; i < 3; i++) {
-    v += amp * noise(p);
-    p *= 2.0;
-    amp *= 0.5;
-  }
-  return v;
+// Soft circular glow with smooth falloff
+float orb(vec2 uv, vec2 center, float radius) {
+  float d = length(uv - center);
+  return smoothstep(radius, 0.0, d);
 }
 
 void main() {
   vec2 uv = gl_FragCoord.xy / uResolution.xy;
-  float t = uTime * 0.025;
+  float aspect = uResolution.x / uResolution.y;
+  // Aspect-correct UVs so orbs are circular, not stretched
+  vec2 p = vec2(uv.x * aspect, uv.y);
 
-  // One single big slow drifting blob — no second hue competing
-  float glow = fbm(uv * 1.2 + vec2(t * 0.5, -t * 0.35));
+  float t = uTime * 0.08;
 
-  // Strong vignette — most of canvas stays near-black, glow lives in the center
-  vec2 centered = uv - 0.5;
-  float vignette = 1.0 - smoothstep(0.25, 0.85, length(centered));
+  // Orb A — primary indigo glow, drifts in the upper-left zone.
+  // Position is hand-placed (golden-ish ratio), motion is a slow oval.
+  vec2 centerA = vec2(
+    0.32 * aspect + sin(t * 0.7) * 0.10 * aspect,
+    0.38 + cos(t * 0.9) * 0.08
+  );
+  float orbA = orb(p, centerA, 0.75);
 
-  // Single low-amplitude indigo glow on near-black base — restrained
+  // Orb B — smaller, cool teal counterpoint in lower-right zone.
+  // Drifts in opposing rhythm so the composition never centers.
+  vec2 centerB = vec2(
+    0.72 * aspect + sin(t * 0.6 + 1.7) * 0.09 * aspect,
+    0.72 + cos(t * 0.8 + 1.1) * 0.08
+  );
+  float orbB = orb(p, centerB, 0.55);
+
+  // Compose: deep base + two designed glow orbs (intentional placement,
+  // not random noise — this is what separates "designed" from "AI bg").
   vec3 col = uColorBase;
-  col = mix(col, uColorGlow, smoothstep(0.35, 0.75, glow) * 0.5 * vignette);
+  col = mix(col, uColorOrbA, orbA * 0.55);
+  col = mix(col, uColorOrbB, orbB * 0.35);
+
+  // 2% film grain — prevents banding on the long color gradients and
+  // adds a tactile, photographed feel (like Linear/Vercel hero gradients).
+  float grain = (hash(gl_FragCoord.xy + uTime) - 0.5) * 0.02;
+  col += grain;
 
   gl_FragColor = vec4(col, 1.0);
 }
@@ -87,10 +93,12 @@ export default function AmbientShader() {
     container.appendChild(gl.canvas);
     Object.assign(gl.canvas.style, { width: '100%', height: '100%', display: 'block' });
 
-    // Theme-independent restrained palette — near-black base with a single
-    // desaturated indigo glow. No second hue (plum was creating muddy purple).
+    // Theme-independent designed palette: two complementary glow orbs
+    // on a near-black base. Indigo + teal is a Linear/Vercel-style cool
+    // duo that never goes muddy when they overlap.
     const base = '#0a0a0f'; // page bg, matches orchestrator
-    const glow = '#3b3a78'; // desaturated indigo — refined, not "tech bro"
+    const orbA = '#4f46e5'; // brand indigo — primary glow
+    const orbB = '#0d9488'; // teal-600 — cool counterpoint, never warm
 
     const program = new Program(gl, {
       vertex: VERTEX,
@@ -99,7 +107,8 @@ export default function AmbientShader() {
         uResolution: { value: [container.clientWidth, container.clientHeight] },
         uTime: { value: 0 },
         uColorBase: { value: hexToRgb(base) },
-        uColorGlow: { value: hexToRgb(glow) },
+        uColorOrbA: { value: hexToRgb(orbA) },
+        uColorOrbB: { value: hexToRgb(orbB) },
       },
     });
 
