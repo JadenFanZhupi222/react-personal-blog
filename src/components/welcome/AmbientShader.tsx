@@ -34,21 +34,23 @@ void main() {
   // Aspect-correct UVs so orbs are circular, not stretched
   vec2 p = vec2(uv.x * aspect, uv.y);
 
-  float t = uTime * 0.08;
+  // Drift periods of ~15-22 seconds — visibly moving within a few seconds
+  // of looking, but ambient enough not to be distracting.
+  float t = uTime * 0.45;
 
   // Orb A — primary indigo glow, drifts in the upper-left zone.
-  // Position is hand-placed (golden-ish ratio), motion is a slow oval.
+  // Hand-placed origin (~golden ratio), slow oval orbit.
   vec2 centerA = vec2(
-    0.32 * aspect + sin(t * 0.7) * 0.10 * aspect,
-    0.38 + cos(t * 0.9) * 0.08
+    0.32 * aspect + sin(t * 0.7) * 0.12 * aspect,
+    0.38 + cos(t * 0.9) * 0.10
   );
   float orbA = orb(p, centerA, 0.75);
 
-  // Orb B — smaller, cool teal counterpoint in lower-right zone.
-  // Drifts in opposing rhythm so the composition never centers.
+  // Orb B — smaller cool teal counterpoint in lower-right.
+  // Different inner frequencies + phase so the two never sync.
   vec2 centerB = vec2(
-    0.72 * aspect + sin(t * 0.6 + 1.7) * 0.09 * aspect,
-    0.72 + cos(t * 0.8 + 1.1) * 0.08
+    0.72 * aspect + sin(t * 0.6 + 1.7) * 0.11 * aspect,
+    0.72 + cos(t * 0.8 + 1.1) * 0.09
   );
   float orbB = orb(p, centerB, 0.55);
 
