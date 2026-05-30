@@ -5,9 +5,6 @@ import Link from 'next/link';
 import { useTranslations } from '@/lib/hooks/useTranslations';
 import { ParallaxSection } from '@/components/ui/ParallaxSection';
 import { ControlPanel } from '@/components/features/ControlPanel';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-gsap.registerPlugin(ScrollTrigger);
 
 export function Welcome() {
   const { t, locale } = useTranslations();
