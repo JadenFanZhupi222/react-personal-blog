@@ -17,7 +17,6 @@ uniform vec2 uResolution;
 uniform float uTime;
 uniform vec3 uColorBase;
 uniform vec3 uColorGlow;
-uniform vec3 uColorAccent;
 
 // 2D value noise — cheap, smooth enough for slow drift
 float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
@@ -31,24 +30,32 @@ float noise(vec2 p) {
   return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
 }
 
+// FBM — layered noise for a more painterly, less "stamped" feel
+float fbm(vec2 p) {
+  float v = 0.0;
+  float amp = 0.5;
+  for (int i = 0; i < 3; i++) {
+    v += amp * noise(p);
+    p *= 2.0;
+    amp *= 0.5;
+  }
+  return v;
+}
+
 void main() {
   vec2 uv = gl_FragCoord.xy / uResolution.xy;
-  float t = uTime * 0.03;
+  float t = uTime * 0.025;
 
-  // Layered slow blobs of glow over near-black base
-  float glow = noise(uv * 1.6 + vec2(t * 0.6, -t * 0.4));
-  float accent = noise(uv * 1.1 - vec2(t * 0.3, t * 0.5));
+  // One single big slow drifting blob — no second hue competing
+  float glow = fbm(uv * 1.2 + vec2(t * 0.5, -t * 0.35));
 
-  // Soft vignette — keep most of the canvas usable, only fade the very edges
+  // Strong vignette — most of canvas stays near-black, glow lives in the center
   vec2 centered = uv - 0.5;
-  float vignette = 1.0 - smoothstep(0.55, 1.15, length(centered));
+  float vignette = 1.0 - smoothstep(0.25, 0.85, length(centered));
 
+  // Single low-amplitude indigo glow on near-black base — restrained
   vec3 col = uColorBase;
-  // Boosted glow: wider smoothstep range, much higher mix amount
-  col = mix(col, uColorGlow, smoothstep(0.2, 0.8, glow) * 0.85 * vignette);
-  col = mix(col, uColorAccent, smoothstep(0.35, 0.9, accent) * 0.4 * vignette);
-  // Constant low-level brand tint so it's never pure void
-  col += uColorGlow * 0.05;
+  col = mix(col, uColorGlow, smoothstep(0.35, 0.75, glow) * 0.5 * vignette);
 
   gl_FragColor = vec4(col, 1.0);
 }
@@ -80,11 +87,10 @@ export default function AmbientShader() {
     container.appendChild(gl.canvas);
     Object.assign(gl.canvas.style, { width: '100%', height: '100%', display: 'block' });
 
-    // Theme-independent refined palette — near-black base with indigo glow
-    // and a whisper of plum. Brand-anchored but restrained.
+    // Theme-independent restrained palette — near-black base with a single
+    // desaturated indigo glow. No second hue (plum was creating muddy purple).
     const base = '#0a0a0f'; // page bg, matches orchestrator
-    const glow = '#4f46e5'; // brand indigo, slightly deeper
-    const accent = '#7c1d6f'; // muted plum, used sparingly
+    const glow = '#3b3a78'; // desaturated indigo — refined, not "tech bro"
 
     const program = new Program(gl, {
       vertex: VERTEX,
@@ -94,7 +100,6 @@ export default function AmbientShader() {
         uTime: { value: 0 },
         uColorBase: { value: hexToRgb(base) },
         uColorGlow: { value: hexToRgb(glow) },
-        uColorAccent: { value: hexToRgb(accent) },
       },
     });
 
