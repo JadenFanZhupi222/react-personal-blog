@@ -33,19 +33,22 @@ float noise(vec2 p) {
 
 void main() {
   vec2 uv = gl_FragCoord.xy / uResolution.xy;
-  float t = uTime * 0.025;
+  float t = uTime * 0.03;
 
-  // Big slow blobs of glow over near-black base
-  float glow = noise(uv * 1.1 + vec2(t * 0.6, -t * 0.4));
-  float accent = noise(uv * 0.8 - vec2(t * 0.3, t * 0.5));
+  // Layered slow blobs of glow over near-black base
+  float glow = noise(uv * 1.6 + vec2(t * 0.6, -t * 0.4));
+  float accent = noise(uv * 1.1 - vec2(t * 0.3, t * 0.5));
 
-  // Radial vignette so edges sink darker — focuses the eye
+  // Soft vignette — keep most of the canvas usable, only fade the very edges
   vec2 centered = uv - 0.5;
-  float vignette = 1.0 - smoothstep(0.3, 0.95, length(centered));
+  float vignette = 1.0 - smoothstep(0.55, 1.15, length(centered));
 
   vec3 col = uColorBase;
-  col = mix(col, uColorGlow, smoothstep(0.45, 0.72, glow) * 0.55 * vignette);
-  col = mix(col, uColorAccent, smoothstep(0.55, 0.85, accent) * 0.18 * vignette);
+  // Boosted glow: wider smoothstep range, much higher mix amount
+  col = mix(col, uColorGlow, smoothstep(0.2, 0.8, glow) * 0.85 * vignette);
+  col = mix(col, uColorAccent, smoothstep(0.35, 0.9, accent) * 0.4 * vignette);
+  // Constant low-level brand tint so it's never pure void
+  col += uColorGlow * 0.05;
 
   gl_FragColor = vec4(col, 1.0);
 }
