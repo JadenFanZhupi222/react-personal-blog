@@ -9,13 +9,9 @@ import { useReducedMotion } from '../lib/useReducedMotion';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-// Panel gradients — deterministic per index, brand-aligned
-const GRADIENTS = [
-  'linear-gradient(135deg, #1e1b4b 0%, #4338ca 60%, #ec4899 100%)',
-  'linear-gradient(135deg, #042f2e 0%, #0d9488 60%, #fde047 100%)',
-  'linear-gradient(135deg, #450a0a 0%, #b91c1c 60%, #fb923c 100%)',
-  'linear-gradient(135deg, #1a2a6c 0%, #b21f1f 60%, #fdbb2d 100%)',
-];
+// One accent hue per panel — used only as a thin underline + corner tag.
+// Keeps the scene unified (shader carries the bg) but gives each project a tiny signature.
+const ACCENTS = ['#818cf8', '#f472b6', '#34d399', '#fbbf24'];
 
 export function ProjectsScene() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -54,26 +50,39 @@ export function ProjectsScene() {
         className="flex h-full"
         style={{ width: `${projects.length * 100}%` }}
       >
-        {projects.map((project, i) => (
-          <div
-            key={project.title}
-            className="relative flex h-full shrink-0 items-center justify-center px-8"
-            style={{
-              width: `${100 / projects.length}%`,
-              background: GRADIENTS[i % GRADIENTS.length],
-            }}
-          >
-            <div className="max-w-4xl text-center">
-              <h3
-                className="text-7xl leading-[1.05] font-black tracking-tight text-white sm:text-8xl md:text-9xl"
-                style={{ mixBlendMode: 'difference' }}
+        {projects.map((project, i) => {
+          const accent = ACCENTS[i % ACCENTS.length];
+          const num = String(i + 1).padStart(2, '0');
+          return (
+            <div
+              key={project.title}
+              className="relative flex h-full shrink-0 flex-col items-start justify-center px-12 sm:px-24"
+              style={{ width: `${100 / projects.length}%` }}
+            >
+              {/* index tag in the corner */}
+              <span
+                className="absolute top-12 left-12 font-mono text-sm tracking-widest text-white/40 sm:left-24"
+                style={{ color: accent, opacity: 0.7 }}
               >
-                {project.title}
-              </h3>
-              <p className="mt-6 text-xl text-white/90 sm:text-2xl">{project.description}</p>
+                {num} / {String(projects.length).padStart(2, '0')}
+              </span>
+
+              <div className="max-w-4xl">
+                <h3 className="text-6xl leading-[0.95] font-black tracking-tight text-white sm:text-7xl md:text-8xl lg:text-9xl">
+                  {project.title}
+                </h3>
+                {/* signature accent line under the title */}
+                <div
+                  className="mt-8 h-px w-24"
+                  style={{ background: accent, boxShadow: `0 0 18px ${accent}80` }}
+                />
+                <p className="mt-8 max-w-xl text-lg leading-relaxed text-white/70 sm:text-xl">
+                  {project.description}
+                </p>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );

@@ -15,9 +15,9 @@ const FRAGMENT = /* glsl */ `
 precision highp float;
 uniform vec2 uResolution;
 uniform float uTime;
-uniform vec3 uColorA;
-uniform vec3 uColorB;
-uniform vec3 uColorC;
+uniform vec3 uColorBase;
+uniform vec3 uColorGlow;
+uniform vec3 uColorAccent;
 
 // 2D value noise — cheap, smooth enough for slow drift
 float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
@@ -33,11 +33,20 @@ float noise(vec2 p) {
 
 void main() {
   vec2 uv = gl_FragCoord.xy / uResolution.xy;
-  float t = uTime * 0.04;
-  float n = noise(uv * 2.0 + vec2(t, -t * 0.7));
-  float m = noise(uv * 3.5 - vec2(t * 0.5, t));
-  vec3 col = mix(uColorA, uColorB, smoothstep(0.2, 0.8, n));
-  col = mix(col, uColorC, smoothstep(0.4, 0.9, m) * 0.5);
+  float t = uTime * 0.025;
+
+  // Big slow blobs of glow over near-black base
+  float glow = noise(uv * 1.1 + vec2(t * 0.6, -t * 0.4));
+  float accent = noise(uv * 0.8 - vec2(t * 0.3, t * 0.5));
+
+  // Radial vignette so edges sink darker — focuses the eye
+  vec2 centered = uv - 0.5;
+  float vignette = 1.0 - smoothstep(0.3, 0.95, length(centered));
+
+  vec3 col = uColorBase;
+  col = mix(col, uColorGlow, smoothstep(0.45, 0.72, glow) * 0.55 * vignette);
+  col = mix(col, uColorAccent, smoothstep(0.55, 0.85, accent) * 0.18 * vignette);
+
   gl_FragColor = vec4(col, 1.0);
 }
 `;
@@ -68,10 +77,11 @@ export default function AmbientShader() {
     container.appendChild(gl.canvas);
     Object.assign(gl.canvas.style, { width: '100%', height: '100%', display: 'block' });
 
-    const styles = getComputedStyle(document.documentElement);
-    const primary = styles.getPropertyValue('--primary').trim() || '#6366f1';
-    const muted = '#1f2933';
-    const accent = '#2d1b69';
+    // Theme-independent refined palette — near-black base with indigo glow
+    // and a whisper of plum. Brand-anchored but restrained.
+    const base = '#0a0a0f'; // page bg, matches orchestrator
+    const glow = '#4f46e5'; // brand indigo, slightly deeper
+    const accent = '#7c1d6f'; // muted plum, used sparingly
 
     const program = new Program(gl, {
       vertex: VERTEX,
@@ -79,9 +89,9 @@ export default function AmbientShader() {
       uniforms: {
         uResolution: { value: [container.clientWidth, container.clientHeight] },
         uTime: { value: 0 },
-        uColorA: { value: hexToRgb(primary) },
-        uColorB: { value: hexToRgb(muted) },
-        uColorC: { value: hexToRgb(accent) },
+        uColorBase: { value: hexToRgb(base) },
+        uColorGlow: { value: hexToRgb(glow) },
+        uColorAccent: { value: hexToRgb(accent) },
       },
     });
 

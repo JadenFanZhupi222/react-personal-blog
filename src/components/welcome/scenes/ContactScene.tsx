@@ -46,11 +46,11 @@ export function ContactScene() {
     >
       <h2
         data-anim="contact-title"
-        className="text-foreground overflow-hidden text-6xl leading-[1.05] font-black tracking-tight sm:text-7xl md:text-8xl"
+        className="overflow-hidden text-6xl leading-[1.05] font-black tracking-tight text-white sm:text-7xl md:text-8xl"
       >
         {splitChars(t.welcome.contact.title)}
       </h2>
-      <p data-anim="desc" className="text-muted-foreground mt-8 max-w-2xl text-xl">
+      <p data-anim="desc" className="mt-8 max-w-2xl text-xl text-zinc-400">
         {t.welcome.contact.description}
       </p>
       <div className="mt-12 flex flex-wrap justify-center gap-4">
@@ -58,7 +58,7 @@ export function ContactScene() {
           <button
             key={platform}
             data-anim="platform"
-            className="border-border bg-card/60 text-card-foreground hover:bg-card rounded-lg border px-6 py-3 shadow-sm backdrop-blur transition-transform hover:scale-105"
+            className="rounded-lg border border-white/10 bg-white/[0.04] px-6 py-3 text-sm font-medium tracking-wide text-white shadow-sm backdrop-blur transition-all hover:scale-[1.03] hover:border-white/20 hover:bg-white/[0.08]"
           >
             {platform}
           </button>
