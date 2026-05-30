@@ -227,20 +227,20 @@ function AchievementSection({
       if (!section) return;
 
       const cards = section.querySelectorAll<HTMLElement>('[data-ach-card]');
-      gsap.set(cards, { opacity: 0, y: 30 });
 
+      // gsap.from (not set+to) so cards default visible. Safer when onEnter
+      // doesn't fire for cards already in viewport at creation.
       ScrollTrigger.batch(cards, {
         start: 'top 90%',
-        onEnter: (els) => {
-          gsap.to(els, {
-            opacity: 1,
-            y: 0,
+        onEnter: (els) =>
+          gsap.from(els, {
+            opacity: 0,
+            y: 30,
             duration: 0.5,
             stagger: 0.05,
             ease: 'power2.out',
             overwrite: true,
-          });
-        },
+          }),
       });
     },
     { scope: sectionRef, dependencies: [reduced, items.length] },

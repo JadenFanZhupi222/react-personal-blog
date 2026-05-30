@@ -76,12 +76,14 @@ export function AchievementsOverview() {
 
       const featured = grid.querySelectorAll<HTMLElement>('[data-card="featured"]');
       const regular = grid.querySelectorAll<HTMLElement>('[data-card="regular"]');
-      gsap.set([...featured, ...regular], { opacity: 0, y: 30 });
 
+      // Use gsap.from (not set+to) so cards default to visible. If onEnter
+      // misses for cards already in the viewport at creation, they fall back
+      // to "visible without animation" instead of staying invisible forever.
       if (featured.length > 0) {
-        gsap.to(featured, {
-          opacity: 1,
-          y: 0,
+        gsap.from(featured, {
+          opacity: 0,
+          y: 30,
           duration: 0.9,
           ease: 'power3.out',
           delay: 0.1,
@@ -90,16 +92,15 @@ export function AchievementsOverview() {
 
       ScrollTrigger.batch(regular, {
         start: 'top 90%',
-        onEnter: (els) => {
-          gsap.to(els, {
-            opacity: 1,
-            y: 0,
+        onEnter: (els) =>
+          gsap.from(els, {
+            opacity: 0,
+            y: 30,
             duration: 0.6,
             stagger: 0.07,
             ease: 'power2.out',
             overwrite: true,
-          });
-        },
+          }),
       });
     },
     {
