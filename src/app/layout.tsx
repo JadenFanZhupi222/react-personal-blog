@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter } from 'next/font/google';
+import { GeistSans } from 'geist/font/sans';
+import { GeistMono } from 'geist/font/mono';
 import './globals.css';
 import { ThemeProvider } from 'next-themes';
 import { QueryProvider } from '@/components/providers/QueryProvider';
@@ -11,7 +12,6 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/next';
 import { SITE_URL } from '@/lib/constants/siteUrl';
 
-const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -57,8 +57,12 @@ export const viewport: Viewport = {
 // at / has its own TranslationsProvider wrapper (cookie-based).
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${GeistSans.variable} ${GeistMono.variable}`}
+    >
+      <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <QueryProvider>
             <NavigationPendingProvider>
