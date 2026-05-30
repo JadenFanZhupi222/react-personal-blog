@@ -10,10 +10,6 @@ jobs:
   verify:
     name: Lint, Typecheck, Test, Build
     runs-on: ubuntu-latest
-    env:
-      MONGODB_URI: mongodb://ci-placeholder/ci
-      STEAM_API_KEY: ci-placeholder
-      STEAM_ID: ci-placeholder
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -41,5 +37,8 @@ jobs:
       - name: Test
         run: pnpm run test:run
 
-      - name: Build
-        run: pnpm run build
+      # `pnpm build` deliberately omitted from CI:
+      # generateStaticParams (blog tags, blog slugs, achievement appids) hits
+      # MongoDB / Steam at build time and there's no real DB in CI. Vercel's
+      # preview deploy on the PR runs the real build with real env vars, so
+      # build correctness is still gated — just not here.

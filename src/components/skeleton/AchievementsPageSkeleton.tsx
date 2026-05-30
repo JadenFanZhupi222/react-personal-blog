@@ -1,30 +1,32 @@
 import React from 'react';
 
+/**
+ * Matches the live AchievementsOverview layout: max-w-7xl container,
+ * page header + summary line, sort/search control bar, then a responsive
+ * grid (1 / 2 / 3 / 4 columns) with a featured card spanning 2×2 on lg+.
+ */
 export function AchievementsPageSkeleton() {
   return (
-    <div className="mx-auto w-full max-w-4xl px-2 py-8">
-      {/* 标题骨架 */}
-      <div className="bg-muted/40 mb-6 h-7 w-32 animate-pulse rounded" />
-      {/* 统计卡片骨架 */}
-      <div className="mb-8 flex flex-col gap-4 md:flex-row md:gap-8">
-        <div className="bg-muted/30 h-24 flex-1 animate-pulse rounded-xl" />
-        <div className="bg-muted/30 h-24 flex-1 animate-pulse rounded-xl" />
+    <div className="mx-auto w-full max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
+      {/* Page title + summary */}
+      <div className="mb-3 h-10 w-72 animate-pulse rounded bg-muted/40 sm:h-12" />
+      <div className="h-5 w-80 animate-pulse rounded bg-muted/30" />
+
+      {/* Search + sort control bar */}
+      <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="h-9 w-full max-w-sm animate-pulse rounded-lg bg-muted/30" />
+        <div className="h-9 w-48 animate-pulse rounded-lg bg-muted/30" />
       </div>
-      {/* 提示骨架 */}
-      <div className="bg-muted/30 mb-4 h-4 w-48 animate-pulse rounded" />
-      {/* 游戏卡片骨架 */}
-      <div className="flex flex-col gap-6">
-        {Array.from({ length: 5 }).map((_, idx) => (
-          <div
-            key={idx}
-            className="bg-muted/10 flex animate-pulse items-center gap-4 rounded-xl p-4 shadow"
-          >
-            <div className="bg-muted/30 h-20 w-36 rounded-lg" />
-            <div className="flex-1 space-y-3">
-              <div className="bg-muted/40 h-5 w-32 rounded" />
-              <div className="bg-muted/20 h-4 w-20 rounded" />
-            </div>
-          </div>
+
+      {/* Card grid — same shape as AchievementsOverview's grid: 3 cols
+          at lg+ so featured 2×2 + 11 regulars = 5 rows × 3 cols, no gap. */}
+      <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Featured card spans 2×2 on lg+ */}
+        <div className="bg-muted/20 h-56 animate-pulse rounded-xl lg:col-span-2 lg:row-span-2 lg:h-auto lg:min-h-[26rem]" />
+
+        {/* 11 regular placeholders → fills the page-1 layout exactly */}
+        {Array.from({ length: 11 }).map((_, idx) => (
+          <div key={idx} className="bg-muted/20 h-56 animate-pulse rounded-xl" />
         ))}
       </div>
     </div>
