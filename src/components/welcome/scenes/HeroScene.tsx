@@ -5,6 +5,8 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import Link from 'next/link';
+import { GlareCard } from '@/components/effects/GlareCard';
+import { MagneticCard } from '@/components/effects/MagneticCard';
 import { useTranslations } from '@/lib/hooks/useTranslations';
 import { splitChars } from '../lib/splitChars';
 import { useReducedMotion } from '../lib/useReducedMotion';
@@ -39,7 +41,7 @@ export function HeroScene() {
         .from(
           roleEls,
           { y: 20, opacity: 0, stagger: 0.08, duration: 0.6, ease: 'power2.out' },
-          '-=0.3',
+          '-=0.3'
         )
         .from(ctaEl, { y: 16, opacity: 0, duration: 0.5, ease: 'power2.out' }, '-=0.2');
 
@@ -55,47 +57,68 @@ export function HeroScene() {
         },
       });
     },
-    { scope: sectionRef, dependencies: [reduced] },
+    { scope: sectionRef, dependencies: [reduced] }
   );
 
   return (
     <section
       ref={sectionRef}
-      className="relative flex min-h-[100dvh] items-center justify-center px-6"
+      className="relative flex min-h-[100dvh] items-center justify-center overflow-hidden px-6"
     >
+      <div
+        aria-hidden="true"
+        data-effect="welcome-orbit"
+        className="welcome-orbit pointer-events-none absolute inset-0"
+      />
+      <div
+        aria-hidden="true"
+        data-effect="welcome-scanline"
+        className="welcome-scanline pointer-events-none absolute inset-x-0 top-1/2"
+      />
       <div ref={innerRef} className="max-w-5xl space-y-8 text-center">
         <div className="space-y-2">
           <h1
             data-anim="name"
-            className="text-white overflow-hidden text-6xl leading-[1.05] font-black tracking-tight sm:text-7xl md:text-8xl"
+            className="welcome-title overflow-hidden text-6xl leading-[1.05] font-black tracking-tight text-white sm:text-7xl md:text-8xl"
           >
             {splitChars(t.welcome.name)}
           </h1>
           <h2
             data-anim="name"
-            className="text-white overflow-hidden text-5xl leading-[1.05] font-black tracking-tight sm:text-6xl md:text-7xl"
+            className="welcome-title welcome-title--sub overflow-hidden text-5xl leading-[1.05] font-black tracking-tight text-white sm:text-6xl md:text-7xl"
           >
             {splitChars(t.welcome.nickname)}
           </h2>
         </div>
         <p className="flex flex-col items-center justify-center gap-3 text-lg text-zinc-400 sm:flex-row sm:text-xl">
-          <span data-anim="role">{t.welcome.role.fullstack}</span>
+          <span data-anim="role" className="welcome-role">
+            {t.welcome.role.fullstack}
+          </span>
           <span data-anim="role" className="hidden opacity-40 sm:inline">
             ·
           </span>
-          <span data-anim="role">{t.welcome.role.tech}</span>
+          <span data-anim="role" className="welcome-role">
+            {t.welcome.role.tech}
+          </span>
           <span data-anim="role" className="hidden opacity-40 sm:inline">
             ·
           </span>
-          <span data-anim="role">{t.welcome.role.game}</span>
+          <span data-anim="role" className="welcome-role">
+            {t.welcome.role.game}
+          </span>
         </p>
-        <div data-anim="cta" className="pt-4">
-          <Link
-            href={`/${locale}/home`}
-            className="bg-primary text-primary-foreground hover:bg-primary-hover focus-visible:ring-primary hover:shadow-primary/40 inline-flex h-12 items-center justify-center rounded-lg px-8 text-lg font-semibold shadow-md transition-all duration-200 hover:scale-105 hover:shadow-2xl focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none active:scale-100"
-          >
-            {t.welcome.enter}
-          </Link>
+        <div data-anim="cta" className="flex justify-center pt-4">
+          <MagneticCard className="h-auto" strength={9}>
+            <GlareCard className="h-auto rounded-lg">
+              <Link
+                href={`/${locale}/home`}
+                className="welcome-entry-cta bg-primary text-primary-foreground hover:bg-primary-hover focus-visible:ring-primary hover:shadow-primary/40 relative inline-flex h-12 items-center justify-center overflow-hidden rounded-lg px-8 text-lg font-semibold shadow-md transition-all duration-200 hover:scale-105 hover:shadow-2xl focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none active:scale-100"
+              >
+                <span aria-hidden className="welcome-entry-cta__pulse" />
+                <span className="relative z-10">{t.welcome.enter}</span>
+              </Link>
+            </GlareCard>
+          </MagneticCard>
         </div>
       </div>
     </section>

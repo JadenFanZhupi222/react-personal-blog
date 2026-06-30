@@ -537,11 +537,155 @@
   animation: react-bits-shimmer 1.2s ease-out;
 }
 
+@keyframes welcome-orbit-spin {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.04);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@keyframes welcome-scanline-drift {
+  0%,
+  100% {
+    transform: translateX(-18%);
+    opacity: 0.24;
+  }
+  50% {
+    transform: translateX(18%);
+    opacity: 0.62;
+  }
+}
+
+@keyframes welcome-entry-pulse {
+  0% {
+    transform: translateX(-140%) skewX(-18deg);
+  }
+  100% {
+    transform: translateX(240%) skewX(-18deg);
+  }
+}
+
+.welcome-orbit {
+  opacity: 0.72;
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      transparent 0 18rem,
+      rgb(99 102 241 / 0.18) 18.08rem 18.18rem,
+      transparent 18.28rem
+    ),
+    radial-gradient(
+      circle at 50% 50%,
+      transparent 0 26rem,
+      rgb(236 72 153 / 0.12) 26.08rem 26.18rem,
+      transparent 26.28rem
+    );
+  mask-image: radial-gradient(circle at center, black, transparent 72%);
+}
+
+.welcome-orbit::before,
+.welcome-orbit::after {
+  content: '';
+  position: absolute;
+  inset: 8%;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 18% 46%, rgb(255 255 255 / 0.72) 0 2px, transparent 3px),
+    radial-gradient(circle at 76% 28%, rgb(129 140 248 / 0.7) 0 2px, transparent 3px),
+    radial-gradient(circle at 62% 78%, rgb(244 114 182 / 0.58) 0 2px, transparent 3px);
+  animation: welcome-orbit-spin 28s linear infinite;
+}
+
+.welcome-orbit::after {
+  inset: 18%;
+  opacity: 0.7;
+  animation-duration: 38s;
+  animation-direction: reverse;
+}
+
+.welcome-scanline {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(255 255 255 / 0.12),
+    rgb(99 102 241 / 0.56),
+    rgb(236 72 153 / 0.28),
+    transparent
+  );
+  filter: blur(0.2px);
+  animation: welcome-scanline-drift 7s ease-in-out infinite;
+}
+
+.welcome-title {
+  text-shadow:
+    0 0 32px rgb(99 102 241 / 0.18),
+    0 0 72px rgb(236 72 153 / 0.1);
+}
+
+.welcome-title--sub {
+  text-shadow:
+    0 0 28px rgb(236 72 153 / 0.16),
+    0 0 68px rgb(99 102 241 / 0.1);
+}
+
+.welcome-role {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  color: rgb(212 212 216 / 0.86);
+  transition:
+    color 180ms ease,
+    text-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.welcome-role:hover,
+.welcome-role:focus-visible {
+  color: white;
+  text-shadow: 0 0 18px rgb(129 140 248 / 0.55);
+  transform: translateY(-1px);
+}
+
+.welcome-entry-cta::before {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  border: 1px solid rgb(255 255 255 / 0.18);
+  pointer-events: none;
+}
+
+.welcome-entry-cta__pulse {
+  position: absolute;
+  inset-block: -35%;
+  left: 0;
+  width: 34%;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.42), transparent);
+  transform: translateX(-140%) skewX(-18deg);
+  pointer-events: none;
+}
+
+.welcome-entry-cta:hover .welcome-entry-cta__pulse,
+.welcome-entry-cta:focus-visible .welcome-entry-cta__pulse {
+  animation: welcome-entry-pulse 850ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .react-bits-grid-aura__beam,
   .react-bits-text-reveal,
   .react-bits-achievement-glow--rare,
   .react-bits-code-scanline__bar,
+  .welcome-orbit::before,
+  .welcome-orbit::after,
+  .welcome-scanline,
+  .welcome-entry-cta:hover .welcome-entry-cta__pulse,
+  .welcome-entry-cta:focus-visible .welcome-entry-cta__pulse,
   .react-bits-shimmer:hover,
   .react-bits-shimmer:focus-visible {
     animation: none;
