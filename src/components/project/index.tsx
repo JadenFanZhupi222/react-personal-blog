@@ -2,6 +2,7 @@
 
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
+import { GlareCard } from '@/components/effects/GlareCard';
 import { LazyMotion, domAnimation, m } from 'framer-motion';
 import { useTranslations } from '@/lib/hooks/useTranslations';
 import { Badge } from '@/components/ui/Badge';
@@ -27,33 +28,35 @@ export function ProjectListPage({ projects }: { projects: Record<Locale, Project
           <m.div className="mt-12 grid gap-6" variants={containerVariants}>
             {projects[locale]?.map((project: Project, index: number) => (
               <m.div key={index} variants={itemVariants}>
-                <Card className="group hover:border-primary-hover transition-colors">
-                  <CardHeader>
-                    <CardTitle className="group-hover:text-primary-hover transition-colors hover:underline">
-                      <a href={project.url} target="_blank" rel="noopener noreferrer">
-                        {project.title}
-                      </a>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground mb-4">{project.description}</p>
-                    <div className="mb-2 flex flex-wrap gap-2">
-                      {project.tags.map((tag: string) => (
-                        <Badge key={tag} icon={false}>
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-                    <div className="space-y-2">
-                      <h3 className="font-semibold">{t.projects.highlights}:</h3>
-                      <ul className="text-muted-foreground list-inside list-disc space-y-1">
-                        {project.highlights.map((highlight: string, i: number) => (
-                          <li key={i}>{highlight}</li>
+                <GlareCard subtle className="rounded-lg">
+                  <Card className="group hover:border-primary-hover bg-card/95 transition-colors duration-300">
+                    <CardHeader>
+                      <CardTitle className="group-hover:text-primary-hover transition-colors hover:underline">
+                        <a href={project.url} target="_blank" rel="noopener noreferrer">
+                          {project.title}
+                        </a>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-muted-foreground mb-4">{project.description}</p>
+                      <div className="mb-2 flex flex-wrap gap-2">
+                        {project.tags.map((tag: string) => (
+                          <Badge key={tag} icon={false} className="react-bits-shimmer">
+                            {tag}
+                          </Badge>
                         ))}
-                      </ul>
-                    </div>
-                  </CardContent>
-                </Card>
+                      </div>
+                      <div className="space-y-2">
+                        <h3 className="font-semibold">{t.projects.highlights}:</h3>
+                        <ul className="text-muted-foreground list-inside list-disc space-y-1">
+                          {project.highlights.map((highlight: string, i: number) => (
+                            <li key={i}>{highlight}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </GlareCard>
               </m.div>
             ))}
           </m.div>

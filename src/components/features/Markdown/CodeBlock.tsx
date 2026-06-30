@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Check, Copy } from 'lucide-react';
+import { CodeScanline } from '@/components/effects/CodeScanline';
 import { useTranslations } from '@/lib/hooks/useTranslations';
 
 interface CodeBlockProps {
@@ -31,7 +32,7 @@ export function CodeBlock({ children }: CodeBlockProps) {
         type="button"
         onClick={handleCopy}
         aria-label={copied ? t.blog.copied : t.blog.copy}
-        className="bg-secondary/80 text-secondary-foreground hover:bg-secondary hover:shadow-md hover:shadow-secondary/30 active:scale-95 active:duration-75 absolute top-2 right-2 z-10 inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs opacity-0 backdrop-blur transition-all duration-200 group-hover:opacity-100 focus:opacity-100"
+        className="bg-secondary/80 text-secondary-foreground hover:bg-secondary hover:shadow-secondary/30 absolute top-2 right-2 z-10 inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs opacity-0 backdrop-blur transition-all duration-200 group-hover:opacity-100 hover:shadow-md focus:opacity-100 active:scale-95 active:duration-75"
       >
         {copied ? (
           <>
@@ -45,9 +46,11 @@ export function CodeBlock({ children }: CodeBlockProps) {
           </>
         )}
       </button>
-      <pre className="bg-code-block-bg border-code-block-border text-foreground [&_.hljs]:color-inherit overflow-x-auto rounded-xl border p-4 text-sm shadow-lg transition-colors duration-200 [&_.hljs]:bg-transparent [&_code]:bg-transparent [&_code]:text-inherit">
-        <div ref={codeRef}>{children}</div>
-      </pre>
+      <CodeScanline>
+        <pre className="bg-code-block-bg border-code-block-border text-foreground [&_.hljs]:color-inherit overflow-x-auto rounded-xl border p-4 text-sm shadow-lg transition-colors duration-200 [&_.hljs]:bg-transparent [&_code]:bg-transparent [&_code]:text-inherit">
+          <div ref={codeRef}>{children}</div>
+        </pre>
+      </CodeScanline>
     </div>
   );
 }
