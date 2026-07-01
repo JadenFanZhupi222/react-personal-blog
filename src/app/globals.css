@@ -150,6 +150,9 @@
     --table-border: #e4e4e7;
     --table-header-bg: #fafafa;
     --table-row-hover: #f4f4f5;
+    --scrollbar-track: color-mix(in srgb, var(--background) 90%, var(--border) 10%);
+    --scrollbar-thumb: color-mix(in srgb, var(--primary) 54%, var(--foreground) 18%);
+    --scrollbar-thumb-hover: color-mix(in srgb, var(--primary) 72%, var(--foreground) 20%);
     /* highlight.js tokens — github light */
     --hljs-fg: #24292e;
     --hljs-keyword: #d73a49;
@@ -238,6 +241,9 @@
     --table-border: oklch(0.285 0.034 190);
     --table-header-bg: oklch(0.205 0.03 194);
     --table-row-hover: oklch(0.235 0.04 184);
+    --scrollbar-track: color-mix(in srgb, var(--background) 84%, var(--foreground) 8%);
+    --scrollbar-thumb: color-mix(in srgb, var(--primary) 58%, var(--foreground) 12%);
+    --scrollbar-thumb-hover: color-mix(in srgb, var(--primary) 78%, var(--foreground) 18%);
     /* highlight.js tokens — github dark */
     --hljs-fg: #c9d1d9;
     --hljs-keyword: #ff7b72;
@@ -261,6 +267,46 @@
       radial-gradient(circle at 92% 8%, color-mix(in srgb, var(--secondary) 12%, transparent), transparent 28rem),
       var(--background);
     font-variant-numeric: tabular-nums;
+  }
+
+  html {
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+    scrollbar-width: thin;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background:
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--scrollbar-track) 92%, transparent),
+        color-mix(in srgb, var(--background) 90%, transparent)
+      );
+  }
+
+  ::-webkit-scrollbar-thumb {
+    min-height: 3rem;
+    border: 2px solid transparent;
+    border-radius: 999px;
+    background:
+      linear-gradient(180deg, var(--scrollbar-thumb), color-mix(in srgb, var(--scrollbar-thumb) 72%, var(--secondary) 28%))
+      border-box;
+    background-clip: padding-box;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background:
+      linear-gradient(180deg, var(--scrollbar-thumb-hover), color-mix(in srgb, var(--scrollbar-thumb-hover) 72%, var(--secondary) 28%))
+      border-box;
+    background-clip: padding-box;
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: var(--scrollbar-track);
   }
 }
 

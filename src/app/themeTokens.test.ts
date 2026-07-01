@@ -38,4 +38,12 @@ describe('theme tokens', () => {
 
     expect(oklchLightness(root, '--design-background')).toBeGreaterThan(0.9);
   });
+
+  it('defines a theme-aware global scrollbar treatment', () => {
+    expect(globalsCss).toContain('scrollbar-color:');
+    expect(globalsCss).toContain('::-webkit-scrollbar');
+    expect(globalsCss).toContain('::-webkit-scrollbar-thumb');
+    expect(globalsCss).toContain('var(--scrollbar-thumb)');
+    expect(globalsCss).toContain('var(--scrollbar-track)');
+  });
 });
