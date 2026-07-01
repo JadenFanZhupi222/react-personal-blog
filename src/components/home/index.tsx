@@ -44,26 +44,24 @@ export function HomePage() {
         variants={containerVariants}
       >
         <main className="min-h-screen w-full px-4 py-8 md:px-8 lg:py-10">
-          <div className="mx-auto grid w-full max-w-7xl gap-6 lg:grid-cols-[minmax(420px,0.95fr)_minmax(520px,1.05fr)] lg:items-stretch">
+          <div className="mx-auto flex w-full max-w-7xl flex-col gap-6">
             <m.section
               variants={itemVariants}
-              className="observatory-panel flex min-h-[34rem] flex-col justify-between rounded-2xl p-6 sm:p-8"
+              className="observatory-panel rounded-2xl p-6 sm:p-8 lg:p-10"
             >
               <div className="mb-8 flex items-center gap-3 text-primary">
                 <span className="h-2 w-2 rounded-full bg-primary shadow-[0_0_18px_var(--primary)]" />
                 <span className="font-mono text-xs">{t.home.title}</span>
               </div>
-              <div>
-                <TextReveal
-                  as="h1"
-                  text={t.home.welcome}
-                  className="text-balance text-5xl font-semibold leading-[0.98] tracking-[-0.03em] text-foreground sm:text-6xl xl:text-7xl"
-                />
-                <p className="mt-6 max-w-xl text-pretty text-lg leading-8 text-muted-foreground">
-                  {t.home.description}
-                </p>
-              </div>
-              <div className="mt-10 grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
+              <TextReveal
+                as="h1"
+                text={t.home.welcome}
+                className="max-w-4xl text-balance text-5xl font-semibold leading-[0.98] tracking-[-0.03em] text-foreground sm:text-6xl xl:text-7xl"
+              />
+              <p className="mt-6 max-w-2xl text-pretty text-lg leading-8 text-muted-foreground">
+                {t.home.description}
+              </p>
+              <div className="mt-12 grid gap-4 md:grid-cols-3">
                 {featureCards.map((card) => (
                   <FeatureCard key={card.href} {...card} compact />
                 ))}
@@ -72,7 +70,7 @@ export function HomePage() {
 
             <m.section
               variants={itemVariants}
-              className="observatory-panel rounded-2xl p-5 sm:p-6"
+              className="observatory-panel rounded-2xl p-5 sm:p-6 lg:p-8"
             >
               <div className="mb-5 flex items-center justify-between gap-4">
                 <h2 className="flex items-center gap-2 text-2xl font-semibold tracking-[-0.02em] text-foreground">
@@ -84,7 +82,7 @@ export function HomePage() {
                   className="hidden h-px flex-1 bg-gradient-to-r from-primary/40 to-transparent sm:block"
                 />
               </div>
-              <div className="grid grid-cols-1 gap-5 xl:grid-cols-2">
+              <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
                 <LeetCodeCard />
                 <SteamCard />
               </div>
