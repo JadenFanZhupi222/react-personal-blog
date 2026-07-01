@@ -88,60 +88,60 @@
     --radius: 0.5rem;
     /* Brand — signature indigo (Tailwind indigo-500 / indigo-600). Lives at the
        same hex in both themes so brand recognition is consistent. */
-    --primary: #6366f1;
-    --primary-foreground: #ffffff;
-    --primary-hover: #4f46e5;
+    --primary: oklch(0.78 0.14 178);
+    --primary-foreground: oklch(0.11 0.018 184);
+    --primary-hover: oklch(0.86 0.13 176);
     /* Surfaces — refined neutral slate (no purple cast). Card is pure white
        for a stronger surface hierarchy against the warm-gray background. */
-    --background: #f7f7f8;
-    --foreground: #0f1115;
-    --muted-foreground: #6b7280;
-    --muted: #ececef;
-    --card: #ffffff;
-    --card-30: rgba(255, 255, 255, 0.3);
-    --card-foreground: #0f1115;
-    --border: #e4e4e7;
-    --input: #e4e4e7;
-    --popover: #ffffff;
-    --popover-foreground: #0f1115;
+    --background: oklch(0.965 0.014 174);
+    --foreground: oklch(0.145 0.022 194);
+    --muted-foreground: oklch(0.42 0.025 194);
+    --muted: oklch(0.91 0.018 176);
+    --card: oklch(0.99 0.006 174);
+    --card-30: oklch(0.99 0.006 174 / 0.56);
+    --card-foreground: oklch(0.145 0.022 194);
+    --border: oklch(0.82 0.024 178);
+    --input: oklch(0.82 0.024 178);
+    --popover: oklch(0.99 0.006 174);
+    --popover-foreground: oklch(0.145 0.022 194);
     /* Secondary — refined rose (Tailwind pink-500). Complements indigo. */
-    --secondary: #ec4899;
-    --secondary-foreground: #ffffff;
-    --accent: oklch(0.96 0 0);
-    --accent-foreground: oklch(0.18 0 0);
+    --secondary: oklch(0.73 0.13 77);
+    --secondary-foreground: oklch(0.14 0.022 194);
+    --accent: oklch(0.9 0.035 176);
+    --accent-foreground: oklch(0.16 0.028 194);
     --destructive: oklch(0.6 0.21 27);
     --destructive-foreground: oklch(0.99 0 0);
-    --ring: #4f46e5;
-    --leetcode-easy: #4caf50;
-    --leetcode-medium: #ff9800;
-    --leetcode-hard: #f44336;
-    --leetcode-completion: #eab308;
-    --leetcode-ranking: #3b82f6;
-    --leetcode-reputation: #a21caf;
-    --steam-card: oklch(0.98 0 0);
-    --steam-title: oklch(0.2 0 0);
-    --steam-playtime: oklch(0.5 0 0);
-    --steam-achievement: #eab308;
-    --steam-online: #22c55e;
-    --steam-offline: #6b7280;
-    --design-background: #2d1b69;
-    --design-title: #ffb155;
-    --design-subtitle: #00e5b0;
-    --design-card-about: linear-gradient(135deg, #ff6b6b 0%, #ff3377 100%);
-    --design-card-projects: #6c4ae2;
-    --design-card-blog: #00b8d4;
-    --design-button: #0066ff;
-    --design-button-text: #ffffff;
-    --design-leetcode-card: linear-gradient(135deg, #9c1b8c 0%, #4a1b9c 100%);
-    --design-steam-card: #1b2b9c;
+    --ring: oklch(0.78 0.14 178);
+    --leetcode-easy: oklch(0.68 0.16 150);
+    --leetcode-medium: oklch(0.72 0.15 74);
+    --leetcode-hard: oklch(0.64 0.2 28);
+    --leetcode-completion: oklch(0.73 0.13 77);
+    --leetcode-ranking: oklch(0.7 0.11 218);
+    --leetcode-reputation: oklch(0.7 0.1 176);
+    --steam-card: oklch(0.97 0.012 174);
+    --steam-title: oklch(0.18 0.025 194);
+    --steam-playtime: oklch(0.43 0.025 194);
+    --steam-achievement: oklch(0.73 0.13 77);
+    --steam-online: oklch(0.68 0.16 150);
+    --steam-offline: oklch(0.52 0.018 194);
+    --design-background: oklch(0.13 0.028 194);
+    --design-title: oklch(0.78 0.14 178);
+    --design-subtitle: oklch(0.73 0.13 77);
+    --design-card-about: linear-gradient(135deg, oklch(0.2 0.045 192), oklch(0.28 0.055 174));
+    --design-card-projects: oklch(0.19 0.04 194);
+    --design-card-blog: oklch(0.24 0.035 184);
+    --design-button: oklch(0.78 0.14 178);
+    --design-button-text: oklch(0.11 0.018 184);
+    --design-leetcode-card: linear-gradient(135deg, oklch(0.2 0.045 192), oklch(0.24 0.055 150));
+    --design-steam-card: oklch(0.2 0.045 210);
     --welcome-gradient-foreground: #0f1115;
     --steam-achievement: #ffffff;
     --achievement-green: #22c55e;
     --achievement-gray: #9ca3af;
     --achievement-darkgreen: #15803d;
-    --achievement-rare-glow: #ffe066;
-    --achievement-rare-glow-strong: #ffd700;
-    --achievement-rare-text-shadow: #fffbe6;
+    --achievement-rare-glow: oklch(0.78 0.15 82);
+    --achievement-rare-glow-strong: oklch(0.86 0.16 86);
+    --achievement-rare-text-shadow: oklch(0.92 0.08 88);
     --code-block-bg: transparent;
     --code-block-border: #e4e4e7;
     --code-inline-bg: #f1f3f5;
@@ -163,81 +163,81 @@
 
   .dark {
     /* Brand — same indigo identity as light. Sits beautifully on dark slate. */
-    --primary: #6366f1;
-    --primary-foreground: #ffffff;
-    --primary-hover: #818cf8;
+    --primary: oklch(0.78 0.14 178);
+    --primary-foreground: oklch(0.105 0.02 194);
+    --primary-hover: oklch(0.86 0.13 176);
     /* Surfaces — Premium Slate (cool neutral, no purple cast). Hierarchical
        elevation: background < card < muted/border, each step a perceptual
        OKLCH lightness bump so layering reads naturally. */
-    --background: oklch(0.16 0.005 250);
-    --foreground: oklch(0.965 0.003 250);
-    --muted-foreground: oklch(0.66 0.006 250);
-    --muted: oklch(0.245 0.006 250);
-    --card: oklch(0.205 0.006 250);
-    --card-30: rgba(37, 40, 48, 0.35);
-    --card-foreground: oklch(0.965 0.003 250);
-    --border: oklch(0.285 0.008 250);
-    --input: oklch(0.285 0.008 250);
-    --popover: oklch(0.205 0.006 250);
-    --popover-foreground: oklch(0.965 0.003 250);
-    --secondary: #ec4899;
-    --secondary-foreground: #ffffff;
-    --accent: oklch(0.285 0.008 250);
-    --accent-foreground: oklch(0.965 0.003 250);
+    --background: oklch(0.115 0.026 194);
+    --foreground: oklch(0.955 0.008 178);
+    --muted-foreground: oklch(0.68 0.024 182);
+    --muted: oklch(0.205 0.03 194);
+    --card: oklch(0.165 0.029 194);
+    --card-30: oklch(0.165 0.029 194 / 0.46);
+    --card-foreground: oklch(0.955 0.008 178);
+    --border: oklch(0.285 0.034 190);
+    --input: oklch(0.285 0.034 190);
+    --popover: oklch(0.145 0.03 194);
+    --popover-foreground: oklch(0.955 0.008 178);
+    --secondary: oklch(0.75 0.13 78);
+    --secondary-foreground: oklch(0.12 0.024 194);
+    --accent: oklch(0.235 0.04 184);
+    --accent-foreground: oklch(0.955 0.008 178);
     --destructive: oklch(0.62 0.22 22);
     --destructive-foreground: oklch(0.99 0 0);
-    --ring: #818cf8;
-    --chart-1: oklch(0.62 0.16 252);
-    --chart-2: oklch(0.7 0.15 350);
-    --chart-3: oklch(0.75 0.15 90);
-    --chart-4: oklch(0.7 0.16 180);
-    --chart-5: oklch(0.65 0.2 30);
-    --sidebar: oklch(0.205 0.006 250);
-    --sidebar-foreground: oklch(0.92 0.002 250);
-    --sidebar-primary: oklch(0.62 0.16 252);
-    --sidebar-primary-foreground: oklch(0.99 0 0);
-    --sidebar-accent: oklch(0.285 0.008 250);
-    --sidebar-accent-foreground: oklch(0.92 0.002 250);
+    --ring: oklch(0.78 0.14 178);
+    --chart-1: oklch(0.78 0.14 178);
+    --chart-2: oklch(0.75 0.13 78);
+    --chart-3: oklch(0.68 0.16 150);
+    --chart-4: oklch(0.7 0.11 218);
+    --chart-5: oklch(0.64 0.2 28);
+    --sidebar: oklch(0.145 0.03 194);
+    --sidebar-foreground: oklch(0.92 0.01 178);
+    --sidebar-primary: oklch(0.78 0.14 178);
+    --sidebar-primary-foreground: oklch(0.105 0.02 194);
+    --sidebar-accent: oklch(0.235 0.04 184);
+    --sidebar-accent-foreground: oklch(0.92 0.01 178);
     --sidebar-border: oklch(1 0 0 / 8%);
     --sidebar-ring: oklch(0.62 0.16 252);
     --leetcode-easy: #22c55e;
-    --leetcode-medium: #f59e42;
+    --leetcode-medium: #f5a524;
     --leetcode-hard: #ef4444;
     --leetcode-completion: #fde047;
-    --leetcode-ranking: #60a5fa;
-    --leetcode-reputation: #c084fc;
-    --steam-card: oklch(0.205 0.006 250);
-    --steam-title: oklch(0.92 0.003 250);
-    --steam-playtime: oklch(0.68 0.005 250);
-    --steam-achievement: #fde047;
+    --leetcode-ranking: oklch(0.72 0.12 218);
+    --leetcode-reputation: oklch(0.78 0.12 178);
+    --steam-card: oklch(0.16 0.035 210);
+    --steam-title: oklch(0.92 0.012 178);
+    --steam-playtime: oklch(0.7 0.02 182);
+    --steam-achievement: oklch(0.82 0.14 84);
     --steam-online: #4ade80;
     --steam-offline: #9ca3af;
-    --design-background: #2d1b69;
-    --design-title: #ffb155;
-    --design-subtitle: #00e5b0;
-    --design-card-about: linear-gradient(135deg, #ff6b6b 0%, #ff3377 100%);
-    --design-card-projects: #6c4ae2;
-    --design-card-blog: #00b8d4;
-    --design-button: #0066ff;
-    --design-button-text: #ffffff;
-    --design-leetcode-card: linear-gradient(135deg, #9c1b8c 0%, #4a1b9c 100%);
-    --design-steam-card: #1b2b9c;
+    --design-background: oklch(0.115 0.026 194);
+    --design-title: oklch(0.78 0.14 178);
+    --design-subtitle: oklch(0.75 0.13 78);
+    --design-card-about: linear-gradient(135deg, oklch(0.17 0.04 194), oklch(0.23 0.055 174));
+    --design-card-projects: oklch(0.18 0.04 194);
+    --design-card-blog: oklch(0.2 0.035 184);
+    --design-button: oklch(0.78 0.14 178);
+    --design-button-text: oklch(0.105 0.02 194);
+    --design-leetcode-card: linear-gradient(135deg, oklch(0.16 0.04 194), oklch(0.2 0.05 150));
+    --design-steam-card: oklch(0.16 0.04 210);
     --welcome-gradient-foreground: #ffffff;
     --steam-achievement: oklch(0.245 0.006 250);
     --achievement-green: #4ade80;
     --achievement-gray: #bdbdbd;
     --achievement-darkgreen: #166534;
-    --achievement-rare-glow: #bfa940;
-    --achievement-rare-glow-strong: #e6c200;
-    --achievement-rare-text-shadow: #5a4a1a;
-    --code-block-bg: oklch(0.185 0.005 250);
-    --code-block-border: oklch(0.285 0.008 250);
-    --code-inline-bg: oklch(0.245 0.006 250);
-    --code-inline-border: oklch(0.32 0.008 250);
-    --table-bg: oklch(0.205 0.006 250);
-    --table-border: oklch(0.285 0.008 250);
-    --table-header-bg: oklch(0.245 0.006 250);
-    --table-row-hover: oklch(0.27 0.007 250);
+    --achievement-rare-glow: oklch(0.78 0.15 82);
+    --achievement-rare-glow-strong: oklch(0.86 0.16 86);
+    --achievement-rare-text-shadow: oklch(0.48 0.08 86);
+    --code-block-bg: oklch(0.135 0.028 194);
+    --code-block-border: oklch(0.285 0.034 190);
+    --code-inline-bg: oklch(0.205 0.03 194);
+    --code-inline-border: oklch(0.31 0.035 190);
+    --table-bg: oklch(0.165 0.029 194);
+    --table-border: oklch(0.285 0.034 190);
+    --table-header-bg: oklch(0.205 0.03 194);
+    --table-row-hover: oklch(0.235 0.04 184);
     /* highlight.js tokens — github dark */
     --hljs-fg: #c9d1d9;
     --hljs-keyword: #ff7b72;
@@ -256,7 +256,75 @@
   }
   body {
     @apply bg-background text-foreground;
+    background:
+      radial-gradient(circle at 18% -10%, color-mix(in srgb, var(--primary) 16%, transparent), transparent 34rem),
+      radial-gradient(circle at 92% 8%, color-mix(in srgb, var(--secondary) 12%, transparent), transparent 28rem),
+      var(--background);
+    font-variant-numeric: tabular-nums;
   }
+}
+
+.observatory-shell {
+  position: relative;
+  isolation: isolate;
+}
+
+.observatory-panel {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--border) 82%, transparent);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--card) 92%, transparent), color-mix(in srgb, var(--accent) 42%, transparent)),
+    color-mix(in srgb, var(--card) 88%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--foreground) 9%, transparent),
+    0 18px 46px color-mix(in srgb, var(--background) 72%, black 28%);
+}
+
+.observatory-panel::after {
+  content: '';
+  position: absolute;
+  inset-inline: 1rem;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--primary) 74%, transparent),
+    color-mix(in srgb, var(--secondary) 36%, transparent),
+    transparent
+  );
+  pointer-events: none;
+}
+
+.observatory-signal-line {
+  position: relative;
+}
+
+.observatory-signal-line::before {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--primary) 56%, transparent),
+    transparent
+  );
+}
+
+.observatory-progress {
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, transparent, color-mix(in srgb, white 26%, transparent), transparent),
+    currentColor;
+  background-size:
+    220% 100%,
+    100% 100%;
+  animation: react-bits-shimmer 3.2s ease-in-out infinite;
 }
 
 .hide-scrollbar {
@@ -365,44 +433,51 @@
 .react-bits-grid-aura {
   background:
     radial-gradient(
-      circle at 18% 18%,
-      color-mix(in srgb, var(--primary) 24%, transparent),
-      transparent 32%
+      ellipse at 16% 12%,
+      color-mix(in srgb, var(--primary) 22%, transparent),
+      transparent 34%
     ),
     radial-gradient(
-      circle at 85% 74%,
-      color-mix(in srgb, var(--secondary) 18%, transparent),
-      transparent 30%
+      ellipse at 86% 80%,
+      color-mix(in srgb, var(--secondary) 16%, transparent),
+      transparent 32%
+    ),
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--background) 92%, black 8%),
+      color-mix(in srgb, var(--background) 88%, var(--primary) 12%)
     );
 }
 
 .react-bits-grid-aura__grid {
-  opacity: 0.34;
+  opacity: 0.46;
   background-image:
-    linear-gradient(color-mix(in srgb, var(--foreground) 8%, transparent) 1px, transparent 1px),
+    linear-gradient(color-mix(in srgb, var(--primary) 12%, transparent) 1px, transparent 1px),
     linear-gradient(
       90deg,
-      color-mix(in srgb, var(--foreground) 8%, transparent) 1px,
+      color-mix(in srgb, var(--primary) 10%, transparent) 1px,
       transparent 1px
-    );
+    ),
+    linear-gradient(135deg, transparent 0 48%, color-mix(in srgb, var(--secondary) 9%, transparent) 49% 51%, transparent 52%);
   background-size: 48px 48px;
-  mask-image: radial-gradient(circle at center, black, transparent 72%);
+  mask-image: radial-gradient(ellipse at center, black, transparent 74%);
 }
 
 .react-bits-grid-aura__beam {
   background: linear-gradient(
     90deg,
     transparent,
-    color-mix(in srgb, var(--primary) 18%, transparent),
+    color-mix(in srgb, var(--primary) 24%, transparent),
+    color-mix(in srgb, var(--secondary) 10%, transparent),
     transparent
   );
-  filter: blur(18px);
-  animation: react-bits-beam-drift 18s ease-in-out infinite;
+  filter: blur(22px);
+  animation: react-bits-beam-drift 20s ease-in-out infinite;
 }
 
 .react-bits-grid-aura__pulse {
-  background: color-mix(in srgb, var(--secondary) 16%, transparent);
-  filter: blur(42px);
+  background: color-mix(in srgb, var(--primary) 18%, transparent);
+  filter: blur(54px);
 }
 
 .react-bits-pointer-glow::before {
@@ -415,7 +490,8 @@
   border-radius: 999px;
   background: radial-gradient(
     circle,
-    color-mix(in srgb, var(--primary) 18%, transparent),
+    color-mix(in srgb, var(--primary) 22%, transparent),
+    color-mix(in srgb, var(--secondary) 9%, transparent) 34%,
     transparent 64%
   );
   opacity: 0;
@@ -473,8 +549,8 @@
   border-radius: inherit;
   background: radial-gradient(
     circle at var(--glare-x) var(--glare-y),
-    rgb(255 255 255 / 0.16),
-    transparent 34%
+    color-mix(in srgb, var(--primary) 20%, white 8%),
+    transparent 36%
   );
   opacity: 0;
   pointer-events: none;
@@ -489,7 +565,7 @@
 .react-bits-glare-card--subtle::before {
   background: radial-gradient(
     circle at var(--glare-x) var(--glare-y),
-    color-mix(in srgb, var(--primary) 14%, transparent),
+    color-mix(in srgb, var(--primary) 16%, transparent),
     transparent 42%
   );
 }
@@ -806,6 +882,7 @@
   .react-bits-text-reveal,
   .react-bits-achievement-glow--rare,
   .react-bits-code-scanline__bar,
+  .observatory-progress,
   .welcome-orbit::before,
   .welcome-orbit::after,
   .welcome-scanline,

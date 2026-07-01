@@ -39,17 +39,22 @@ export function BlogListPage({ blogs, locale, heading, text, emptyText }: BlogLi
               {emptyText ?? ''}
             </m.p>
           ) : (
-            <m.div className="mt-12 grid gap-6" variants={containerVariants}>
+            <m.div className="mt-12 grid gap-4" variants={containerVariants}>
               {blogs.map((blog) => (
                 <m.div key={blog.slug} variants={itemVariants}>
-                  <Card className="group hover:border-primary-hover transition-colors">
-                    <CardHeader>
-                      <CardTitle className="group-hover:text-primary-hover transition-colors hover:underline">
-                        <Link href={`/${locale}/blog/${blog.slug}`}>{blog.title || 'No Title'}</Link>
+                  <Card className="observatory-panel group rounded-xl bg-card/75 p-5 transition-colors hover:border-primary/45 sm:p-6">
+                    <CardHeader className="mb-3">
+                      <CardTitle className="text-2xl tracking-[-0.02em] transition-colors group-hover:text-primary-hover">
+                        <Link
+                          href={`/${locale}/blog/${blog.slug}`}
+                          className="rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        >
+                          {blog.title || 'No Title'}
+                        </Link>
                       </CardTitle>
                     </CardHeader>
 
-                    <div className="text-muted-foreground mb-4 flex items-center gap-4 px-6 text-sm">
+                    <div className="text-muted-foreground mb-4 flex flex-wrap items-center gap-4 text-sm">
                       <span className="flex items-center gap-1">
                         <Calendar className="h-4 w-4" />
                         {blog.date}
@@ -61,15 +66,22 @@ export function BlogListPage({ blogs, locale, heading, text, emptyText }: BlogLi
                     </div>
 
                     <CardContent>
-                      <p className="text-muted-foreground mb-4">{blog.description}</p>
+                      <p className="text-muted-foreground mb-5 max-w-3xl leading-7">
+                        {blog.description}
+                      </p>
                       <div className="flex flex-wrap gap-2">
                         {blog.tags.map((tag) => (
                           <Link
                             key={tag}
                             href={`/${locale}/blog/tags/${encodeURIComponent(tag)}`}
-                            className="hover:opacity-80"
+                            className="rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                           >
-                            <Badge icon>{tag}</Badge>
+                            <Badge
+                              icon
+                              className="react-bits-shimmer border border-secondary/20 bg-secondary/12 text-foreground hover:text-secondary"
+                            >
+                              {tag}
+                            </Badge>
                           </Link>
                         ))}
                       </div>

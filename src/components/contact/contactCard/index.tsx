@@ -1,4 +1,5 @@
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
+import { GlareCard } from '@/components/effects/GlareCard';
 import React from 'react';
 
 interface ContactCardProps {
@@ -19,20 +20,22 @@ export function ContactCard({
   contentClassName = '',
 }: ContactCardProps) {
   return (
-    <Card
-      className={`flex h-full flex-col p-6 shadow-xl transition-transform duration-200 hover:-translate-y-2 hover:shadow-2xl ${cardClassName}`}
-    >
-      <CardHeader className={`pt-2 pb-0 ${headerClassName}`}>
-        <CardTitle className="mx-auto flex items-center gap-2 text-xl font-bold">
-          {icon}
-          {title}
-        </CardTitle>
-      </CardHeader>
-      <CardContent
-        className={`flex flex-1 flex-col items-center justify-center ${contentClassName}`}
+    <GlareCard subtle className="rounded-xl">
+      <Card
+        className={`observatory-panel flex h-full flex-col rounded-xl p-5 transition-transform duration-200 hover:-translate-y-1 ${cardClassName}`}
       >
-        {children}
-      </CardContent>
-    </Card>
+        <CardHeader className={`pt-2 pb-0 ${headerClassName}`}>
+          <CardTitle className="mx-auto flex items-center gap-2 text-xl font-semibold tracking-[-0.02em]">
+            <span className="text-primary">{icon}</span>
+            {title}
+          </CardTitle>
+        </CardHeader>
+        <CardContent
+          className={`flex flex-1 flex-col items-center justify-center ${contentClassName}`}
+        >
+          {children}
+        </CardContent>
+      </Card>
+    </GlareCard>
   );
 }

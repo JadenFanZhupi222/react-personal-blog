@@ -15,19 +15,19 @@ export interface ProfileSectionProps {
 
 export function ProfileSection({ profile, totalPlaytime, formatPlaytime, t }: ProfileSectionProps) {
   return (
-    <div className="flex items-center gap-4">
-      <div className="relative h-12 w-12">
+    <div className="flex items-center gap-4 rounded-xl border border-border/70 bg-background/25 p-3">
+      <div className="relative h-12 w-12 overflow-hidden rounded-xl ring-1 ring-secondary/40">
         <Image
           src={profile.avatar}
           alt={profile.personaname}
           fill
           sizes="48px"
-          className="rounded-full"
+          className="object-cover"
           priority={true}
         />
       </div>
       <div>
-        <h3 className="text-foreground font-semibold">{profile.personaname}</h3>
+        <h3 className="text-foreground font-semibold leading-tight">{profile.personaname}</h3>
         <p
           className="text-sm"
           style={{

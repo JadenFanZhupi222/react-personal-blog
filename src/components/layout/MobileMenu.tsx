@@ -11,6 +11,7 @@ interface MobileMenuProps {
   setTheme: (theme: string) => void;
   mounted: boolean;
   t: Translations;
+  pathname: string;
   locale: Locale;
   setLocale: (locale: Locale) => void;
 }
@@ -22,55 +23,49 @@ export function MobileMenu({
   setTheme,
   mounted,
   t,
+  pathname,
   locale,
   setLocale,
 }: MobileMenuProps) {
+  const navItems = [
+    { href: `/${locale}/home`, label: t.home.title },
+    { href: `/${locale}/about`, label: t.about.title },
+    { href: `/${locale}/projects`, label: t.projects.title },
+    { href: `/${locale}/blog`, label: t.blog.title },
+    { href: `/${locale}/contact`, label: t.contact.title },
+  ];
+
+  const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
+
   return (
     isOpen && (
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
-        className="bg-card border-primary/30 sticky top-0 z-50 w-full border-b"
+        className="sticky top-0 z-50 w-full px-3 pt-2"
       >
-        <div className="container py-4">
-          <nav className="flex flex-col space-y-4 px-6">
-            <PendingLink
-              href={`/${locale}/home`}
-              className="text-foreground/70 hover:text-primary transition-colors duration-200"
-              onClick={() => setIsOpen(false)}
-            >
-              {t.home.title}
-            </PendingLink>
-            <PendingLink
-              href={`/${locale}/about`}
-              className="text-foreground/70 hover:text-primary transition-colors duration-200"
-              onClick={() => setIsOpen(false)}
-            >
-              {t.about.title}
-            </PendingLink>
-            <PendingLink
-              href={`/${locale}/projects`}
-              className="text-foreground/70 hover:text-primary transition-colors duration-200"
-              onClick={() => setIsOpen(false)}
-            >
-              {t.projects.title}
-            </PendingLink>
-            <PendingLink
-              href={`/${locale}/blog`}
-              className="text-foreground/70 hover:text-primary transition-colors duration-200"
-              onClick={() => setIsOpen(false)}
-            >
-              {t.blog.title}
-            </PendingLink>
-            <PendingLink
-              href={`/${locale}/contact`}
-              className="text-foreground/70 hover:text-primary transition-colors duration-200"
-              onClick={() => setIsOpen(false)}
-            >
-              {t.contact.title}
-            </PendingLink>
-            <div className="space-y-4 border-t pt-4">
+        <div className="observatory-panel mx-auto w-full max-w-7xl rounded-xl py-4 backdrop-blur-xl">
+          <nav className="flex flex-col gap-2 px-4">
+            {navItems.map((item) => {
+              const active = isActive(item.href);
+              return (
+                <PendingLink
+                  key={item.href}
+                  href={item.href}
+                  aria-current={active ? 'page' : undefined}
+                  className={`rounded-lg px-3 py-2.5 text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                    active
+                      ? 'bg-primary/12 text-primary shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--primary)_34%,transparent)]'
+                      : 'text-foreground/72 hover:bg-accent/60 hover:text-foreground'
+                  }`}
+                  onClick={() => setIsOpen(false)}
+                >
+                  {item.label}
+                </PendingLink>
+              );
+            })}
+            <div className="mt-2 space-y-4 border-t border-border/70 pt-4">
               <div>
                 <div className="text-foreground/70 mb-2 px-2 text-sm font-medium">
                   Language
@@ -88,8 +83,8 @@ export function MobileMenu({
                       }}
                       className={`flex w-full items-center rounded-md px-2 py-2 transition-colors ${
                         locale === lang.code
-                          ? 'bg-primary/80 text-primary-foreground/90'
-                          : 'hover:bg-primary-hover/30 text-foreground hover:text-primary'
+                          ? 'bg-primary text-primary-foreground'
+                          : 'text-foreground hover:bg-accent hover:text-primary'
                       }`}
                     >
                       {lang.name}

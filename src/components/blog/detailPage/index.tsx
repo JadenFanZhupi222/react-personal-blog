@@ -15,13 +15,13 @@ interface BlogDetailContentProps {
 
 export function BlogDetailContent({ blog, context, locale }: BlogDetailContentProps) {
   return (
-    <div className="bg-background flex min-h-[100dvh] justify-center px-2 py-8">
-      <div className="w-full max-w-3xl">
-        <div className="bg-card dark:bg-card w-full rounded-2xl p-6 shadow-xl sm:p-10">
-          <h1 className="text-foreground mb-2 text-center text-3xl leading-tight font-extrabold tracking-tight">
+    <div className="flex min-h-[100dvh] justify-center px-3 py-10 sm:py-14">
+      <div className="w-full max-w-4xl">
+        <div className="observatory-panel w-full rounded-2xl p-6 sm:p-10">
+          <h1 className="text-balance text-center text-4xl font-semibold leading-tight tracking-[-0.03em] text-foreground sm:text-5xl">
             {blog.title}
           </h1>
-          <div className="text-muted-foreground mb-6 flex flex-wrap items-center justify-center gap-3 text-xs sm:text-sm">
+          <div className="text-muted-foreground mt-5 mb-6 flex flex-wrap items-center justify-center gap-3 text-xs sm:text-sm">
             <span className="flex items-center gap-1">
               <Calendar className="h-4 w-4" />
               {blog.date}
@@ -31,7 +31,9 @@ export function BlogDetailContent({ blog, context, locale }: BlogDetailContentPr
               {blog.readTime}
             </span>
           </div>
-          <div className="text-muted-foreground mb-4 text-center text-base">{blog.description}</div>
+          <div className="mx-auto mb-5 max-w-2xl text-center text-base leading-7 text-muted-foreground">
+            {blog.description}
+          </div>
           {blog.tags.length > 0 && (
             <div className="mb-6 flex flex-wrap justify-center gap-2">
               {blog.tags.map((tag) => (
@@ -40,12 +42,17 @@ export function BlogDetailContent({ blog, context, locale }: BlogDetailContentPr
                   href={`/${locale}/blog/tags/${encodeURIComponent(tag)}`}
                   className="hover:opacity-80"
                 >
-                  <Badge icon>{tag}</Badge>
+                <Badge
+                  icon
+                  className="border border-secondary/20 bg-secondary/12 text-foreground hover:text-secondary"
+                >
+                  {tag}
+                </Badge>
                 </Link>
               ))}
             </div>
           )}
-          <div className="border-border mb-8 border-b border-dashed" />
+          <div className="border-border/80 mb-8 border-b" />
           <article className="mx-auto max-w-none">
             <Markdown>{blog.content}</Markdown>
           </article>

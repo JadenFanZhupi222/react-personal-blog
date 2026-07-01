@@ -13,6 +13,7 @@ interface FeatureCardProps {
   title: string;
   description: string;
   actionText: string;
+  compact?: boolean;
 }
 
 export function FeatureCard({
@@ -21,11 +22,15 @@ export function FeatureCard({
   title,
   description,
   actionText,
+  compact = false,
 }: FeatureCardProps) {
   const controls = useAnimation();
 
   return (
-    <Link href={href}>
+    <Link
+      href={href}
+      className="block h-full rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+    >
       <MagneticCard>
         <GlareCard subtle>
           <motion.div
@@ -33,15 +38,25 @@ export function FeatureCard({
             onMouseEnter={() => controls.start({ scale: 1.12 })}
             onMouseLeave={() => controls.start({ scale: 1 })}
           >
-            <Card className="bg-card/95 text-card-foreground border-border group hover:border-primary/50 h-full min-w-0 border transition-colors duration-300">
-              <CardContent className="pt-6">
-                <div className="flex flex-col items-center space-y-4 text-center">
-                  <Icon className="text-primary h-8 w-8 transition-transform duration-300 group-hover:scale-110" />
-                  <div className="space-y-2">
-                    <h3 className="text-foreground text-xl font-semibold">{title}</h3>
-                    <p className="text-muted-foreground">{description}</p>
+            <Card className="observatory-panel group h-full min-w-0 rounded-xl bg-card/80 text-card-foreground transition-colors duration-300 hover:border-primary/50">
+              <CardContent className={compact ? 'p-4' : 'p-5 sm:p-6'}>
+                <div
+                  className={
+                    compact
+                      ? 'flex items-center gap-3 text-left'
+                      : 'flex min-h-48 flex-col items-start justify-between gap-6 text-left'
+                  }
+                >
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-primary/30 bg-primary/10 text-primary transition-transform duration-300 group-hover:scale-105">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <div className="min-w-0 space-y-2">
+                    <h3 className="text-foreground text-lg font-semibold tracking-[-0.01em]">
+                      {title}
+                    </h3>
+                    {!compact && <p className="text-muted-foreground leading-7">{description}</p>}
                     <motion.p
-                      className="text-foreground/80 text-sm font-medium"
+                      className="inline-flex text-sm font-medium text-primary"
                       animate={controls}
                       transition={{ type: 'spring', stiffness: 400, damping: 15 }}
                     >

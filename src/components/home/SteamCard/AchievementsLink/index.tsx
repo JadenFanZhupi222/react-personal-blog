@@ -14,9 +14,9 @@ export function AchievementsLink({ text }: AchievementsLinkProps) {
     <div className="mt-2 flex justify-center">
       <Link
         href={`/${locale}/achievements`}
-        className="text-secondary-foreground bg-secondary hover:bg-secondary/90 hover:-translate-y-1 hover:shadow-xl hover:shadow-secondary/40 active:translate-y-0 active:shadow-md active:duration-75 flex items-center gap-1 rounded-full border-0 px-4 py-2 shadow-md transition-all duration-200"
+        className="flex items-center gap-2 rounded-full border border-secondary/40 bg-secondary/15 px-4 py-2 text-secondary transition-all duration-200 hover:-translate-y-0.5 hover:bg-secondary hover:text-secondary-foreground hover:shadow-[0_0_26px_color-mix(in_srgb,var(--secondary)_34%,transparent)] active:translate-y-0 active:duration-75"
       >
-        <Trophy className="text-secondary-foreground h-4 w-4" />
+        <Trophy className="h-4 w-4" />
         <span className="text-sm">{text}</span>
       </Link>
     </div>

@@ -40,15 +40,15 @@ export function LanguageSwitch() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="text-foreground hover:bg-primary-hover/30 hover:scale-110 active:scale-95 active:duration-75 transition-transform duration-200 inline-flex h-8 w-8 items-center justify-center rounded-md bg-transparent">
+      <DropdownMenuTrigger className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-border/70 bg-card-30 text-foreground transition-all duration-200 hover:border-primary/50 hover:bg-accent hover:text-primary active:scale-95 active:duration-75">
         <Globe size={20} />
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="dark:bg-background/95">
+      <DropdownMenuContent align="end" className="border-border bg-popover/95 backdrop-blur-xl">
         {languages.map((lang) => (
           <DropdownMenuItem
             key={lang.code}
             onClick={() => handleLanguageChange(lang.code)}
-            className={locale === lang.code ? 'bg-accent dark:bg-accent/50' : ''}
+            className={locale === lang.code ? 'bg-accent text-primary' : ''}
           >
             {lang.name}
           </DropdownMenuItem>

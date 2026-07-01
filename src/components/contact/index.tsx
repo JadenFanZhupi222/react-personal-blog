@@ -34,12 +34,12 @@ export default function ContactPage({ contact }: { contact: ContactData }) {
   return (
     <LazyMotion features={domAnimation}>
       <m.div
-        className="bg-background flex min-h-[90dvh] items-start justify-center px-2 py-0 lg:items-center lg:py-8"
+        className="observatory-shell flex min-h-[90dvh] items-start justify-center px-3 py-12 lg:items-center lg:py-16"
         initial="hidden"
         animate="visible"
         variants={containerVariants}
       >
-        <div className="mx-auto grid h-[260px] w-full max-w-4xl gap-8 pt-8 sm:grid-cols-3 sm:pt-0">
+        <div className="mx-auto grid w-full max-w-5xl gap-5 sm:grid-cols-3">
           {[
             {
               key: 'github',
@@ -50,7 +50,7 @@ export default function ContactPage({ contact }: { contact: ContactData }) {
                   href={contact.github.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-foreground font-mono text-lg hover:underline"
+                  className="rounded-md font-mono text-lg text-foreground hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
                   {contact.github.username}
                 </a>
@@ -65,7 +65,7 @@ export default function ContactPage({ contact }: { contact: ContactData }) {
                   {contact.emails.map((item) => (
                     <div key={item.value} className="flex items-center gap-2">
                       {emailIconMap[item.iconKey]}
-                      <span className="text-foreground font-mono text-lg">{item.value}</span>
+                      <span className="break-all font-mono text-base text-foreground">{item.value}</span>
                     </div>
                   ))}
                 </div>
@@ -83,7 +83,7 @@ export default function ContactPage({ contact }: { contact: ContactData }) {
                       href={item.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 hover:underline"
+                      className="flex items-center gap-2 rounded-md hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                     >
                       {socialIconMap[item.iconKey]}
                       <span className="font-mono text-sm">{item.value}</span>

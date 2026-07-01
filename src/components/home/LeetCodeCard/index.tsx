@@ -28,10 +28,10 @@ export function LeetCodeCard() {
   }
 
   return (
-    <Card className="bg-card text-card-foreground border-border border shadow-lg">
-      <CardContent className="pt-6">
+    <Card className="observatory-panel h-full rounded-xl bg-card/80 text-card-foreground">
+      <CardContent className="p-5 sm:p-6">
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-foreground flex items-center gap-2 text-2xl font-bold">
+          <h2 className="text-foreground flex items-center gap-2 text-xl font-semibold tracking-[-0.02em]">
             <Trophy className="text-primary h-5 w-5" />
             {t.home.activity.leetcode.title}
           </h2>
@@ -43,7 +43,7 @@ export function LeetCodeCard() {
           <>
             <div>
               <div className="mb-4 flex items-center gap-2">
-                <span className="text-secondary ml-auto text-3xl font-extrabold">
+                <span className="text-primary ml-auto text-4xl font-semibold tracking-[-0.04em]">
                   {stats.totalSolved}
                 </span>
                 <span className="text-muted-foreground text-lg font-semibold">
@@ -59,9 +59,9 @@ export function LeetCodeCard() {
                     {stats.easySolved} / {stats.totalEasy}
                   </span>
                 </div>
-                <div className="bg-muted h-2 w-full rounded">
+                <div className="bg-muted h-2 w-full overflow-hidden rounded-full">
                   <div
-                    className="bg-leetcode-easy h-2 rounded transition-all duration-500"
+                    className="observatory-progress h-2 rounded-full text-leetcode-easy transition-all duration-500"
                     style={{
                       width: `${stats.totalEasy ? (stats.easySolved / stats.totalEasy) * 100 : 0}%`,
                     }}
@@ -75,9 +75,9 @@ export function LeetCodeCard() {
                     {stats.mediumSolved} / {stats.totalMedium}
                   </span>
                 </div>
-                <div className="bg-muted h-2 w-full rounded">
+                <div className="bg-muted h-2 w-full overflow-hidden rounded-full">
                   <div
-                    className="bg-leetcode-medium h-2 rounded transition-all duration-500"
+                    className="observatory-progress h-2 rounded-full text-leetcode-medium transition-all duration-500"
                     style={{
                       width: `${stats.totalMedium ? (stats.mediumSolved / stats.totalMedium) * 100 : 0}%`,
                     }}
@@ -91,42 +91,42 @@ export function LeetCodeCard() {
                     {stats.hardSolved} / {stats.totalHard}
                   </span>
                 </div>
-                <div className="bg-muted h-2 w-full rounded">
+                <div className="bg-muted h-2 w-full overflow-hidden rounded-full">
                   <div
-                    className="bg-leetcode-hard h-2 rounded transition-all duration-500"
+                    className="observatory-progress h-2 rounded-full text-leetcode-hard transition-all duration-500"
                     style={{
                       width: `${stats.totalHard ? (stats.hardSolved / stats.totalHard) * 100 : 0}%`,
                     }}
                   />
                 </div>
               </div>
-              <div className="mt-6 flex items-center justify-between text-xs font-semibold">
+              <div className="mt-6 grid grid-cols-3 gap-2 text-xs font-semibold">
                 <div className="flex items-center gap-1">
                   <Star className="text-secondary h-4 w-4" />
                   <span className="text-muted-foreground">
                     {t.home.activity.leetcode.completion}
                   </span>
                 </div>
-                <div className="flex items-center gap-1">
+                <div className="flex items-center justify-center gap-1">
                   <Award className="text-secondary h-4 w-4" />
                   <span className="text-muted-foreground">{t.home.activity.leetcode.ranking}</span>
                 </div>
-                <div className="flex items-center gap-1">
+                <div className="flex items-center justify-end gap-1">
                   <Medal className="text-secondary h-4 w-4" />
                   <span className="text-muted-foreground">
                     {t.home.activity.leetcode.reputation}
                   </span>
                 </div>
               </div>
-              <div className="mt-1 flex items-center justify-between text-lg font-extrabold">
+              <div className="mt-1 grid grid-cols-3 gap-2 text-lg font-semibold tracking-[-0.02em]">
                 <span className="text-foreground">
                   {stats.totalQuestions
                     ? ((stats.totalSolved / stats.totalQuestions) * 100).toFixed(1)
                     : 0}
                   %
                 </span>
-                <span className="text-foreground">{stats.ranking.toLocaleString()}</span>
-                <span className="text-foreground">{stats.reputation}</span>
+                <span className="text-center text-foreground">{stats.ranking.toLocaleString()}</span>
+                <span className="text-right text-foreground">{stats.reputation}</span>
               </div>
             </div>
           </>

@@ -37,16 +37,16 @@ export function SteamCard() {
   }
 
   return (
-    <GlareCard subtle className="rounded-lg">
-      <Card className="bg-card text-card-foreground border-border relative overflow-hidden border shadow-lg">
+    <GlareCard subtle className="rounded-xl">
+      <Card className="observatory-panel relative h-full overflow-hidden rounded-xl bg-steam-card/90 text-card-foreground">
         <div
           aria-hidden
-          className="from-achievement-rare-glow/10 via-primary/60 pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r to-transparent"
+          className="from-achievement-rare-glow/10 via-achievement-rare-glow/70 pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r to-transparent"
         />
-        <CardContent className="relative flex h-full min-h-[320px] flex-col pt-6">
+        <CardContent className="relative flex h-full min-h-[320px] flex-col p-5 sm:p-6">
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-foreground flex items-center gap-2 text-2xl font-bold">
-              <Gamepad className="text-primary h-5 w-5" />
+            <h2 className="text-foreground flex items-center gap-2 text-xl font-semibold tracking-[-0.02em]">
+              <Gamepad className="text-secondary h-5 w-5" />
               {t.home.activity.steam.title}
             </h2>
             {!error && <RefreshButton onClick={() => refetch()} isLoading={isFetching} />}

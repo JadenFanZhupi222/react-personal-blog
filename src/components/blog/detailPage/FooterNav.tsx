@@ -27,7 +27,7 @@ function NavCard({
   return (
     <Link
       href={`/${locale}/blog/${blog.slug}`}
-      className={`group bg-card hover:border-primary-hover flex flex-col gap-2 rounded-xl border p-4 transition-colors ${align}`}
+      className={`observatory-panel group flex flex-col gap-2 rounded-xl bg-card/75 p-4 transition-colors hover:border-primary/45 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${align}`}
     >
       <span className="text-muted-foreground inline-flex items-center gap-1 text-xs">
         {direction === 'prev' ? <ArrowLeft className="h-3.5 w-3.5" /> : null}
@@ -45,7 +45,7 @@ function RelatedCard({ blog, locale }: { blog: BlogSummary; locale: Locale }) {
   return (
     <Link
       href={`/${locale}/blog/${blog.slug}`}
-      className="group bg-card hover:border-primary-hover flex flex-col gap-2 rounded-xl border p-4 transition-colors"
+      className="observatory-panel group flex flex-col gap-2 rounded-xl bg-card/75 p-4 transition-colors hover:border-primary/45 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
       <span className="text-foreground group-hover:text-primary-hover line-clamp-2 font-semibold transition-colors">
         {blog.title}
@@ -63,7 +63,7 @@ function RelatedCard({ blog, locale }: { blog: BlogSummary; locale: Locale }) {
       {blog.tags.length > 0 && (
         <div className="flex flex-wrap gap-1">
           {blog.tags.slice(0, 3).map((tag) => (
-            <Badge key={tag} className="text-xs">
+            <Badge key={tag} className="border border-secondary/20 bg-secondary/12 text-xs text-foreground">
               {tag}
             </Badge>
           ))}
@@ -96,7 +96,9 @@ export function FooterNav({ context, locale }: FooterNavProps) {
       )}
       {related.length > 0 && (
         <div>
-          <h2 className="text-foreground mb-4 text-xl font-bold">{t.blog.related}</h2>
+          <h2 className="text-foreground mb-4 text-xl font-semibold tracking-[-0.02em]">
+            {t.blog.related}
+          </h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {related.map((r) => (
               <RelatedCard key={r.slug} blog={r} locale={locale} />

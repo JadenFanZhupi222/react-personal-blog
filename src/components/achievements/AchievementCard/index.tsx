@@ -38,11 +38,13 @@ export function AchievementCard({ achievement: ach }: { achievement: Achievement
     <AchievementGlow rare={isRare} achieved={achieved}>
       <div
         className={cn(
-          'group flex h-full items-start gap-3 rounded-xl p-3.5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg',
-          achieved ? 'bg-card hover:bg-accent/40' : 'bg-muted/20 opacity-70 hover:opacity-100',
+          'group flex h-full items-start gap-3 rounded-xl border p-3.5 transition-all duration-300 hover:-translate-y-0.5',
+          achieved
+            ? 'border-border/70 bg-card/80 hover:border-primary/40 hover:bg-accent/40'
+            : 'border-border/40 bg-muted/20 opacity-70 hover:opacity-100',
           isRare &&
             achieved &&
-            'ring-achievement-rare-glow shadow-[0_0_16px_-2px_var(--achievement-rare-glow)] ring-1',
+            'border-achievement-rare-glow/55 ring-achievement-rare-glow shadow-[0_0_22px_-4px_var(--achievement-rare-glow)] ring-1',
           isRare && !achieved && 'ring-achievement-rare-glow/40 ring-1'
         )}
       >

@@ -12,21 +12,28 @@ export function ExperienceCard({ exp, index }: ExperienceCardProps) {
   const isMobile = useIsMobile();
 
   if (!isMobile) {
-    // PC端直接展示全部内容
     return (
-      <Card key={index} className="bg-card text-card-foreground border-border border shadow-lg">
-        <div className="px-6 pt-6 pb-2">
-          <div className="mb-4 flex items-start justify-between">
+      <Card
+        key={index}
+        className="observatory-panel relative rounded-xl bg-card/80 text-card-foreground md:before:absolute md:before:-left-[2.55rem] md:before:top-8 md:before:h-3 md:before:w-3 md:before:rounded-full md:before:bg-primary md:before:shadow-[0_0_18px_var(--primary)]"
+      >
+        <div className="p-6">
+          <div className="mb-4 flex items-start justify-between gap-4">
             <div>
-              <h3 className="mb-4 text-lg font-semibold">{exp.title}</h3>
-              <p className="text-muted-foreground">{exp.company}</p>
+              <h3 className="mb-2 text-xl font-semibold tracking-[-0.02em]">{exp.title}</h3>
+              <p className="text-primary">{exp.company}</p>
             </div>
-            <span className="text-muted-foreground text-sm">{exp.period}</span>
+            <span className="shrink-0 rounded-full border border-border/70 bg-background/30 px-3 py-1 font-mono text-xs text-muted-foreground">
+              {exp.period}
+            </span>
           </div>
-          <p className="text-muted-foreground mb-4">{exp.description}</p>
-          <ul className="text-muted-foreground list-inside list-disc space-y-2">
+          <p className="mb-5 leading-7 text-muted-foreground">{exp.description}</p>
+          <ul className="space-y-2 text-muted-foreground">
             {exp.achievements.map((achievement, i) => (
-              <li key={i}>{achievement}</li>
+              <li key={i} className="flex gap-3 leading-7">
+                <span className="mt-3 h-1.5 w-1.5 shrink-0 rounded-full bg-secondary" />
+                <span>{achievement}</span>
+              </li>
             ))}
           </ul>
         </div>
@@ -34,19 +41,18 @@ export function ExperienceCard({ exp, index }: ExperienceCardProps) {
     );
   }
 
-  // mobile端折叠卡片
   return (
     <CollapsibleCard
       header={
         <div>
           <h3 className="mb-1 text-base font-semibold">{exp.title}</h3>
-          <p className="text-muted-foreground mb-1 text-xs">{exp.period}</p>
-          <p className="text-muted-foreground text-sm">{exp.company}</p>
+          <p className="mb-1 text-xs text-muted-foreground">{exp.period}</p>
+          <p className="text-sm text-primary">{exp.company}</p>
         </div>
       }
-      className="mb-2"
+      className="observatory-panel mb-2 rounded-xl"
     >
-      <p className="text-muted-foreground mb-2 text-xs">{exp.description}</p>
+      <p className="mb-2 text-xs text-muted-foreground">{exp.description}</p>
       <ul className="list-disc space-y-1 pl-4">
         {exp.achievements.map((achievement, i) => (
           <li key={i} className="text-xs">

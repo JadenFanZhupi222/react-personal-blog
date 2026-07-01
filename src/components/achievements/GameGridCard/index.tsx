@@ -28,7 +28,7 @@ export function GameGridCard({
       <PendingLink
         href={`/${locale}/achievements/${game.appid}`}
         className={cn(
-          'group ring-primary/40 relative block aspect-[460/215] overflow-hidden rounded-xl ring-0 transition-shadow duration-300 hover:shadow-2xl hover:ring-2',
+          'group relative block aspect-[460/215] overflow-hidden rounded-xl border border-border/70 bg-card ring-0 transition-all duration-300 hover:-translate-y-0.5 hover:border-secondary/45 hover:shadow-[0_22px_52px_color-mix(in_srgb,var(--background)_46%,black_54%)] hover:ring-2 hover:ring-secondary/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
           featured && 'h-full lg:aspect-auto'
         )}
       >
@@ -46,12 +46,13 @@ export function GameGridCard({
         />
 
         {/* Bottom gradient scrim */}
-        <div className="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-black/95 via-black/60 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-black/95 via-black/62 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/12 via-transparent to-secondary/12 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
         {/* Featured badge top-left */}
         {featured && featuredLabel && (
           <div className="absolute top-3 left-3">
-            <span className="inline-flex items-center gap-1 rounded-full bg-black/50 px-2.5 py-1 text-xs font-medium text-white backdrop-blur-md">
+            <span className="inline-flex items-center gap-1 rounded-full border border-achievement-rare-glow/30 bg-black/55 px-2.5 py-1 text-xs font-medium text-white backdrop-blur-md">
               <Trophy className="text-achievement-rare-glow-strong h-3 w-3" />
               {featuredLabel}
             </span>
@@ -62,7 +63,7 @@ export function GameGridCard({
         <div className="absolute inset-x-0 bottom-0 px-4 pb-3">
           <h3
             className={cn(
-              'line-clamp-1 font-semibold text-white drop-shadow-md',
+              'line-clamp-1 font-semibold tracking-[-0.02em] text-white drop-shadow-md',
               featured ? 'text-2xl sm:text-3xl' : 'text-base'
             )}
           >

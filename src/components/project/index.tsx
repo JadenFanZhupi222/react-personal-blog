@@ -3,6 +3,7 @@
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
 import { GlareCard } from '@/components/effects/GlareCard';
+import { ExternalLink } from 'lucide-react';
 import { LazyMotion, domAnimation, m } from 'framer-motion';
 import { useTranslations } from '@/lib/hooks/useTranslations';
 import { Badge } from '@/components/ui/Badge';
@@ -25,32 +26,49 @@ export function ProjectListPage({ projects }: { projects: Record<Locale, Project
           <m.div variants={itemVariants}>
             <PageHeader heading={t.projects.title} text={t.projects.description} />
           </m.div>
-          <m.div className="mt-12 grid gap-6" variants={containerVariants}>
+          <m.div className="mt-12 grid gap-5 lg:grid-cols-2" variants={containerVariants}>
             {projects[locale]?.map((project: Project, index: number) => (
-              <m.div key={index} variants={itemVariants}>
-                <GlareCard subtle className="rounded-lg">
-                  <Card className="group hover:border-primary-hover bg-card/95 transition-colors duration-300">
-                    <CardHeader>
-                      <CardTitle className="group-hover:text-primary-hover transition-colors hover:underline">
-                        <a href={project.url} target="_blank" rel="noopener noreferrer">
-                          {project.title}
+              <m.div key={index} variants={itemVariants} className={index === 0 ? 'lg:col-span-2' : ''}>
+                <GlareCard subtle className="rounded-xl">
+                  <Card className="observatory-panel group h-full rounded-xl bg-card/80 transition-colors duration-300">
+                    <CardHeader className="gap-4">
+                      <CardTitle className="text-2xl tracking-[-0.025em] transition-colors group-hover:text-primary-hover">
+                        <a
+                          href={project.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        >
+                          <span className="inline-flex items-center gap-2">
+                            {project.title}
+                            <ExternalLink className="h-4 w-4 text-primary" />
+                          </span>
                         </a>
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-muted-foreground mb-4">{project.description}</p>
-                      <div className="mb-2 flex flex-wrap gap-2">
+                      <p className="text-muted-foreground mb-5 max-w-3xl leading-7">
+                        {project.description}
+                      </p>
+                      <div className="mb-5 flex flex-wrap gap-2">
                         {project.tags.map((tag: string) => (
-                          <Badge key={tag} icon={false} className="react-bits-shimmer">
+                          <Badge
+                            key={tag}
+                            icon={false}
+                            className="react-bits-shimmer border border-primary/20 bg-primary/10 text-foreground"
+                          >
                             {tag}
                           </Badge>
                         ))}
                       </div>
                       <div className="space-y-2">
-                        <h3 className="font-semibold">{t.projects.highlights}:</h3>
-                        <ul className="text-muted-foreground list-inside list-disc space-y-1">
+                        <h3 className="font-semibold text-primary">{t.projects.highlights}</h3>
+                        <ul className="space-y-2 text-muted-foreground">
                           {project.highlights.map((highlight: string, i: number) => (
-                            <li key={i}>{highlight}</li>
+                            <li key={i} className="flex gap-3 leading-7">
+                              <span className="mt-3 h-1.5 w-1.5 shrink-0 rounded-full bg-secondary" />
+                              <span>{highlight}</span>
+                            </li>
                           ))}
                         </ul>
                       </div>

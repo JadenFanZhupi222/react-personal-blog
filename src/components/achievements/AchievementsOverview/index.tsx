@@ -124,22 +124,23 @@ export function AchievementsOverview() {
   };
 
   return (
-    <div className="mx-auto w-full max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
-      <h1 className="text-foreground text-4xl font-bold tracking-tight sm:text-5xl">
+    <div className="observatory-shell mx-auto w-full max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
+      <div className="observatory-panel rounded-2xl p-6 sm:p-8">
+      <h1 className="text-foreground text-4xl font-semibold tracking-[-0.03em] sm:text-5xl">
         {t.achievements.title}
       </h1>
       <p className="text-muted-foreground mt-3 text-lg">
-        <span className="text-foreground font-semibold tabular-nums">{totalGames}</span>{' '}
+        <span className="text-primary font-semibold tabular-nums">{totalGames}</span>{' '}
         {t.achievements.summary.games}
         <span className="mx-2">·</span>
-        <span className="text-foreground font-semibold tabular-nums">
+        <span className="text-secondary font-semibold tabular-nums">
           {formatPlaytime(totalPlaytime)}
         </span>{' '}
         {t.achievements.summary.played}
       </p>
 
       {/* Control bar: search + sort */}
-      <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="relative max-w-sm flex-1">
           <Search className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
           <input
@@ -147,21 +148,21 @@ export function AchievementsOverview() {
             value={searchTerm}
             onChange={(e) => handleSearchChange(e.target.value)}
             placeholder={t.achievements.searchPlaceholder}
-            className="bg-card text-foreground placeholder:text-muted-foreground focus:border-primary w-full rounded-lg border py-2 pr-3 pl-9 text-sm outline-none transition-colors"
+            className="w-full rounded-xl border border-border/80 bg-background/40 py-2.5 pr-3 pl-9 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-ring/35"
           />
         </div>
         <div className="flex items-center gap-2">
           <span className="text-muted-foreground text-sm">{t.achievements.sort.label}</span>
-          <div className="bg-card flex gap-1 rounded-lg border p-1">
+          <div className="flex gap-1 rounded-xl border border-border/80 bg-background/40 p-1">
             {(['playtime', 'name'] as SortKey[]).map((key) => (
               <button
                 key={key}
                 onClick={() => handleSortChange(key)}
                 className={cn(
-                  'rounded-md px-3 py-1 text-sm transition-colors',
+                  'rounded-lg px-3 py-1.5 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
                   sortKey === key
                     ? 'bg-primary text-primary-foreground'
-                    : 'text-muted-foreground hover:text-foreground'
+                    : 'text-muted-foreground hover:bg-accent hover:text-foreground'
                 )}
               >
                 {t.achievements.sort[key]}
@@ -169,6 +170,7 @@ export function AchievementsOverview() {
             ))}
           </div>
         </div>
+      </div>
       </div>
 
       {currentItems.length === 0 ? (
