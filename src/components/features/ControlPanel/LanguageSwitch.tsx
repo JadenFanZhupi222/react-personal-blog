@@ -39,7 +39,7 @@ export function LanguageSwitch() {
   };
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-border/70 bg-card-30 text-foreground transition-all duration-200 hover:border-primary/50 hover:bg-accent hover:text-primary active:scale-95 active:duration-75">
         <Globe size={20} />
       </DropdownMenuTrigger>
