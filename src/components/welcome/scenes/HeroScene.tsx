@@ -79,18 +79,18 @@ export function HeroScene() {
         <div className="space-y-2">
           <h1
             data-anim="name"
-            className="welcome-title overflow-hidden text-6xl leading-[1.05] font-black tracking-tight text-white sm:text-7xl md:text-8xl"
+            className="welcome-title overflow-hidden text-6xl leading-[1.05] font-black tracking-tight text-foreground sm:text-7xl md:text-8xl"
           >
             {splitChars(t.welcome.name)}
           </h1>
           <h2
             data-anim="name"
-            className="welcome-title welcome-title--sub overflow-hidden text-5xl leading-[1.05] font-black tracking-tight text-white sm:text-6xl md:text-7xl"
+            className="welcome-title welcome-title--sub overflow-hidden text-5xl leading-[1.05] font-black tracking-tight text-foreground sm:text-6xl md:text-7xl"
           >
             {splitChars(t.welcome.nickname)}
           </h2>
         </div>
-        <p className="flex flex-col items-center justify-center gap-3 text-lg text-zinc-400 sm:flex-row sm:text-xl">
+        <p className="flex flex-col items-center justify-center gap-3 text-lg text-muted-foreground sm:flex-row sm:text-xl">
           <span data-anim="role" className="welcome-role">
             {t.welcome.role.fullstack}
           </span>

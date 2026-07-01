@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { useTheme } from 'next-themes';
 import { Renderer, Program, Mesh, Triangle } from 'ogl';
 import { useReducedMotion } from './lib/useReducedMotion';
 
@@ -80,6 +81,8 @@ function hexToRgb(hex: string): [number, number, number] {
 export default function AmbientShader() {
   const containerRef = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
+  const { resolvedTheme } = useTheme();
+  const isLight = resolvedTheme === 'light';
 
   useEffect(() => {
     if (reduced) return;
@@ -95,12 +98,17 @@ export default function AmbientShader() {
     container.appendChild(gl.canvas);
     Object.assign(gl.canvas.style, { width: '100%', height: '100%', display: 'block' });
 
-    // Theme-independent designed palette: two complementary glow orbs
-    // on a near-black base. Indigo + teal is a Linear/Vercel-style cool
-    // duo that never goes muddy when they overlap.
-    const base = '#0a0a0f'; // page bg, matches orchestrator
-    const orbA = '#4f46e5'; // brand indigo — primary glow
-    const orbB = '#0d9488'; // teal-600 — cool counterpoint, never warm
+    const palette = isLight
+      ? {
+          base: '#f2fbf8',
+          orbA: '#5eead4',
+          orbB: '#f2c14e',
+        }
+      : {
+          base: '#0a0a0f',
+          orbA: '#4f46e5',
+          orbB: '#0d9488',
+        };
 
     const program = new Program(gl, {
       vertex: VERTEX,
@@ -108,9 +116,9 @@ export default function AmbientShader() {
       uniforms: {
         uResolution: { value: [container.clientWidth, container.clientHeight] },
         uTime: { value: 0 },
-        uColorBase: { value: hexToRgb(base) },
-        uColorOrbA: { value: hexToRgb(orbA) },
-        uColorOrbB: { value: hexToRgb(orbB) },
+        uColorBase: { value: hexToRgb(palette.base) },
+        uColorOrbA: { value: hexToRgb(palette.orbA) },
+        uColorOrbB: { value: hexToRgb(palette.orbB) },
       },
     });
 
@@ -152,7 +160,7 @@ export default function AmbientShader() {
       document.removeEventListener('visibilitychange', onVis);
       gl.canvas.remove();
     };
-  }, [reduced]);
+  }, [isLight, reduced]);
 
   if (reduced) return null;
   return (

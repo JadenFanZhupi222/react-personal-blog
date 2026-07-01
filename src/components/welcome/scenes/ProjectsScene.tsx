@@ -61,14 +61,14 @@ export function ProjectsScene() {
             >
               {/* index tag in the corner */}
               <span
-                className="absolute top-12 left-12 font-mono text-sm tracking-widest text-white/40 sm:left-24"
+                className="absolute top-12 left-12 font-mono text-sm tracking-widest text-foreground/40 sm:left-24"
                 style={{ color: accent, opacity: 0.7 }}
               >
                 {num} / {String(projects.length).padStart(2, '0')}
               </span>
 
               <div className="max-w-4xl">
-                <h3 className="text-6xl leading-[0.95] font-black tracking-tight text-white sm:text-7xl md:text-8xl lg:text-9xl">
+                <h3 className="text-6xl leading-[0.95] font-black tracking-tight text-foreground sm:text-7xl md:text-8xl lg:text-9xl">
                   {project.title}
                 </h3>
                 {/* signature accent line under the title */}
@@ -76,7 +76,7 @@ export function ProjectsScene() {
                   className="mt-8 h-px w-24"
                   style={{ background: accent, boxShadow: `0 0 18px ${accent}80` }}
                 />
-                <p className="mt-8 max-w-xl text-lg leading-relaxed text-white/70 sm:text-xl">
+                <p className="mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
                   {project.description}
                 </p>
               </div>

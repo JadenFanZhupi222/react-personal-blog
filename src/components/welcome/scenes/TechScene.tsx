@@ -101,7 +101,7 @@ export function TechScene() {
         className="pointer-events-none absolute inset-0 opacity-[0.18]"
         style={{
           backgroundImage:
-            'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)',
+            'linear-gradient(color-mix(in srgb, var(--foreground) 9%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--foreground) 9%, transparent) 1px, transparent 1px)',
           backgroundSize: '64px 64px',
           maskImage:
             'radial-gradient(ellipse at center, black 30%, transparent 80%)',
@@ -109,7 +109,7 @@ export function TechScene() {
       />
       <pre
         ref={codeRef}
-        className="relative max-w-2xl px-6 font-mono text-base leading-relaxed text-zinc-100 sm:text-lg"
+        className="relative max-w-2xl px-6 font-mono text-base leading-relaxed text-foreground sm:text-lg"
       >
         {tokens.map((tk, i) => (
           <span
@@ -124,7 +124,7 @@ export function TechScene() {
         ))}
         <span
           aria-hidden
-          className="ml-0.5 inline-block h-[1em] w-[0.5em] translate-y-[0.1em] bg-zinc-100"
+          className="ml-0.5 inline-block h-[1em] w-[0.5em] translate-y-[0.1em] bg-foreground"
           style={{ animation: 'blink 1s steps(2, end) infinite' }}
         />
       </pre>

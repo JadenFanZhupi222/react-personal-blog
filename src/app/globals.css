@@ -652,13 +652,13 @@
     radial-gradient(
       circle at 50% 50%,
       transparent 0 18rem,
-      rgb(99 102 241 / 0.18) 18.08rem 18.18rem,
+      color-mix(in srgb, var(--primary) 18%, transparent) 18.08rem 18.18rem,
       transparent 18.28rem
     ),
     radial-gradient(
       circle at 50% 50%,
       transparent 0 26rem,
-      rgb(236 72 153 / 0.12) 26.08rem 26.18rem,
+      color-mix(in srgb, var(--secondary) 12%, transparent) 26.08rem 26.18rem,
       transparent 26.28rem
     );
   mask-image: radial-gradient(circle at center, black, transparent 72%);
@@ -671,9 +671,9 @@
   inset: 8%;
   border-radius: 999px;
   background:
-    radial-gradient(circle at 18% 46%, rgb(255 255 255 / 0.72) 0 2px, transparent 3px),
-    radial-gradient(circle at 76% 28%, rgb(129 140 248 / 0.7) 0 2px, transparent 3px),
-    radial-gradient(circle at 62% 78%, rgb(244 114 182 / 0.58) 0 2px, transparent 3px);
+    radial-gradient(circle at 18% 46%, color-mix(in srgb, var(--foreground) 62%, transparent) 0 2px, transparent 3px),
+    radial-gradient(circle at 76% 28%, color-mix(in srgb, var(--primary) 70%, transparent) 0 2px, transparent 3px),
+    radial-gradient(circle at 62% 78%, color-mix(in srgb, var(--secondary) 58%, transparent) 0 2px, transparent 3px);
   animation: welcome-orbit-spin 28s linear infinite;
 }
 
@@ -689,9 +689,9 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgb(255 255 255 / 0.12),
-    rgb(99 102 241 / 0.56),
-    rgb(236 72 153 / 0.28),
+    color-mix(in srgb, var(--foreground) 12%, transparent),
+    color-mix(in srgb, var(--primary) 56%, transparent),
+    color-mix(in srgb, var(--secondary) 28%, transparent),
     transparent
   );
   filter: blur(0.2px);
@@ -700,21 +700,21 @@
 
 .welcome-title {
   text-shadow:
-    0 0 32px rgb(99 102 241 / 0.18),
-    0 0 72px rgb(236 72 153 / 0.1);
+    0 0 32px color-mix(in srgb, var(--primary) 18%, transparent),
+    0 0 72px color-mix(in srgb, var(--secondary) 10%, transparent);
 }
 
 .welcome-title--sub {
   text-shadow:
-    0 0 28px rgb(236 72 153 / 0.16),
-    0 0 68px rgb(99 102 241 / 0.1);
+    0 0 28px color-mix(in srgb, var(--secondary) 16%, transparent),
+    0 0 68px color-mix(in srgb, var(--primary) 10%, transparent);
 }
 
 .welcome-role {
   position: relative;
   display: inline-flex;
   align-items: center;
-  color: rgb(212 212 216 / 0.86);
+  color: color-mix(in srgb, var(--foreground) 72%, var(--muted-foreground) 28%);
   transition:
     color 180ms ease,
     text-shadow 180ms ease,
@@ -723,8 +723,8 @@
 
 .welcome-role:hover,
 .welcome-role:focus-visible {
-  color: white;
-  text-shadow: 0 0 18px rgb(129 140 248 / 0.55);
+  color: var(--foreground);
+  text-shadow: 0 0 18px color-mix(in srgb, var(--primary) 55%, transparent);
   transform: translateY(-1px);
 }
 
@@ -733,7 +733,7 @@
   position: absolute;
   inset: 1px;
   border-radius: inherit;
-  border: 1px solid rgb(255 255 255 / 0.18);
+  border: 1px solid color-mix(in srgb, var(--foreground) 18%, transparent);
   pointer-events: none;
 }
 
@@ -742,7 +742,7 @@
   inset-block: -35%;
   left: 0;
   width: 34%;
-  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.42), transparent);
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--foreground) 42%, transparent), transparent);
   transform: translateX(-140%) skewX(-18deg);
   pointer-events: none;
 }
@@ -797,15 +797,15 @@
 }
 
 .welcome-backdrop {
-  mix-blend-mode: screen;
+  mix-blend-mode: plus-lighter;
 }
 
 .welcome-circuit-grid {
   opacity: 0.34;
   background-image:
-    linear-gradient(rgb(255 255 255 / 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(255 255 255 / 0.045) 1px, transparent 1px),
-    linear-gradient(135deg, transparent 0 47%, rgb(99 102 241 / 0.08) 48% 52%, transparent 53%);
+    linear-gradient(color-mix(in srgb, var(--foreground) 5%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--foreground) 5%, transparent) 1px, transparent 1px),
+    linear-gradient(135deg, transparent 0 47%, color-mix(in srgb, var(--primary) 8%, transparent) 48% 52%, transparent 53%);
   background-size:
     64px 64px,
     64px 64px,
@@ -823,8 +823,8 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgb(129 140 248 / 0.2),
-    rgb(236 72 153 / 0.12),
+    color-mix(in srgb, var(--primary) 20%, transparent),
+    color-mix(in srgb, var(--secondary) 12%, transparent),
     transparent
   );
   filter: blur(10px);
@@ -846,7 +846,7 @@
   grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: clamp(1rem, 4vw, 5rem);
   padding-inline: clamp(1rem, 6vw, 7rem);
-  color: rgb(255 255 255 / 0.28);
+  color: color-mix(in srgb, var(--foreground) 28%, transparent);
   font-family: var(--font-geist-mono);
   font-size: clamp(0.68rem, 1vw, 0.82rem);
   letter-spacing: 0;
@@ -864,12 +864,12 @@
 }
 
 .welcome-code-rain__column:nth-child(even) {
-  color: rgb(129 140 248 / 0.34);
+  color: color-mix(in srgb, var(--primary) 34%, transparent);
   animation-duration: 16s;
 }
 
 .welcome-code-rain__column:nth-child(3n) {
-  color: rgb(236 72 153 / 0.26);
+  color: color-mix(in srgb, var(--secondary) 26%, transparent);
   animation-duration: 18s;
 }
 
