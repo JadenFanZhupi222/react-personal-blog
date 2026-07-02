@@ -40,14 +40,14 @@ export function BlogDetailContent({ blog, context, locale }: BlogDetailContentPr
                 <Link
                   key={tag}
                   href={`/${locale}/blog/tags/${encodeURIComponent(tag)}`}
-                  className="hover:opacity-80"
+                  className="rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
-                <Badge
-                  icon
-                  className="border border-secondary/20 bg-secondary/12 text-foreground hover:text-secondary"
-                >
-                  {tag}
-                </Badge>
+                  <Badge
+                    icon
+                    className="border border-secondary/20 bg-secondary/12 text-foreground transition-colors hover:bg-secondary/22 hover:text-foreground"
+                  >
+                    {tag}
+                  </Badge>
                 </Link>
               ))}
             </div>

@@ -78,7 +78,7 @@ export function BlogListPage({ blogs, locale, heading, text, emptyText }: BlogLi
                           >
                             <Badge
                               icon
-                              className="react-bits-shimmer border border-secondary/20 bg-secondary/12 text-foreground hover:text-secondary"
+                              className="react-bits-shimmer border border-secondary/20 bg-secondary/12 text-foreground transition-colors hover:bg-secondary/22 hover:text-foreground"
                             >
                               {tag}
                             </Badge>
