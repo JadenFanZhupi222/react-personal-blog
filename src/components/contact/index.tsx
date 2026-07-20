@@ -42,7 +42,7 @@ export default function ContactPage({ contact }: { contact: ContactData }) {
       >
         <div className="mx-auto w-full max-w-7xl">
           <m.div variants={itemVariants}>
-            <PageHeader heading={t.contact.title} />
+            <PageHeader heading={t.contact.title} text={t.contact.description} />
           </m.div>
           <div className="mt-12 grid gap-5 sm:grid-cols-3">
             {[

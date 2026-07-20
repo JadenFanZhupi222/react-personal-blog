@@ -121,6 +121,7 @@ export interface Translations {
   };
   contact: {
     title: string;
+    description: string;
     github: string;
     emails: string;
     socials: string;
