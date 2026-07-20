@@ -11,7 +11,7 @@ export function Badge({ children, icon = false, className }: BadgeProps) {
   return (
     <span
       className={cn(
-        'bg-secondary text-secondary-foreground inline-flex items-center gap-1 rounded-full px-3 py-1 text-sm',
+        'bg-muted text-muted-foreground inline-flex items-center gap-1 rounded-md px-2.5 py-1 font-mono text-xs font-medium transition-colors',
         className
       )}
     >

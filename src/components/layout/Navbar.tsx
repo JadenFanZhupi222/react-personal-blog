@@ -39,15 +39,17 @@ export function Navbar({ ssrTranslations }: { ssrTranslations: Translations }) {
   const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
   return (
-    <nav className="sticky top-0 z-50 w-full px-3 pt-3 text-foreground">
-      <div className="observatory-panel mx-auto flex h-14 w-full max-w-7xl items-center rounded-xl px-3 shadow-none backdrop-blur-xl sm:px-5">
+    <nav className="border-border/80 bg-background/92 text-foreground sticky top-0 z-50 w-full border-b backdrop-blur-xl">
+      <div className="mx-auto flex h-16 w-full max-w-7xl items-center px-4 sm:px-6 lg:px-8">
         <div className="flex min-w-0 items-center gap-5">
           <Link
             href="/"
-            className="group flex min-w-0 items-center gap-2 rounded-md px-1 py-1 transition-colors duration-200 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="group hover:text-primary focus-visible:ring-ring flex min-w-0 items-center gap-2 rounded-md px-1 py-1 transition-colors duration-200 focus-visible:ring-2 focus-visible:outline-none"
           >
-            <Radio className="h-4 w-4 text-primary transition-transform duration-300 group-hover:rotate-12" />
-            <span className="truncate font-mono text-sm font-semibold tracking-normal">
+            <span className="bg-primary text-primary-foreground grid h-7 w-7 place-items-center rounded-md">
+              <Radio className="h-4 w-4 transition-transform duration-300 group-hover:rotate-12" />
+            </span>
+            <span className="truncate font-mono text-sm font-bold tracking-[-0.02em]">
               Zhupi222
             </span>
           </Link>
@@ -59,16 +61,13 @@ export function Navbar({ ssrTranslations }: { ssrTranslations: Translations }) {
                   key={item.href}
                   href={item.href}
                   aria-current={active ? 'page' : undefined}
-                  className={`relative rounded-lg px-3 py-2 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                  className={`focus-visible:ring-ring relative rounded-lg px-3 py-2 transition-colors duration-200 focus-visible:ring-2 focus-visible:outline-none ${
                     active
-                      ? 'text-primary'
+                      ? 'bg-primary text-primary-foreground'
                       : 'text-foreground/68 hover:bg-accent/55 hover:text-foreground'
                   }`}
                 >
-                  {active && (
-                    <span className="absolute left-3 top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-primary shadow-[0_0_14px_var(--primary)]" />
-                  )}
-                  <span className={active ? 'pl-3' : ''}>{item.label}</span>
+                  <span>{item.label}</span>
                 </PendingLink>
               );
             })}
@@ -82,7 +81,7 @@ export function Navbar({ ssrTranslations }: { ssrTranslations: Translations }) {
           </nav>
           {/* Mobile menu button */}
           <button
-            className="inline-flex items-center justify-center rounded-lg p-2.5 text-foreground transition-all duration-200 hover:bg-accent hover:text-primary active:scale-95 active:duration-75 md:hidden"
+            className="text-foreground hover:bg-accent hover:text-primary inline-flex items-center justify-center rounded-lg p-2.5 transition-all duration-200 active:scale-95 active:duration-75 md:hidden"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
           >

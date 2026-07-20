@@ -44,42 +44,41 @@ export function HomePage() {
         variants={containerVariants}
       >
         <main className="min-h-screen w-full px-4 py-8 md:px-8 lg:py-10">
-          <div className="mx-auto flex w-full max-w-7xl flex-col gap-6">
+          <div className="mx-auto flex w-full max-w-7xl flex-col gap-8">
             <m.section
               variants={itemVariants}
-              className="observatory-panel rounded-2xl p-6 sm:p-8 lg:p-10"
+              className="editorial-panel overflow-hidden rounded-xl p-6 sm:p-9 lg:p-12"
             >
-              <div className="mb-8 flex items-center gap-3 text-primary">
-                <span className="h-2 w-2 rounded-full bg-primary shadow-[0_0_18px_var(--primary)]" />
-                <span className="font-mono text-xs">{t.home.title}</span>
+              <div className="text-primary mb-9 flex items-center gap-3">
+                <span className="bg-primary h-2 w-2" />
+                <span className="font-mono text-xs font-bold tracking-[0.16em]">
+                  {t.home.title}
+                </span>
               </div>
               <TextReveal
                 as="h1"
                 text={t.home.welcome}
-                className="max-w-4xl text-balance text-5xl font-semibold leading-[0.98] tracking-[-0.03em] text-foreground sm:text-6xl xl:text-7xl"
+                className="text-foreground max-w-5xl text-5xl leading-[0.9] font-black tracking-[-0.055em] text-balance sm:text-7xl xl:text-8xl"
               />
-              <p className="mt-6 max-w-2xl text-pretty text-lg leading-8 text-muted-foreground">
+              <p className="text-muted-foreground mt-6 max-w-2xl text-lg leading-8 text-pretty">
                 {t.home.description}
               </p>
-              <div className="mt-12 grid gap-4 md:grid-cols-3">
+              <div className="mt-14 grid gap-4 md:grid-cols-2 lg:grid-cols-[1.35fr_1fr_1fr]">
                 {featureCards.map((card) => (
                   <FeatureCard key={card.href} {...card} compact />
                 ))}
               </div>
             </m.section>
 
-            <m.section
-              variants={itemVariants}
-              className="observatory-panel rounded-2xl p-5 sm:p-6 lg:p-8"
-            >
+            <m.section variants={itemVariants} className="border-border border-t py-8 sm:py-10">
               <div className="mb-5 flex items-center justify-between gap-4">
-                <h2 className="flex items-center gap-2 text-2xl font-semibold tracking-[-0.02em] text-foreground">
-                  <Activity className="h-5 w-5 text-primary" />
+                <h2 className="text-foreground flex items-center gap-2 text-2xl font-semibold tracking-[-0.02em]">
+                  <Activity className="text-primary h-5 w-5" />
                   {t.home.activity.title}
                 </h2>
                 <div
                   aria-hidden="true"
-                  className="hidden h-px flex-1 bg-gradient-to-r from-primary/40 to-transparent sm:block"
+                  className="from-primary/40 hidden h-px flex-1 bg-gradient-to-r to-transparent sm:block"
                 />
               </div>
               <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">

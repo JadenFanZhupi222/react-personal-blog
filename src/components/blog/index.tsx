@@ -39,15 +39,15 @@ export function BlogListPage({ blogs, locale, heading, text, emptyText }: BlogLi
               {emptyText ?? ''}
             </m.p>
           ) : (
-            <m.div className="mt-12 grid gap-4" variants={containerVariants}>
+            <m.div className="border-border mt-12 border-t" variants={containerVariants}>
               {blogs.map((blog) => (
                 <m.div key={blog.slug} variants={itemVariants}>
-                  <Card className="observatory-panel group rounded-xl bg-card/75 p-5 transition-colors hover:border-primary/45 sm:p-6">
+                  <Card className="group hover:bg-card/45 rounded-none border-x-0 border-t-0 bg-transparent px-0 py-8 transition-colors sm:px-5">
                     <CardHeader className="mb-3">
-                      <CardTitle className="text-2xl tracking-[-0.02em] transition-colors group-hover:text-primary-hover">
+                      <CardTitle className="group-hover:text-primary-hover text-2xl tracking-[-0.02em] transition-colors">
                         <Link
                           href={`/${locale}/blog/${blog.slug}`}
-                          className="rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                          className="focus-visible:ring-ring rounded-md focus-visible:ring-2 focus-visible:outline-none"
                         >
                           {blog.title || 'No Title'}
                         </Link>
@@ -74,11 +74,11 @@ export function BlogListPage({ blogs, locale, heading, text, emptyText }: BlogLi
                           <Link
                             key={tag}
                             href={`/${locale}/blog/tags/${encodeURIComponent(tag)}`}
-                            className="rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                            className="focus-visible:ring-ring rounded-full focus-visible:ring-2 focus-visible:outline-none"
                           >
                             <Badge
                               icon
-                              className="react-bits-shimmer border border-secondary/20 bg-secondary/12 text-foreground transition-colors hover:bg-secondary/22 hover:text-foreground"
+                              className="border-border bg-muted text-muted-foreground hover:border-primary hover:text-foreground border"
                             >
                               {tag}
                             </Badge>

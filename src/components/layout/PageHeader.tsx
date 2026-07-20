@@ -5,18 +5,19 @@ interface PageHeaderProps {
 
 export function PageHeader({ heading, text }: PageHeaderProps) {
   return (
-    <div className="observatory-signal-line max-w-3xl space-y-4 pt-6">
-      <div
-        aria-hidden="true"
-        className="inline-flex h-7 w-32 items-center gap-2 rounded-full border border-border/70 bg-card-30 px-3 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--foreground)_8%,transparent)]"
-      >
-        <span className="h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_14px_var(--primary)]" />
-        <span className="h-px flex-1 bg-gradient-to-r from-primary/70 to-transparent" />
+    <header className="border-border max-w-4xl border-t pt-6">
+      <div aria-hidden="true" className="mb-6 flex items-center gap-3">
+        <span className="bg-primary h-2 w-2" />
+        <span className="text-muted-foreground font-mono text-[0.68rem] font-semibold tracking-[0.18em]">
+          ZHUPI222 / INDEX
+        </span>
       </div>
-      <h1 className="text-balance text-4xl font-semibold leading-tight tracking-[-0.025em] sm:text-5xl">
+      <h1 className="max-w-3xl text-5xl leading-[0.94] font-black tracking-[-0.055em] text-balance sm:text-6xl lg:text-7xl">
         {heading}
       </h1>
-      {text && <p className="max-w-2xl text-pretty text-lg leading-8 text-muted-foreground">{text}</p>}
-    </div>
+      {text && (
+        <p className="text-muted-foreground mt-6 max-w-2xl text-lg leading-8 text-pretty">{text}</p>
+      )}
+    </header>
   );
 }
