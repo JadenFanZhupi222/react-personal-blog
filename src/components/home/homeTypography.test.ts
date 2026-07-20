@@ -21,7 +21,11 @@ describe('home typography', () => {
     expect(homeSource).toContain("from 'next/image'");
     expect(homeSource).toContain('/images/developer-editorial-hero.png');
     expect(homeSource).not.toContain('editorial-panel');
-    expect(featureCardSource).toContain('aspect-[16/9]');
-    expect(featureCardSource).toContain('{description}');
+    expect(homeSource).toContain('lg:grid-cols-3');
+    expect(homeSource).not.toContain('lg:grid-cols-[1.25fr_1fr_1fr]');
+    expect(homeSource.match(/cover:/g)).toHaveLength(3);
+    expect(featureCardSource).toContain("from 'next/image'");
+    expect(featureCardSource).toContain('src={cover}');
+    expect(featureCardSource).not.toContain('<h3');
   });
 });
