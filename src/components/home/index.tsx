@@ -58,7 +58,7 @@ export function HomePage() {
               <TextReveal
                 as="h1"
                 text={t.home.welcome}
-                className="text-foreground max-w-5xl text-5xl leading-[0.9] font-black tracking-[-0.055em] text-balance sm:text-7xl xl:text-8xl"
+                className="text-foreground max-w-6xl text-4xl leading-[0.96] font-black tracking-[-0.04em] text-balance sm:text-5xl lg:text-6xl xl:text-7xl"
               />
               <p className="text-muted-foreground mt-6 max-w-2xl text-lg leading-8 text-pretty">
                 {t.home.description}
