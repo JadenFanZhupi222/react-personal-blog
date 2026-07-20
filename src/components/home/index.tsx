@@ -20,6 +20,7 @@ export function HomePage() {
       description: t.home.features.about.description,
       actionText: t.home.features.about.action,
       index: '01',
+      cover: '/images/home/about-cover.png',
     },
     {
       href: `/${locale}/projects`,
@@ -28,6 +29,7 @@ export function HomePage() {
       description: t.home.features.projects.description,
       actionText: t.home.features.projects.action,
       index: '02',
+      cover: '/images/home/projects-cover.png',
     },
     {
       href: `/${locale}/blog`,
@@ -36,6 +38,7 @@ export function HomePage() {
       description: t.home.features.blog.description,
       actionText: t.home.features.blog.action,
       index: '03',
+      cover: '/images/home/writing-cover.png',
     },
   ];
 
@@ -91,7 +94,7 @@ export function HomePage() {
                   INDEX 01—03
                 </span>
               </div>
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-[1.25fr_1fr_1fr]">
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {featureCards.map((card) => (
                   <FeatureCard key={card.href} {...card} />
                 ))}
