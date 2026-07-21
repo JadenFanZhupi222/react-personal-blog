@@ -62,7 +62,7 @@ export function HomeProjectCarousel({ projects, locale, labels }: HomeProjectCar
           return (
             <SwiperSlide key={project.slug || project.title}>
               <article className="grid lg:grid-cols-[minmax(0,1.35fr)_minmax(22rem,.65fr)]">
-                <ProjectArtwork slug={project.slug} title={project.title} />
+                <ProjectArtwork slug={project.slug} title={project.title} order={project.order} />
                 <div className="flex min-h-[24rem] flex-col justify-between border-t border-white/14 p-6 sm:p-8 lg:min-h-0 lg:border-t-0 lg:border-l lg:p-10">
                   <div>
                     <span className="font-mono text-[10px] font-bold tracking-[0.18em] text-white/42">PROJECT {String(index + 1).padStart(2, '0')}</span>

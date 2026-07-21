@@ -3,14 +3,15 @@ import type { ReactNode } from 'react';
 interface ProjectArtworkProps {
   slug: string;
   title: string;
+  order?: number;
 }
 
-export function ProjectArtwork({ slug, title }: ProjectArtworkProps) {
+export function ProjectArtwork({ slug, title, order }: ProjectArtworkProps) {
   if (slug === 'ai-photo-booth-desktop' || slug === 'zoda-ai-photo-booth') {
     return <PhotoBoothArtwork title={title} />;
   }
 
-  if (slug === 'family-meal-planner') {
+  if (slug === 'family-meal-planner' || order === 1) {
     return <MealPlannerArtwork title={title} />;
   }
 
