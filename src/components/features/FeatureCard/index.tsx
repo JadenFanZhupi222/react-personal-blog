@@ -40,7 +40,7 @@ export function FeatureCard({
         <div
           data-slot="feature-media"
           className={`relative overflow-hidden bg-[#151515] ${
-            featured ? 'aspect-[16/8]' : 'aspect-[16/7] lg:aspect-[4/3]'
+            featured ? 'aspect-[16/6]' : 'aspect-[16/7] lg:aspect-video'
           }`}
         >
           <Image
@@ -50,7 +50,11 @@ export function FeatureCard({
             sizes={
               featured ? '(max-width: 1023px) 100vw, 67vw' : '(max-width: 1023px) 100vw, 33vw'
             }
-            className="object-cover transition-transform duration-700 ease-out motion-reduce:transition-none group-hover:scale-[1.025]"
+            className={`object-cover object-[center_60%] transition-transform duration-700 ease-out motion-reduce:transition-none ${
+              featured
+                ? 'scale-[1.06] group-hover:scale-[1.09]'
+                : 'scale-[1.08] group-hover:scale-[1.11]'
+            }`}
           />
           <span className="bg-primary absolute top-4 left-4 px-3 py-1.5 text-xs font-bold text-black">
             {label}
@@ -59,7 +63,7 @@ export function FeatureCard({
 
         <div
           data-slot="feature-content"
-          className={`flex flex-col ${featured ? 'min-h-64 p-6 sm:p-8' : 'min-h-72 p-6'}`}
+          className={`flex flex-col ${featured ? 'min-h-60 p-6 sm:p-7' : 'min-h-64 p-6'}`}
         >
           <p className="text-xs font-semibold tracking-[0.08em] text-white/58">{metadata}</p>
           <h3
@@ -71,11 +75,7 @@ export function FeatureCard({
           >
             {title}
           </h3>
-          <p
-            className={`mt-4 max-w-[62ch] leading-7 text-pretty text-white/70 ${
-              featured ? 'line-clamp-2' : 'line-clamp-3'
-            }`}
-          >
+          <p className="mt-4 line-clamp-2 max-w-[62ch] leading-7 text-pretty text-white/70">
             {description}
           </p>
           <p className="group-hover:text-primary mt-auto pt-7 text-sm font-bold transition-colors">
