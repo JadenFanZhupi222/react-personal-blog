@@ -88,30 +88,30 @@
     --radius: 0.5rem;
     /* Brand — signature indigo (Tailwind indigo-500 / indigo-600). Lives at the
        same hex in both themes so brand recognition is consistent. */
-    --primary: oklch(0.78 0.14 178);
-    --primary-foreground: oklch(0.11 0.018 184);
-    --primary-hover: oklch(0.86 0.13 176);
+    --primary: oklch(0.82 0.17 88);
+    --primary-foreground: oklch(0.16 0.015 85);
+    --primary-hover: oklch(0.76 0.18 82);
     /* Surfaces — refined neutral slate (no purple cast). Card is pure white
        for a stronger surface hierarchy against the warm-gray background. */
-    --background: oklch(0.965 0.014 174);
-    --foreground: oklch(0.145 0.022 194);
-    --muted-foreground: oklch(0.42 0.025 194);
-    --muted: oklch(0.91 0.018 176);
-    --card: oklch(0.99 0.006 174);
-    --card-30: oklch(0.99 0.006 174 / 0.56);
-    --card-foreground: oklch(0.145 0.022 194);
-    --border: oklch(0.82 0.024 178);
-    --input: oklch(0.82 0.024 178);
-    --popover: oklch(0.99 0.006 174);
-    --popover-foreground: oklch(0.145 0.022 194);
+    --background: oklch(0.955 0.012 88);
+    --foreground: oklch(0.16 0.012 78);
+    --muted-foreground: oklch(0.43 0.016 78);
+    --muted: oklch(0.9 0.015 88);
+    --card: oklch(0.985 0.007 88);
+    --card-30: oklch(0.985 0.007 88 / 0.72);
+    --card-foreground: oklch(0.16 0.012 78);
+    --border: oklch(0.8 0.018 82);
+    --input: oklch(0.8 0.018 82);
+    --popover: oklch(0.985 0.007 88);
+    --popover-foreground: oklch(0.16 0.012 78);
     /* Secondary — refined rose (Tailwind pink-500). Complements indigo. */
     --secondary: oklch(0.73 0.13 77);
     --secondary-foreground: oklch(0.14 0.022 194);
-    --accent: oklch(0.9 0.035 176);
-    --accent-foreground: oklch(0.16 0.028 194);
+    --accent: oklch(0.89 0.028 88);
+    --accent-foreground: oklch(0.16 0.012 78);
     --destructive: oklch(0.6 0.21 27);
     --destructive-foreground: oklch(0.99 0 0);
-    --ring: oklch(0.78 0.14 178);
+    --ring: oklch(0.72 0.16 86);
     --leetcode-easy: oklch(0.68 0.16 150);
     --leetcode-medium: oklch(0.72 0.15 74);
     --leetcode-hard: oklch(0.64 0.2 28);
@@ -124,7 +124,7 @@
     --steam-achievement: oklch(0.73 0.13 77);
     --steam-online: oklch(0.68 0.16 150);
     --steam-offline: oklch(0.52 0.018 194);
-    --design-background: oklch(0.965 0.014 174);
+    --design-background: oklch(0.955 0.012 88);
     --design-title: oklch(0.22 0.045 194);
     --design-subtitle: oklch(0.55 0.105 78);
     --design-card-about: linear-gradient(135deg, oklch(0.99 0.006 174), oklch(0.9 0.035 176));
@@ -166,30 +166,30 @@
 
   .dark {
     /* Brand — same indigo identity as light. Sits beautifully on dark slate. */
-    --primary: oklch(0.78 0.14 178);
-    --primary-foreground: oklch(0.105 0.02 194);
-    --primary-hover: oklch(0.86 0.13 176);
+    --primary: oklch(0.82 0.17 88);
+    --primary-foreground: oklch(0.13 0.012 85);
+    --primary-hover: oklch(0.88 0.16 92);
     /* Surfaces — Premium Slate (cool neutral, no purple cast). Hierarchical
        elevation: background < card < muted/border, each step a perceptual
        OKLCH lightness bump so layering reads naturally. */
-    --background: oklch(0.115 0.026 194);
-    --foreground: oklch(0.955 0.008 178);
-    --muted-foreground: oklch(0.68 0.024 182);
-    --muted: oklch(0.205 0.03 194);
-    --card: oklch(0.165 0.029 194);
-    --card-30: oklch(0.165 0.029 194 / 0.46);
-    --card-foreground: oklch(0.955 0.008 178);
-    --border: oklch(0.285 0.034 190);
-    --input: oklch(0.285 0.034 190);
-    --popover: oklch(0.145 0.03 194);
-    --popover-foreground: oklch(0.955 0.008 178);
+    --background: oklch(0.105 0.008 85);
+    --foreground: oklch(0.955 0.01 88);
+    --muted-foreground: oklch(0.69 0.014 86);
+    --muted: oklch(0.19 0.012 82);
+    --card: oklch(0.145 0.01 82);
+    --card-30: oklch(0.145 0.01 82 / 0.6);
+    --card-foreground: oklch(0.955 0.01 88);
+    --border: oklch(0.28 0.012 82);
+    --input: oklch(0.28 0.012 82);
+    --popover: oklch(0.135 0.01 82);
+    --popover-foreground: oklch(0.955 0.01 88);
     --secondary: oklch(0.75 0.13 78);
     --secondary-foreground: oklch(0.12 0.024 194);
-    --accent: oklch(0.235 0.04 184);
-    --accent-foreground: oklch(0.955 0.008 178);
+    --accent: oklch(0.225 0.018 82);
+    --accent-foreground: oklch(0.955 0.01 88);
     --destructive: oklch(0.62 0.22 22);
     --destructive-foreground: oklch(0.99 0 0);
-    --ring: oklch(0.78 0.14 178);
+    --ring: oklch(0.82 0.17 88);
     --chart-1: oklch(0.78 0.14 178);
     --chart-2: oklch(0.75 0.13 78);
     --chart-3: oklch(0.68 0.16 150);
@@ -215,7 +215,7 @@
     --steam-achievement: oklch(0.82 0.14 84);
     --steam-online: #4ade80;
     --steam-offline: #9ca3af;
-    --design-background: oklch(0.115 0.026 194);
+    --design-background: oklch(0.105 0.008 85);
     --design-title: oklch(0.78 0.14 178);
     --design-subtitle: oklch(0.75 0.13 78);
     --design-card-about: linear-gradient(135deg, oklch(0.17 0.04 194), oklch(0.23 0.055 174));
@@ -263,8 +263,11 @@
   body {
     @apply bg-background text-foreground;
     background:
-      radial-gradient(circle at 18% -10%, color-mix(in srgb, var(--primary) 16%, transparent), transparent 34rem),
-      radial-gradient(circle at 92% 8%, color-mix(in srgb, var(--secondary) 12%, transparent), transparent 28rem),
+      radial-gradient(
+        circle at 15% -12%,
+        color-mix(in srgb, var(--primary) 8%, transparent),
+        transparent 32rem
+      ),
       var(--background);
     font-variant-numeric: tabular-nums;
   }
@@ -280,27 +283,32 @@
   }
 
   ::-webkit-scrollbar-track {
-    background:
-      linear-gradient(
-        180deg,
-        color-mix(in srgb, var(--scrollbar-track) 92%, transparent),
-        color-mix(in srgb, var(--background) 90%, transparent)
-      );
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--scrollbar-track) 92%, transparent),
+      color-mix(in srgb, var(--background) 90%, transparent)
+    );
   }
 
   ::-webkit-scrollbar-thumb {
     min-height: 3rem;
     border: 2px solid transparent;
     border-radius: 999px;
-    background:
-      linear-gradient(180deg, var(--scrollbar-thumb), color-mix(in srgb, var(--scrollbar-thumb) 72%, var(--secondary) 28%))
+    background: linear-gradient(
+        180deg,
+        var(--scrollbar-thumb),
+        color-mix(in srgb, var(--scrollbar-thumb) 72%, var(--secondary) 28%)
+      )
       border-box;
     background-clip: padding-box;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background:
-      linear-gradient(180deg, var(--scrollbar-thumb-hover), color-mix(in srgb, var(--scrollbar-thumb-hover) 72%, var(--secondary) 28%))
+    background: linear-gradient(
+        180deg,
+        var(--scrollbar-thumb-hover),
+        color-mix(in srgb, var(--scrollbar-thumb-hover) 72%, var(--secondary) 28%)
+      )
       border-box;
     background-clip: padding-box;
   }
@@ -318,13 +326,28 @@
 .observatory-panel {
   position: relative;
   overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--border) 82%, transparent);
-  background:
-    linear-gradient(135deg, color-mix(in srgb, var(--card) 92%, transparent), color-mix(in srgb, var(--accent) 42%, transparent)),
-    color-mix(in srgb, var(--card) 88%, transparent);
+  border: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
+  background: color-mix(in srgb, var(--card) 94%, transparent);
   box-shadow:
     inset 0 1px 0 color-mix(in srgb, var(--foreground) 9%, transparent),
-    0 18px 46px color-mix(in srgb, var(--background) 72%, black 28%);
+    0 16px 40px color-mix(in srgb, var(--background) 82%, black 18%);
+}
+
+.editorial-panel {
+  position: relative;
+  border: 1px solid color-mix(in srgb, var(--border) 90%, transparent);
+  border-radius: 0.75rem;
+  background: color-mix(in srgb, var(--card) 96%, transparent);
+  box-shadow: 0 14px 38px color-mix(in srgb, var(--background) 84%, black 16%);
+}
+
+.home-activity-shell {
+  --foreground: oklch(0.955 0.01 88);
+  --muted-foreground: oklch(0.69 0.014 86);
+  --card: oklch(0.145 0.01 82);
+  --card-foreground: oklch(0.955 0.01 88);
+  --border: oklch(0.28 0.012 82);
+  --accent: oklch(0.225 0.018 82);
 }
 
 .observatory-panel::after {
@@ -504,7 +527,12 @@
       color-mix(in srgb, var(--primary) 10%, transparent) 1px,
       transparent 1px
     ),
-    linear-gradient(135deg, transparent 0 48%, color-mix(in srgb, var(--secondary) 9%, transparent) 49% 51%, transparent 52%);
+    linear-gradient(
+      135deg,
+      transparent 0 48%,
+      color-mix(in srgb, var(--secondary) 9%, transparent) 49% 51%,
+      transparent 52%
+    );
   background-size: 48px 48px;
   mask-image: radial-gradient(ellipse at center, black, transparent 74%);
 }
@@ -717,9 +745,21 @@
   inset: 8%;
   border-radius: 999px;
   background:
-    radial-gradient(circle at 18% 46%, color-mix(in srgb, var(--foreground) 62%, transparent) 0 2px, transparent 3px),
-    radial-gradient(circle at 76% 28%, color-mix(in srgb, var(--primary) 70%, transparent) 0 2px, transparent 3px),
-    radial-gradient(circle at 62% 78%, color-mix(in srgb, var(--secondary) 58%, transparent) 0 2px, transparent 3px);
+    radial-gradient(
+      circle at 18% 46%,
+      color-mix(in srgb, var(--foreground) 62%, transparent) 0 2px,
+      transparent 3px
+    ),
+    radial-gradient(
+      circle at 76% 28%,
+      color-mix(in srgb, var(--primary) 70%, transparent) 0 2px,
+      transparent 3px
+    ),
+    radial-gradient(
+      circle at 62% 78%,
+      color-mix(in srgb, var(--secondary) 58%, transparent) 0 2px,
+      transparent 3px
+    );
   animation: welcome-orbit-spin 28s linear infinite;
 }
 
@@ -788,7 +828,12 @@
   inset-block: -35%;
   left: 0;
   width: 34%;
-  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--foreground) 42%, transparent), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--foreground) 42%, transparent),
+    transparent
+  );
   transform: translateX(-140%) skewX(-18deg);
   pointer-events: none;
 }
@@ -850,8 +895,17 @@
   opacity: 0.34;
   background-image:
     linear-gradient(color-mix(in srgb, var(--foreground) 5%, transparent) 1px, transparent 1px),
-    linear-gradient(90deg, color-mix(in srgb, var(--foreground) 5%, transparent) 1px, transparent 1px),
-    linear-gradient(135deg, transparent 0 47%, color-mix(in srgb, var(--primary) 8%, transparent) 48% 52%, transparent 53%);
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--foreground) 5%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      135deg,
+      transparent 0 47%,
+      color-mix(in srgb, var(--primary) 8%, transparent) 48% 52%,
+      transparent 53%
+    );
   background-size:
     64px 64px,
     64px 64px,

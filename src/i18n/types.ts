@@ -61,6 +61,14 @@ export interface Translations {
         action: string;
       };
     };
+    showcase: {
+      title: string;
+      previous: string;
+      next: string;
+      viewProject: string;
+      latestWriting: string;
+      viewAllWriting: string;
+    };
     activity: {
       title: string;
       leetcode: {
@@ -121,6 +129,7 @@ export interface Translations {
   };
   contact: {
     title: string;
+    description: string;
     github: string;
     emails: string;
     socials: string;

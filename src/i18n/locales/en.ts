@@ -19,10 +19,10 @@ const en: Translations = {
     nickname: 'Zhupi222',
     role: {
       fullstack: 'Full-stack Developer',
-      tech: 'Tech Enthusiast',
-      game: 'Gamer',
+      tech: 'Technical Writing',
+      game: 'Games',
     },
-    enter: 'Step inside',
+    enter: 'Enter site',
     techStack: {
       title: 'Tech Stack',
       items: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS'],
@@ -32,7 +32,7 @@ const en: Translations = {
       items: [
         {
           title: 'Personal Blog',
-          description: 'A modern personal website built with Next.js, React, and MongoDB.',
+          description: 'Built with Next.js, React, and MongoDB.',
         },
         {
           title: 'Date Picker',
@@ -42,34 +42,42 @@ const en: Translations = {
       ],
     },
     contact: {
-      title: 'Get In Touch',
-      description: 'Feel free to reach out for collaborations or just a friendly hello',
+      title: 'Contact',
+      description: 'GitHub / WeChat / Email',
       platforms: ['GitHub', 'WeChat', 'Email'],
     },
   },
   home: {
     title: 'Home',
-    welcome: 'Welcome to My Space',
-    description: 'Full-stack developer. I build things on the web and write about them here.',
+    welcome: 'Technical writing, projects, and development work',
+    description: 'A collection of software projects, technical notes, and development reviews.',
     features: {
       about: {
-        title: 'About Me',
-        description: 'Background, skills, and what I have been working on.',
-        action: 'View Profile',
+        title: 'About',
+        description: 'Professional experience, technical skills, and areas of focus.',
+        action: 'View details',
       },
       projects: {
         title: 'Projects',
-        description: 'Explore my portfolio of work and side projects.',
-        action: 'View Projects',
+        description: 'Completed projects with notes on their design and implementation.',
+        action: 'Browse projects',
       },
       blog: {
-        title: 'Blog',
-        description: 'Technical articles, tutorials, and code snippets.',
-        action: 'Read Posts',
+        title: 'Writing',
+        description: 'Development notes, technical analysis, and practical solutions.',
+        action: 'Read articles',
       },
     },
+    showcase: {
+      title: 'Selected projects',
+      previous: 'Previous project',
+      next: 'Next project',
+      viewProject: 'View project',
+      latestWriting: 'Latest writing',
+      viewAllWriting: 'View all writing',
+    },
     activity: {
-      title: 'What I am up to',
+      title: 'Development and interests',
       leetcode: {
         title: 'LeetCode Stats',
         placeholder: 'Loading LeetCode stats...',
@@ -93,8 +101,8 @@ const en: Translations = {
     },
   },
   about: {
-    title: 'About Me',
-    description: 'A bit more about me — what I work on, what I am learning, and how I got here.',
+    title: 'About',
+    description: 'Professional experience, technical skills, and areas of focus.',
     skills: {
       title: 'Skills',
       categories: {
@@ -105,18 +113,18 @@ const en: Translations = {
       },
     },
     experience: {
-      title: 'Experience',
+      title: 'Professional experience',
     },
   },
   projects: {
     title: 'Projects',
-    description: 'Recent work and side projects.',
-    highlights: 'Key Highlights',
+    description: 'Completed projects with notes on their design and implementation.',
+    highlights: 'Implementation notes',
   },
   blog: {
-    title: 'Blog',
-    description: 'Technical articles, tutorials, and code snippets to help you learn and grow.',
-    readMore: 'Read More',
+    title: 'Technical writing',
+    description: 'Development notes, technical analysis, and practical solutions.',
+    readMore: 'Read article',
     prev: 'Previous',
     next: 'Next',
     related: 'Related posts',
@@ -127,10 +135,12 @@ const en: Translations = {
     copied: 'Copied',
   },
   contact: {
-    title: 'Contact',
+    title: 'Contact information',
+    description:
+      'For technical discussions, project collaboration, or other enquiries, use the contact details below.',
     github: 'GitHub',
     emails: 'Email',
-    socials: 'Socials',
+    socials: 'Social platforms',
   },
   notFound: {
     title: '404',

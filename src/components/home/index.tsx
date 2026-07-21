@@ -1,39 +1,25 @@
 'use client';
 
-import { Activity, Code, FolderGit2, User } from 'lucide-react';
+import { Activity } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { LazyMotion, domAnimation, m } from 'framer-motion';
+import { TextReveal } from '@/components/effects/TextReveal';
 import { LeetCodeCard } from '@/components/home/LeetCodeCard';
 import { SteamCard } from '@/components/home/SteamCard';
-import { FeatureCard } from '@/components/features/FeatureCard';
-import { TextReveal } from '@/components/effects/TextReveal';
-import { useTranslations } from '@/lib/hooks/useTranslations';
-import { LazyMotion, m, domAnimation } from 'framer-motion';
 import { containerVariants, itemVariants } from '@/lib/animations';
+import { useTranslations } from '@/lib/hooks/useTranslations';
+import { HomeProjectCarousel } from './HomeProjectCarousel';
+import { LatestWriting } from './LatestWriting';
+import type { HomeFeaturedContent } from './types';
 
-export function HomePage() {
+interface HomePageProps {
+  featuredContent: HomeFeaturedContent;
+}
+
+export function HomePage({ featuredContent }: HomePageProps) {
   const { t, locale } = useTranslations();
-  const featureCards = [
-    {
-      href: `/${locale}/about`,
-      icon: User,
-      title: t.home.features.about.title,
-      description: t.home.features.about.description,
-      actionText: t.home.features.about.action,
-    },
-    {
-      href: `/${locale}/projects`,
-      icon: FolderGit2,
-      title: t.home.features.projects.title,
-      description: t.home.features.projects.description,
-      actionText: t.home.features.projects.action,
-    },
-    {
-      href: `/${locale}/blog`,
-      icon: Code,
-      title: t.home.features.blog.title,
-      description: t.home.features.blog.description,
-      actionText: t.home.features.blog.action,
-    },
-  ];
+  const featured = featuredContent[locale];
 
   return (
     <LazyMotion features={domAnimation}>
@@ -43,43 +29,73 @@ export function HomePage() {
         animate="visible"
         variants={containerVariants}
       >
-        <main className="min-h-screen w-full px-4 py-8 md:px-8 lg:py-10">
-          <div className="mx-auto flex w-full max-w-7xl flex-col gap-6">
+        <main className="min-h-screen w-full pb-12">
+          <div className="mx-auto flex w-full max-w-[96rem] flex-col gap-0 px-3 pt-3 sm:px-5 sm:pt-5">
             <m.section
               variants={itemVariants}
-              className="observatory-panel rounded-2xl p-6 sm:p-8 lg:p-10"
+              className="relative min-h-[36rem] overflow-hidden rounded-lg bg-black text-white sm:min-h-[42rem] lg:min-h-[46rem]"
             >
-              <div className="mb-8 flex items-center gap-3 text-primary">
-                <span className="h-2 w-2 rounded-full bg-primary shadow-[0_0_18px_var(--primary)]" />
-                <span className="font-mono text-xs">{t.home.title}</span>
-              </div>
-              <TextReveal
-                as="h1"
-                text={t.home.welcome}
-                className="max-w-4xl text-balance text-5xl font-semibold leading-[0.98] tracking-[-0.03em] text-foreground sm:text-6xl xl:text-7xl"
+              <Image
+                src="/images/developer-editorial-hero.png"
+                alt="由机械键盘、技术图纸和代码界面组成的开发工作台"
+                fill
+                priority
+                sizes="(max-width: 1536px) 100vw, 1536px"
+                className="object-cover object-center"
               />
-              <p className="mt-6 max-w-2xl text-pretty text-lg leading-8 text-muted-foreground">
-                {t.home.description}
-              </p>
-              <div className="mt-12 grid gap-4 md:grid-cols-3">
-                {featureCards.map((card) => (
-                  <FeatureCard key={card.href} {...card} compact />
-                ))}
+              <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.94)_0%,rgba(0,0,0,0.72)_34%,rgba(0,0,0,0.12)_72%),linear-gradient(0deg,rgba(0,0,0,0.82)_0%,transparent_55%)]" />
+              <div className="absolute inset-0 flex flex-col justify-between p-6 sm:p-10 lg:p-14">
+                <div className="text-primary flex items-center gap-3">
+                  <span className="bg-primary h-2 w-2" />
+                  <span className="font-mono text-xs font-bold tracking-[0.16em]">
+                    ZHUPI222 / {t.home.title}
+                  </span>
+                </div>
+                <div>
+                  <TextReveal
+                    as="h1"
+                    text={t.home.welcome}
+                    className="max-w-4xl text-4xl leading-[0.93] font-black tracking-[-0.04em] text-balance text-white sm:text-5xl lg:text-6xl xl:text-7xl"
+                  />
+                  <p className="mt-6 max-w-xl text-base leading-7 text-white/72 sm:text-lg sm:leading-8">
+                    {t.home.description}
+                  </p>
+                  <Link
+                    href={`/${locale}/about`}
+                    className="hover:text-primary focus-visible:text-primary mt-7 inline-flex min-h-11 items-center gap-2 text-sm font-bold text-white transition-colors focus-visible:outline-none"
+                  >
+                    {t.home.features.about.action} <span aria-hidden="true">→</span>
+                  </Link>
+                </div>
               </div>
             </m.section>
 
+            <m.div variants={itemVariants} className="py-12 sm:py-16">
+              <HomeProjectCarousel
+                projects={featured.projects}
+                locale={locale}
+                labels={t.home.showcase}
+              />
+              <LatestWriting
+                articles={featured.articles}
+                locale={locale}
+                title={t.home.showcase.latestWriting}
+                viewAll={t.home.showcase.viewAllWriting}
+              />
+            </m.div>
+
             <m.section
               variants={itemVariants}
-              className="observatory-panel rounded-2xl p-5 sm:p-6 lg:p-8"
+              className="home-activity-shell rounded-lg bg-[#090909] p-5 text-white sm:p-8 lg:p-10"
             >
               <div className="mb-5 flex items-center justify-between gap-4">
-                <h2 className="flex items-center gap-2 text-2xl font-semibold tracking-[-0.02em] text-foreground">
-                  <Activity className="h-5 w-5 text-primary" />
+                <h2 className="flex items-center gap-3 text-3xl font-black tracking-[-0.04em] text-white">
+                  <Activity className="text-primary h-5 w-5" />
                   {t.home.activity.title}
                 </h2>
                 <div
                   aria-hidden="true"
-                  className="hidden h-px flex-1 bg-gradient-to-r from-primary/40 to-transparent sm:block"
+                  className="from-primary/65 hidden h-px flex-1 bg-gradient-to-r to-transparent sm:block"
                 />
               </div>
               <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">

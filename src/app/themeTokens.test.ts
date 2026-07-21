@@ -14,7 +14,8 @@ function cssBlock(selector: string) {
   }
 
   let depth = 0;
-  for (let i = start; i < globalsCss.length; i++) {
+  const openingBrace = globalsCss.indexOf('{', start);
+  for (let i = openingBrace; i < globalsCss.length; i++) {
     if (globalsCss[i] === '{') depth++;
     if (globalsCss[i] === '}') depth--;
     if (depth === 0 && i > start) {
@@ -45,5 +46,15 @@ describe('theme tokens', () => {
     expect(globalsCss).toContain('::-webkit-scrollbar-thumb');
     expect(globalsCss).toContain('var(--scrollbar-thumb)');
     expect(globalsCss).toContain('var(--scrollbar-track)');
+  });
+
+  it('uses the warm yellow editorial palette in both themes', () => {
+    const root = cssBlock(':root');
+    const dark = cssBlock('.dark');
+
+    expect(root).toContain('--primary: oklch(0.82 0.17 88)');
+    expect(root).toContain('--background: oklch(0.955 0.012 88)');
+    expect(dark).toContain('--background: oklch(0.105 0.008 85)');
+    expect(globalsCss).toContain('.editorial-panel');
   });
 });

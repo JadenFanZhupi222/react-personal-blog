@@ -19,10 +19,10 @@ const zh: Translations = {
     nickname: 'Zhupi222',
     role: {
       fullstack: '全栈开发',
-      tech: '技术',
+      tech: '技术记录',
       game: '游戏',
     },
-    enter: '进入',
+    enter: '进入网站',
     techStack: {
       title: '技术栈',
       items: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS'],
@@ -32,7 +32,7 @@ const zh: Translations = {
       items: [
         {
           title: '个人博客',
-          description: 'Next.js / React / MongoDB',
+          description: '基于 Next.js、React 与 MongoDB 构建',
         },
         {
           title: '日历组件',
@@ -41,34 +41,42 @@ const zh: Translations = {
       ],
     },
     contact: {
-      title: '联系',
+      title: '联系方式',
       description: 'GitHub / 微信 / 邮箱',
       platforms: ['GitHub', '微信', '邮箱'],
     },
   },
   home: {
     title: '首页',
-    welcome: '代码 / 文章 / 项目',
-    description: '记录开发、项目和踩过的坑。',
+    welcome: '技术文章、项目与开发实践',
+    description: '汇集软件开发中的项目成果、技术记录与问题复盘。',
     features: {
       about: {
         title: '关于',
-        description: '经历、技能、近况',
-        action: '经历和技能',
+        description: '个人经历、专业技能与技术方向',
+        action: '查看详细信息',
       },
       projects: {
         title: '项目',
-        description: '做过什么，怎么做的',
-        action: '做过什么',
+        description: '已完成项目及其设计与实现',
+        action: '浏览项目',
       },
       blog: {
         title: '博客',
-        description: '问题、解法、复盘',
-        action: '问题和解法',
+        description: '开发记录、技术分析与解决方案',
+        action: '阅读文章',
       },
     },
+    showcase: {
+      title: '精选项目',
+      previous: '上一个项目',
+      next: '下一个项目',
+      viewProject: '查看项目',
+      latestWriting: '最新文章',
+      viewAllWriting: '查看全部文章',
+    },
     activity: {
-      title: '近况',
+      title: '开发与兴趣动态',
       leetcode: {
         title: 'LeetCode 统计',
         placeholder: '加载中...',
@@ -93,7 +101,7 @@ const zh: Translations = {
   },
   about: {
     title: '关于',
-    description: '经历 / 技能 / 近况',
+    description: '个人经历、专业技能与技术方向。',
     skills: {
       title: '技能',
       categories: {
@@ -104,18 +112,18 @@ const zh: Translations = {
       },
     },
     experience: {
-      title: '经验',
+      title: '工作经历',
     },
   },
   projects: {
     title: '项目',
-    description: '个人项目',
-    highlights: '亮点',
+    description: '已完成项目及其设计与实现。',
+    highlights: '实现要点',
   },
   blog: {
-    title: '博客',
-    description: '技术记录',
-    readMore: '继续',
+    title: '技术文章',
+    description: '开发记录、技术分析与解决方案。',
+    readMore: '阅读全文',
     prev: '上一篇',
     next: '下一篇',
     related: '相关',
@@ -126,10 +134,11 @@ const zh: Translations = {
     copied: '已复制',
   },
   contact: {
-    title: '联系',
+    title: '联系方式',
+    description: '技术交流、项目合作及其他事项，可通过以下方式联系。',
     github: 'GitHub',
     emails: '邮箱',
-    socials: '社交',
+    socials: '社交平台',
   },
   notFound: {
     title: '404',
