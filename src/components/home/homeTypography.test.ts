@@ -31,6 +31,13 @@ describe('home typography', () => {
     expect(homePageSource).toContain('getAllBlogs');
     expect(featureCardSource).toContain("from 'next/image'");
     expect(featureCardSource).toContain('src={cover}');
+    expect(featureCardSource).toContain('data-slot="feature-media"');
+    expect(featureCardSource).toContain('data-slot="feature-content"');
+    expect(featureCardSource).toContain(
+      "featured ? 'aspect-[16/8]' : 'aspect-[16/7] lg:aspect-[4/3]'"
+    );
+    expect(featureCardSource).not.toContain('absolute inset-0 flex');
+    expect(featureCardSource).not.toContain('whileHover={{ y: -4 }}');
     expect(featureCardSource).not.toContain('LucideIcon');
     expect(featureCardSource).not.toContain('index');
   });
