@@ -75,10 +75,11 @@ export function HomePage({ featuredContent }: HomePageProps) {
                   {t.home.features.projects.title} / {t.home.features.blog.title}
                 </h2>
               </div>
-              <div className="grid gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(18rem,1fr)]">
+              <div className="grid items-start gap-5 lg:grid-cols-[minmax(0,2fr)_minmax(18rem,1fr)] lg:gap-6">
                 <FeatureCard
                   href={featured.project?.url ?? `/${locale}/projects`}
                   cover="/images/home/personal-blog-project.png"
+                  coverAlt="个人博客首页的深色界面预览"
                   label={t.home.features.projects.title}
                   title={featured.project?.title ?? t.home.features.projects.title}
                   description={
@@ -95,6 +96,7 @@ export function HomePage({ featuredContent }: HomePageProps) {
                       : `/${locale}/blog`
                   }
                   cover="/images/home/family-recipe-code.png"
+                  coverAlt="家庭食谱小程序开发文章中的 TypeScript 代码片段"
                   label={t.home.features.blog.title}
                   title={featured.article?.title ?? t.home.features.blog.title}
                   description={featured.article?.description ?? t.home.features.blog.description}
