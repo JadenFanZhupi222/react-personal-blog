@@ -3,11 +3,15 @@ import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
 const homeSource = readFileSync(join(process.cwd(), 'src/components/home/index.tsx'), 'utf8');
-const featureCardSource = readFileSync(
-  join(process.cwd(), 'src/components/features/FeatureCard/index.tsx'),
+const homePageSource = readFileSync(join(process.cwd(), 'src/app/[locale]/home/page.tsx'), 'utf8');
+const carouselSource = readFileSync(
+  join(process.cwd(), 'src/components/home/HomeProjectCarousel.tsx'),
   'utf8'
 );
-const homePageSource = readFileSync(join(process.cwd(), 'src/app/[locale]/home/page.tsx'), 'utf8');
+const writingSource = readFileSync(
+  join(process.cwd(), 'src/components/home/LatestWriting.tsx'),
+  'utf8'
+);
 
 describe('home typography', () => {
   it('keeps the Chinese-friendly hero scale below the oversized 8xl treatment', () => {
@@ -18,27 +22,23 @@ describe('home typography', () => {
     expect(homeSource).not.toContain('xl:text-8xl');
   });
 
-  it('uses a media-led hero and real asymmetric featured content', () => {
+  it('uses a media-led hero and a manual three-project showcase', () => {
     expect(homeSource).toContain("from 'next/image'");
     expect(homeSource).toContain('/images/developer-editorial-hero.png');
     expect(homeSource).not.toContain('editorial-panel');
-    expect(homeSource).toContain('lg:grid-cols-[minmax(0,2fr)_minmax(18rem,1fr)]');
-    expect(homeSource).not.toContain('lg:grid-cols-3');
+    expect(homeSource).toContain('HomeProjectCarousel');
+    expect(homeSource).toContain('LatestWriting');
+    expect(homeSource).not.toContain('FeatureCard');
     expect(homeSource).toContain('t.home.features.about.action');
-    expect(homeSource).toContain('/images/home/personal-blog-project.png');
-    expect(homeSource).toContain('/images/home/family-recipe-code.png');
     expect(homePageSource).toContain('getAllProjects');
     expect(homePageSource).toContain('getAllBlogs');
-    expect(featureCardSource).toContain("from 'next/image'");
-    expect(featureCardSource).toContain('src={cover}');
-    expect(featureCardSource).toContain('data-slot="feature-media"');
-    expect(featureCardSource).toContain('data-slot="feature-content"');
-    expect(featureCardSource).toContain(
-      "featured ? 'aspect-[16/6]' : 'aspect-[16/7] lg:aspect-video'"
-    );
-    expect(featureCardSource).not.toContain('absolute inset-0 flex');
-    expect(featureCardSource).not.toContain('whileHover={{ y: -4 }}');
-    expect(featureCardSource).not.toContain('LucideIcon');
-    expect(featureCardSource).not.toContain('index');
+    expect(homePageSource).toContain("item.slug !== 'personal-homepage'");
+    expect(homePageSource).toContain('.slice(0, 3)');
+    expect(carouselSource).toContain('Swiper');
+    expect(carouselSource).toContain('Keyboard');
+    expect(carouselSource).toContain('A11y');
+    expect(carouselSource).not.toContain('autoplay');
+    expect(carouselSource).toContain('aria-live="polite"');
+    expect(writingSource).toContain('/blog/${article.slug}');
   });
 });

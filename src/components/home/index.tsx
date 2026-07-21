@@ -3,13 +3,14 @@
 import { Activity } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { LazyMotion, domAnimation, m } from 'framer-motion';
+import { TextReveal } from '@/components/effects/TextReveal';
 import { LeetCodeCard } from '@/components/home/LeetCodeCard';
 import { SteamCard } from '@/components/home/SteamCard';
-import { FeatureCard } from '@/components/features/FeatureCard';
-import { TextReveal } from '@/components/effects/TextReveal';
-import { useTranslations } from '@/lib/hooks/useTranslations';
-import { LazyMotion, m, domAnimation } from 'framer-motion';
 import { containerVariants, itemVariants } from '@/lib/animations';
+import { useTranslations } from '@/lib/hooks/useTranslations';
+import { HomeProjectCarousel } from './HomeProjectCarousel';
+import { LatestWriting } from './LatestWriting';
 import type { HomeFeaturedContent } from './types';
 
 interface HomePageProps {
@@ -36,7 +37,7 @@ export function HomePage({ featuredContent }: HomePageProps) {
             >
               <Image
                 src="/images/developer-editorial-hero.png"
-                alt="机械键盘、技术图纸和代码界面组成的开发工作台"
+                alt="由机械键盘、技术图纸和代码界面组成的开发工作台"
                 fill
                 priority
                 sizes="(max-width: 1536px) 100vw, 1536px"
@@ -69,46 +70,19 @@ export function HomePage({ featuredContent }: HomePageProps) {
               </div>
             </m.section>
 
-            <m.section variants={itemVariants} className="py-12 sm:py-16">
-              <div className="mb-7 px-1">
-                <h2 className="text-3xl font-black tracking-[-0.04em] sm:text-4xl">
-                  {t.home.features.projects.title} / {t.home.features.blog.title}
-                </h2>
-              </div>
-              <div className="grid items-start gap-5 lg:grid-cols-[minmax(0,2fr)_minmax(18rem,1fr)] lg:gap-6">
-                <FeatureCard
-                  href={featured.project?.url ?? `/${locale}/projects`}
-                  cover="/images/home/personal-blog-project.png"
-                  coverAlt="个人博客首页的深色界面预览"
-                  label={t.home.features.projects.title}
-                  title={featured.project?.title ?? t.home.features.projects.title}
-                  description={
-                    featured.project?.description ?? t.home.features.projects.description
-                  }
-                  metadata={featured.project?.tags.slice(0, 3).join(' / ') ?? 'Next.js / React'}
-                  actionText={t.home.features.projects.action}
-                  featured
-                />
-                <FeatureCard
-                  href={
-                    featured.article
-                      ? `/${locale}/blog/${featured.article.slug}`
-                      : `/${locale}/blog`
-                  }
-                  cover="/images/home/family-recipe-code.png"
-                  coverAlt="家庭食谱小程序开发文章中的 TypeScript 代码片段"
-                  label={t.home.features.blog.title}
-                  title={featured.article?.title ?? t.home.features.blog.title}
-                  description={featured.article?.description ?? t.home.features.blog.description}
-                  metadata={
-                    featured.article
-                      ? `${featured.article.date} · ${featured.article.readTime}`
-                      : t.home.features.blog.title
-                  }
-                  actionText={t.home.features.blog.action}
-                />
-              </div>
-            </m.section>
+            <m.div variants={itemVariants} className="py-12 sm:py-16">
+              <HomeProjectCarousel
+                projects={featured.projects}
+                locale={locale}
+                labels={t.home.showcase}
+              />
+              <LatestWriting
+                articles={featured.articles}
+                locale={locale}
+                title={t.home.showcase.latestWriting}
+                viewAll={t.home.showcase.viewAllWriting}
+              />
+            </m.div>
 
             <m.section
               variants={itemVariants}

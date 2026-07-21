@@ -61,6 +61,14 @@ export interface Translations {
         action: string;
       };
     };
+    showcase: {
+      title: string;
+      previous: string;
+      next: string;
+      viewProject: string;
+      latestWriting: string;
+      viewAllWriting: string;
+    };
     activity: {
       title: string;
       leetcode: {

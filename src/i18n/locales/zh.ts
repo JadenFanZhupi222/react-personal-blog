@@ -67,6 +67,14 @@ const zh: Translations = {
         action: '阅读文章',
       },
     },
+    showcase: {
+      title: '精选项目',
+      previous: '上一个项目',
+      next: '下一个项目',
+      viewProject: '查看项目',
+      latestWriting: '最新文章',
+      viewAllWriting: '查看全部文章',
+    },
     activity: {
       title: '开发与兴趣动态',
       leetcode: {

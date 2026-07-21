@@ -68,6 +68,14 @@ const en: Translations = {
         action: 'Read articles',
       },
     },
+    showcase: {
+      title: 'Selected projects',
+      previous: 'Previous project',
+      next: 'Next project',
+      viewProject: 'View project',
+      latestWriting: 'Latest writing',
+      viewAllWriting: 'View all writing',
+    },
     activity: {
       title: 'Development and interests',
       leetcode: {

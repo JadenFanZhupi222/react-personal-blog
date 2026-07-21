@@ -20,35 +20,33 @@ async function PrefetchedHome() {
   const locales: Locale[] = ['en', 'zh'];
   const featuredContent = Object.fromEntries(
     locales.map((locale) => {
-      const project =
-        projects[locale].find(
-          (item) => item.slug === 'personal-homepage' || item.url.includes('react-personal-blog')
-        ) ?? projects[locale][0];
-      const article =
-        blogs[locale].find((item) => item.slug === 'taro-family-recipe-summary') ??
-        blogs[locale][0];
+      const selectedProjects = projects[locale]
+        .filter(
+          (item) =>
+            item.slug !== 'personal-homepage' && !item.url.includes('react-personal-blog')
+        )
+        .sort((a, b) => a.order - b.order)
+        .slice(0, 3);
+      const latestArticles = blogs[locale].slice(0, 3);
 
       return [
         locale,
         {
-          project: project
-            ? {
-                title: project.title,
-                description: project.description,
-                tags: project.tags,
-                url: project.url,
-              }
-            : null,
-          article: article
-            ? {
-                title: article.title,
-                description: article.description,
-                tags: article.tags,
-                slug: article.slug,
-                date: article.date,
-                readTime: article.readTime,
-              }
-            : null,
+          projects: selectedProjects.map((project) => ({
+            title: project.title,
+            description: project.description,
+            tags: project.tags,
+            slug: project.slug,
+            highlights: project.highlights,
+            url: project.url,
+            order: project.order,
+          })),
+          articles: latestArticles.map((article) => ({
+            title: article.title,
+            slug: article.slug,
+            date: article.date,
+            readTime: article.readTime,
+          })),
         },
       ];
     })
