@@ -2,27 +2,28 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { LucideIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface FeatureCardProps {
   href: string;
-  icon: LucideIcon;
+  cover: string;
+  label: string;
   title: string;
   description: string;
   actionText: string;
-  index?: string;
-  cover: string;
+  metadata: string;
+  featured?: boolean;
 }
 
 export function FeatureCard({
   href,
-  icon: Icon,
+  cover,
+  label,
   title,
   description,
   actionText,
-  index = '00',
-  cover,
+  metadata,
+  featured = false,
 }: FeatureCardProps) {
   return (
     <Link
@@ -35,32 +36,53 @@ export function FeatureCard({
         whileTap={{ scale: 0.99 }}
         transition={{ type: 'spring', stiffness: 320, damping: 24 }}
       >
-        <article className="group bg-card text-card-foreground h-full min-w-0 overflow-hidden rounded-lg shadow-[0_14px_38px_color-mix(in_srgb,var(--background)_78%,black_22%)]">
-          <div className="relative aspect-[16/10] overflow-hidden bg-[#111] text-white sm:aspect-[16/9]">
+        <article
+          className={`group relative min-w-0 overflow-hidden rounded-lg bg-[#0a0a0a] text-white ${
+            featured
+              ? 'min-h-[30rem] sm:min-h-[34rem]'
+              : 'min-h-[25rem] sm:min-h-[28rem] lg:min-h-[34rem]'
+          }`}
+        >
+          <div className="absolute inset-0 overflow-hidden">
             <Image
               src={cover}
               alt=""
               fill
-              sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw"
-              className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+              sizes={
+                featured ? '(max-width: 1023px) 100vw, 67vw' : '(max-width: 1023px) 100vw, 33vw'
+              }
+              className={`object-cover transition-transform duration-700 ${
+                featured
+                  ? 'scale-[1.12] group-hover:scale-[1.16]'
+                  : 'scale-[1.1] group-hover:scale-[1.14]'
+              }`}
             />
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.35)_0%,transparent_42%,rgba(0,0,0,0.88)_100%)]" />
-            <span className="text-primary absolute top-5 left-5 font-mono text-xs font-bold tracking-[0.18em]">
-              {index}
-            </span>
-            <div className="group-hover:border-primary/70 group-hover:text-primary absolute top-4 right-4 flex h-10 w-10 items-center justify-center rounded-md border border-white/18 bg-black/45 text-white backdrop-blur-sm transition-colors duration-300">
-              <Icon className="h-5 w-5" />
-            </div>
-            <span className="absolute right-5 bottom-5 left-5 text-3xl leading-none font-black tracking-[-0.04em] text-balance text-white sm:text-4xl">
-              {title}
-            </span>
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.48)_0%,rgba(0,0,0,0.08)_38%,rgba(0,0,0,0.96)_100%)]" />
           </div>
-          <div className="flex min-h-40 flex-col justify-between gap-7 p-5 sm:p-6">
-            <p className="text-muted-foreground leading-7 text-pretty">{description}</p>
-            <p className="text-foreground inline-flex items-center gap-2 text-sm font-bold">
-              <span className="bg-primary h-2 w-2" />
-              {actionText}
-            </p>
+          <div className="relative flex min-h-[inherit] flex-col justify-between p-6 sm:p-8">
+            <div className="flex items-center justify-between gap-4 text-sm font-semibold">
+              <span className="text-primary">{label}</span>
+              <span className="text-right text-white/62">{metadata}</span>
+            </div>
+            <div className={featured ? 'max-w-3xl' : 'max-w-xl'}>
+              <h3
+                className={`leading-[0.98] font-black tracking-[-0.04em] text-balance ${
+                  featured ? 'text-4xl sm:text-5xl' : 'text-3xl'
+                }`}
+              >
+                {title}
+              </h3>
+              <p
+                className={`mt-4 max-w-[62ch] leading-7 text-pretty text-white/72 ${
+                  featured ? 'line-clamp-3' : 'line-clamp-4'
+                }`}
+              >
+                {description}
+              </p>
+              <p className="group-hover:text-primary mt-7 text-sm font-bold text-white transition-colors">
+                {actionText} <span aria-hidden="true">→</span>
+              </p>
+            </div>
           </div>
         </article>
       </motion.div>

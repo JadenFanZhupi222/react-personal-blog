@@ -7,6 +7,7 @@ const featureCardSource = readFileSync(
   join(process.cwd(), 'src/components/features/FeatureCard/index.tsx'),
   'utf8'
 );
+const homePageSource = readFileSync(join(process.cwd(), 'src/app/[locale]/home/page.tsx'), 'utf8');
 
 describe('home typography', () => {
   it('keeps the Chinese-friendly hero scale below the oversized 8xl treatment', () => {
@@ -17,15 +18,20 @@ describe('home typography', () => {
     expect(homeSource).not.toContain('xl:text-8xl');
   });
 
-  it('uses a media-led hero and news-style navigation cards', () => {
+  it('uses a media-led hero and real asymmetric featured content', () => {
     expect(homeSource).toContain("from 'next/image'");
     expect(homeSource).toContain('/images/developer-editorial-hero.png');
     expect(homeSource).not.toContain('editorial-panel');
-    expect(homeSource).toContain('lg:grid-cols-3');
-    expect(homeSource).not.toContain('lg:grid-cols-[1.25fr_1fr_1fr]');
-    expect(homeSource.match(/cover:/g)).toHaveLength(3);
+    expect(homeSource).toContain('lg:grid-cols-[minmax(0,2fr)_minmax(18rem,1fr)]');
+    expect(homeSource).not.toContain('lg:grid-cols-3');
+    expect(homeSource).toContain('t.home.features.about.action');
+    expect(homeSource).toContain('/images/home/personal-blog-project.png');
+    expect(homeSource).toContain('/images/home/family-recipe-code.png');
+    expect(homePageSource).toContain('getAllProjects');
+    expect(homePageSource).toContain('getAllBlogs');
     expect(featureCardSource).toContain("from 'next/image'");
     expect(featureCardSource).toContain('src={cover}');
-    expect(featureCardSource).not.toContain('<h3');
+    expect(featureCardSource).not.toContain('LucideIcon');
+    expect(featureCardSource).not.toContain('index');
   });
 });

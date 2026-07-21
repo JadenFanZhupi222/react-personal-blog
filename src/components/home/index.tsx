@@ -1,7 +1,8 @@
 'use client';
 
-import { Activity, Code, FolderGit2, User } from 'lucide-react';
+import { Activity } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { LeetCodeCard } from '@/components/home/LeetCodeCard';
 import { SteamCard } from '@/components/home/SteamCard';
 import { FeatureCard } from '@/components/features/FeatureCard';
@@ -9,38 +10,15 @@ import { TextReveal } from '@/components/effects/TextReveal';
 import { useTranslations } from '@/lib/hooks/useTranslations';
 import { LazyMotion, m, domAnimation } from 'framer-motion';
 import { containerVariants, itemVariants } from '@/lib/animations';
+import type { HomeFeaturedContent } from './types';
 
-export function HomePage() {
+interface HomePageProps {
+  featuredContent: HomeFeaturedContent;
+}
+
+export function HomePage({ featuredContent }: HomePageProps) {
   const { t, locale } = useTranslations();
-  const featureCards = [
-    {
-      href: `/${locale}/about`,
-      icon: User,
-      title: t.home.features.about.title,
-      description: t.home.features.about.description,
-      actionText: t.home.features.about.action,
-      index: '01',
-      cover: '/images/home/about-cover.png',
-    },
-    {
-      href: `/${locale}/projects`,
-      icon: FolderGit2,
-      title: t.home.features.projects.title,
-      description: t.home.features.projects.description,
-      actionText: t.home.features.projects.action,
-      index: '02',
-      cover: '/images/home/projects-cover.png',
-    },
-    {
-      href: `/${locale}/blog`,
-      icon: Code,
-      title: t.home.features.blog.title,
-      description: t.home.features.blog.description,
-      actionText: t.home.features.blog.action,
-      index: '03',
-      cover: '/images/home/writing-cover.png',
-    },
-  ];
+  const featured = featuredContent[locale];
 
   return (
     <LazyMotion features={domAnimation}>
@@ -76,28 +54,57 @@ export function HomePage() {
                   <TextReveal
                     as="h1"
                     text={t.home.welcome}
-                    className="max-w-4xl text-4xl leading-[0.93] font-black tracking-[-0.045em] text-balance text-white sm:text-5xl lg:text-6xl xl:text-7xl"
+                    className="max-w-4xl text-4xl leading-[0.93] font-black tracking-[-0.04em] text-balance text-white sm:text-5xl lg:text-6xl xl:text-7xl"
                   />
                   <p className="mt-6 max-w-xl text-base leading-7 text-white/72 sm:text-lg sm:leading-8">
                     {t.home.description}
                   </p>
+                  <Link
+                    href={`/${locale}/about`}
+                    className="hover:text-primary focus-visible:text-primary mt-7 inline-flex min-h-11 items-center gap-2 text-sm font-bold text-white transition-colors focus-visible:outline-none"
+                  >
+                    {t.home.features.about.action} <span aria-hidden="true">→</span>
+                  </Link>
                 </div>
               </div>
             </m.section>
 
             <m.section variants={itemVariants} className="py-12 sm:py-16">
-              <div className="mb-7 flex items-end justify-between gap-4 px-1">
+              <div className="mb-7 px-1">
                 <h2 className="text-3xl font-black tracking-[-0.04em] sm:text-4xl">
                   {t.home.features.projects.title} / {t.home.features.blog.title}
                 </h2>
-                <span className="text-muted-foreground hidden font-mono text-xs tracking-[0.16em] sm:block">
-                  INDEX 01—03
-                </span>
               </div>
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {featureCards.map((card) => (
-                  <FeatureCard key={card.href} {...card} />
-                ))}
+              <div className="grid gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(18rem,1fr)]">
+                <FeatureCard
+                  href={featured.project?.url ?? `/${locale}/projects`}
+                  cover="/images/home/personal-blog-project.png"
+                  label={t.home.features.projects.title}
+                  title={featured.project?.title ?? t.home.features.projects.title}
+                  description={
+                    featured.project?.description ?? t.home.features.projects.description
+                  }
+                  metadata={featured.project?.tags.slice(0, 3).join(' / ') ?? 'Next.js / React'}
+                  actionText={t.home.features.projects.action}
+                  featured
+                />
+                <FeatureCard
+                  href={
+                    featured.article
+                      ? `/${locale}/blog/${featured.article.slug}`
+                      : `/${locale}/blog`
+                  }
+                  cover="/images/home/family-recipe-code.png"
+                  label={t.home.features.blog.title}
+                  title={featured.article?.title ?? t.home.features.blog.title}
+                  description={featured.article?.description ?? t.home.features.blog.description}
+                  metadata={
+                    featured.article
+                      ? `${featured.article.date} · ${featured.article.readTime}`
+                      : t.home.features.blog.title
+                  }
+                  actionText={t.home.features.blog.action}
+                />
               </div>
             </m.section>
 
