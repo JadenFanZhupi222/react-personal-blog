@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
-import './globals.css';
+import '../globals.css';
 import { ThemeProvider } from 'next-themes';
 import { QueryProvider } from '@/components/providers/QueryProvider';
 import { TopProgressBar } from '@/components/ui/TopProgressBar';
@@ -53,7 +53,7 @@ export const viewport: Viewport = {
 
 // Root layout is fully static. Locale lives in the URL ([locale] segment),
 // so the locale-aware UI (Navbar, UpdateNotification, TranslationsProvider)
-// is set up in src/app/[locale]/layout.tsx — not here. The bare welcome page
+// is set up in src/app/(frontend)/[locale]/layout.tsx — not here. The bare welcome page
 // at / has its own TranslationsProvider wrapper (cookie-based).
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

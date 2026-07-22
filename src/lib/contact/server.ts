@@ -1,12 +1,13 @@
 import { cacheLife, cacheTag } from 'next/cache';
-import { dbConnect } from '@/lib/db';
-import ContactModel from '@/models/Contact';
+import { getCMS } from '@/lib/cms/client';
+import { mapSiteSettings } from '@/lib/cms/mappers';
 import type { ContactData } from './types';
 
 export async function getContactData(): Promise<ContactData | null> {
   'use cache';
   cacheLife('hours');
   cacheTag('contact');
-  await dbConnect();
-  return ContactModel.findOne({}, { _id: 0, __v: 0 }).lean<ContactData>();
+  const cms = await getCMS();
+  const settings = await cms.findGlobal({ slug: 'site-settings', locale: 'en', overrideAccess: false });
+  return mapSiteSettings(settings).contact;
 }

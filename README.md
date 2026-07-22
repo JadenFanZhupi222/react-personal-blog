@@ -121,3 +121,32 @@ The project uses a custom theme system with dark/light mode support:
 
 Shijie Fan
 Zhupi222
+
+## Payload CMS
+
+The site includes a self-hosted Payload CMS admin panel at `/admin`. Payload uses the same MongoDB server as the legacy content layer but writes to isolated `cms-*` collections so the source collections remain available for rollback.
+
+Required configuration:
+
+```env
+MONGODB_URI=mongodb://localhost:27017/personal-blog
+PAYLOAD_SECRET=replace-with-a-long-random-secret
+```
+
+Start the site with `pnpm dev`, open `http://localhost:3000/admin`, and create the first administrator. The CMS manages bilingual posts, projects, experiences, skills, contact details, and media. Post bodies remain Markdown so the existing public renderer continues to work.
+
+Generate Payload types and the admin import map after changing a collection:
+
+```bash
+pnpm cms:generate
+```
+
+Preview and run the legacy MongoDB migration:
+
+```bash
+pnpm cms:migrate:dry-run
+pnpm cms:migrate
+pnpm cms:migrate:verify
+```
+
+The migration is idempotent and never deletes the legacy `blogs`, `projects`, `experiences`, `skills`, or `contacts` collections. Back up the database before the first production migration. Uploaded media needs persistent storage in production; configure an official Payload cloud-storage adapter when deploying to an ephemeral platform such as Vercel.

@@ -3,7 +3,10 @@ import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
 const homeSource = readFileSync(join(process.cwd(), 'src/components/home/index.tsx'), 'utf8');
-const homePageSource = readFileSync(join(process.cwd(), 'src/app/[locale]/home/page.tsx'), 'utf8');
+const homePageSource = readFileSync(
+  join(process.cwd(), 'src/app/(frontend)/[locale]/home/page.tsx'),
+  'utf8'
+);
 const carouselSource = readFileSync(
   join(process.cwd(), 'src/components/home/HomeProjectCarousel.tsx'),
   'utf8'
@@ -12,7 +15,6 @@ const writingSource = readFileSync(
   join(process.cwd(), 'src/components/home/LatestWriting.tsx'),
   'utf8'
 );
-
 describe('home typography', () => {
   it('keeps the Chinese-friendly hero scale below the oversized 8xl treatment', () => {
     expect(homeSource).toContain('text-4xl');
