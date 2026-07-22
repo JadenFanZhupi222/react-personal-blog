@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next';
+import { withPayload } from '@payloadcms/next/withPayload';
 
 // Fail fast if required env vars are missing
 const requiredEnvVars = ['MONGODB_URI', 'STEAM_API_KEY', 'STEAM_ID'];
@@ -37,4 +38,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withPayload(nextConfig);

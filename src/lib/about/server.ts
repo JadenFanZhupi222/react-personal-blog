@@ -1,18 +1,28 @@
 import { cacheLife, cacheTag } from 'next/cache';
-import { dbConnect } from '@/lib/db';
-import Skills from '@/models/Skills';
-import Experiences from '@/models/Experiences';
-import { parseAboutData } from './parser';
-import type { AboutData, RawSkillsData, RawExperiencesData } from './types';
+import { getCMS } from '@/lib/cms/client';
+import { mapExperience, mapSiteSettings } from '@/lib/cms/mappers';
+import type { Locale } from '@/i18n/types';
+import type { AboutData, Experience } from './types';
 
 export async function getAboutData(): Promise<AboutData> {
   'use cache';
   cacheLife('hours');
   cacheTag('about');
-  await dbConnect();
-  const [skills, experiences] = await Promise.all([
-    Skills.find({}, { _id: 0, __v: 0 }).lean<RawSkillsData[]>(),
-    Experiences.find({}, { _id: 0, __v: 0 }).lean<RawExperiencesData[]>(),
-  ]);
-  return parseAboutData({ skills, experiences });
+  const cms = await getCMS();
+  const locales: Locale[] = ['en', 'zh'];
+  const entries = await Promise.all(locales.map(async (locale) => {
+    const [settings, result] = await Promise.all([
+      cms.findGlobal({ slug: 'site-settings', locale, fallbackLocale: false, overrideAccess: false }),
+      cms.find({ collection: 'cms-experiences', locale, fallbackLocale: false, sort: '-startDate', limit: 1000, overrideAccess: false }),
+    ]);
+    const experiences = result.docs.map(mapExperience).map((experience: Experience) => ({
+      ...experience,
+      period: `${experience.startDate.replace('-', '.')} - ${experience.endDate ? experience.endDate.replace('-', '.') : 'Present'}`,
+    }));
+    return { skills: mapSiteSettings(settings).skills, experiences };
+  }));
+  return {
+    skills: { en: entries[0].skills, zh: entries[1].skills },
+    experiences: { en: entries[0].experiences, zh: entries[1].experiences },
+  };
 }

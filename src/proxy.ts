@@ -3,6 +3,16 @@ import { NextRequest, NextResponse } from 'next/server';
 const SUPPORTED_LOCALES = ['en', 'zh'] as const;
 const LOCALIZED_TOP_LEVEL = ['home', 'about', 'projects', 'contact', 'blog', 'achievements'];
 
+const BYPASS_PREFIXES = ['/admin', '/cms-api', '/api', '/_next'];
+const BYPASS_PATHS = ['/rss.xml', '/sitemap.xml', '/robots.txt', '/favicon.ico'];
+
+export function shouldBypassLocaleProxy(pathname: string): boolean {
+  return (
+    BYPASS_PATHS.includes(pathname) ||
+    BYPASS_PREFIXES.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`))
+  );
+}
+
 /**
  * Locale-aware redirect for bare paths. The site's actual routes live under
  * /[locale]/..., but we keep legacy/un-prefixed URLs working: e.g. /about
@@ -11,6 +21,7 @@ const LOCALIZED_TOP_LEVEL = ['home', 'about', 'projects', 'contact', 'blog', 'ac
  */
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  if (shouldBypassLocaleProxy(pathname)) return NextResponse.next();
   const segments = pathname.split('/').filter(Boolean);
 
   // Already locale-prefixed — pass through.
@@ -35,5 +46,5 @@ export function proxy(request: NextRequest) {
 
 export const config = {
   // Skip Next internals, API routes, static files, RSS/sitemap.
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|rss.xml|sitemap.xml|robots.txt).*)'],
+  matcher: ['/((?!api|cms-api|admin|_next/static|_next/image|favicon.ico|rss.xml|sitemap.xml|robots.txt).*)'],
 };
