@@ -7,7 +7,10 @@ const featureCardSource = readFileSync(
   join(process.cwd(), 'src/components/features/FeatureCard/index.tsx'),
   'utf8'
 );
-const homePageSource = readFileSync(join(process.cwd(), 'src/app/[locale]/home/page.tsx'), 'utf8');
+const homePageSource = readFileSync(
+  join(process.cwd(), 'src/app/(frontend)/[locale]/home/page.tsx'),
+  'utf8'
+);
 
 describe('home typography', () => {
   it('keeps the Chinese-friendly hero scale below the oversized 8xl treatment', () => {
