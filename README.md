@@ -135,11 +135,17 @@ PAYLOAD_SECRET=replace-with-a-long-random-secret
 
 Start the site with `pnpm dev`, open `http://localhost:3000/admin`, and create the first administrator. The CMS manages bilingual posts, projects, experiences, skills, contact details, and media. Post bodies remain Markdown so the existing public renderer continues to work.
 
+The admin home is a content workspace with draft counts, collection summaries, recently updated entries, and shortcuts for creating posts, projects, and experiences. It follows the operating-system light or dark theme and uses the same graphite, warm-white, and muted-yellow visual language as the public site.
+
+Post content uses an enhanced Markdown field with separate **Edit** and **Preview** modes. Preview renders GFM and fenced code blocks without changing the stored value: the database and public site still receive the same localized Markdown string.
+
 Generate Payload types and the admin import map after changing a collection:
 
 ```bash
 pnpm cms:generate
 ```
+
+Run the same command after adding or moving an admin component so Payload can refresh `src/app/(payload)/admin/importMap.js`.
 
 Preview and run the legacy MongoDB migration:
 
