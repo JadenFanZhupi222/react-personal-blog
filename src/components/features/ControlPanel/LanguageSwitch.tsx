@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Locale } from '@/i18n/types';
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 const languages: { code: Locale; name: string }[] = [
   { code: 'en', name: 'English' },
@@ -21,7 +21,6 @@ const LOCALE_PREFIX = /^\/(en|zh)(\/.*)?$/;
 
 export function LanguageSwitch() {
   const { locale, setLocale } = useTranslations();
-  const router = useRouter();
   const pathname = usePathname();
 
   const handleLanguageChange = (newLocale: Locale) => {
@@ -34,7 +33,7 @@ export function LanguageSwitch() {
     const match = pathname.match(LOCALE_PREFIX);
     if (match) {
       const rest = match[2] ?? '';
-      router.push(`/${newLocale}${rest}`);
+      window.location.assign(`/${newLocale}${rest}`);
     }
   };
 
