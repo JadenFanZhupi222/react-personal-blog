@@ -46,8 +46,9 @@ const zh: Translations = {
     },
     contact: {
       title: '联系方式',
-      description: 'GitHub / 微信 / 邮箱',
-      platforms: ['GitHub', '微信', '邮箱'],
+      description: 'GitHub / 邮箱',
+      platforms: ['GitHub', '邮箱'],
+      copied: '已复制',
     },
   },
   home: {

@@ -12,6 +12,7 @@ describe('welcome theme styling', () => {
   it('uses theme-aware surfaces and text instead of fixed dark styling', () => {
     expect(welcomeSource).toContain('bg-background');
     expect(welcomeSource).toContain('text-foreground');
+    expect(welcomeSource).toContain('overflow-x-clip');
     expect(welcomeSource).not.toContain('bg-[#0a0a0f]');
     expect(welcomeSource).not.toContain('text-white');
   });

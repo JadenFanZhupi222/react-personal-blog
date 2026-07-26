@@ -49,8 +49,9 @@ const en: Translations = {
     },
     contact: {
       title: 'Contact',
-      description: 'GitHub / WeChat / Email',
-      platforms: ['GitHub', 'WeChat', 'Email'],
+      description: 'GitHub / Email',
+      platforms: ['GitHub', 'Email'],
+      copied: 'Copied',
     },
   },
   home: {

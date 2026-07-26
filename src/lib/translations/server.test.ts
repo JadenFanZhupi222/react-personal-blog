@@ -49,4 +49,11 @@ describe('getTranslations', () => {
       getTranslations('zh').welcome.projects.items.map((project) => project.title)
     ).toEqual(['AI 拍照亭桌面应用', 'Git Client', '家庭食谱小程序']);
   });
+
+  it('keeps Welcome contact actions limited to GitHub and email', () => {
+    expect(getTranslations('en').welcome.contact.platforms).toEqual(['GitHub', 'Email']);
+    expect(getTranslations('zh').welcome.contact.platforms).toEqual(['GitHub', '邮箱']);
+    expect(getTranslations('en').welcome.contact.copied).toBe('Copied');
+    expect(getTranslations('zh').welcome.contact.copied).toBe('已复制');
+  });
 });

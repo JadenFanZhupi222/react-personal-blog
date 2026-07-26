@@ -38,6 +38,7 @@ export interface Translations {
       title: string;
       description: string;
       platforms: string[];
+      copied: string;
     };
   };
   home: {

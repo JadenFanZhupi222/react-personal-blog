@@ -13,6 +13,11 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 // Keeps the scene unified (shader carries the bg) but gives each project a tiny signature.
 const ACCENTS = ['#818cf8', '#f472b6', '#34d399', '#fbbf24'];
 
+export function projectTrackXPercent(panelCount: number) {
+  if (panelCount <= 1) return 0;
+  return (-100 * (panelCount - 1)) / panelCount;
+}
+
 export function ProjectsScene() {
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -29,7 +34,7 @@ export function ProjectsScene() {
 
       const panels = track.children.length;
       gsap.to(track, {
-        xPercent: -100 * (panels - 1),
+        xPercent: projectTrackXPercent(panels),
         ease: 'none',
         scrollTrigger: {
           trigger: section,
