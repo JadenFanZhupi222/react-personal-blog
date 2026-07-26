@@ -31,13 +31,19 @@ const en: Translations = {
       title: 'Featured Projects',
       items: [
         {
-          title: 'Personal Blog',
-          description: 'Built with Next.js, React, and MongoDB.',
+          title: 'AI Photo Booth',
+          description:
+            'A configurable desktop system for capture, AI generation, payment, printing, and offline operation.',
         },
         {
-          title: 'Date Picker',
+          title: 'Git Client',
           description:
-            'A calendar component built in Salesforce using LWC (Lightning Web Component), based on native HTML, CSS, and JavaScript.',
+            'A cross-platform Git client built with Tauri 2, React 19, and a layered Rust workspace.',
+        },
+        {
+          title: 'Family Meal Planner',
+          description:
+            'A collaborative WeChat Mini Program for shared recipes, meal planning, and household permissions.',
         },
       ],
     },
