@@ -31,7 +31,11 @@ body {
     'cv01' 1,
     'cv09' 1;
   background:
-    radial-gradient(circle at 76% -12%, color-mix(in srgb, var(--zp-admin-accent) 9%, transparent), transparent 34rem),
+    radial-gradient(
+      circle at 76% -12%,
+      color-mix(in srgb, var(--zp-admin-accent) 9%, transparent),
+      transparent 34rem
+    ),
     var(--zp-admin-canvas);
 }
 
@@ -262,7 +266,7 @@ body,
 
 .zp-primary-action {
   display: inline-flex;
-  min-height: 2.75rem;
+  min-height: 44px;
   align-items: center;
   justify-content: center;
   gap: 0.55rem;
@@ -300,8 +304,11 @@ body,
   overflow: hidden;
   border: 1px solid var(--zp-admin-border);
   border-radius: var(--zp-admin-radius-panel);
-  background:
-    linear-gradient(145deg, color-mix(in srgb, var(--zp-admin-surface-raised) 94%, white 2%), var(--zp-admin-surface));
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--zp-admin-surface-raised) 94%, white 2%),
+    var(--zp-admin-surface)
+  );
   box-shadow:
     inset 0 1px rgb(255 255 255 / 2.8%),
     0 0.75rem 2rem rgb(0 0 0 / 7%);
@@ -334,8 +341,11 @@ body,
 
 .zp-metric--featured {
   border-color: color-mix(in srgb, var(--zp-admin-accent) 23%, var(--zp-admin-border));
-  background:
-    linear-gradient(135deg, color-mix(in srgb, var(--zp-admin-accent) 10%, var(--zp-admin-surface-raised)), var(--zp-admin-surface));
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--zp-admin-accent) 10%, var(--zp-admin-surface-raised)),
+    var(--zp-admin-surface)
+  );
 }
 
 .zp-metric strong {
@@ -782,7 +792,7 @@ body,
   .btn,
   .field-type input:not([type='checkbox']):not([type='radio']),
   .field-type select {
-    min-height: 2.75rem;
+    min-height: 44px;
   }
 
   .zp-dashboard {
@@ -817,7 +827,7 @@ body,
   }
 
   .zp-markdown__modes button {
-    min-height: 2.75rem;
+    min-height: 44px;
   }
 
   .zp-markdown__toolbar {

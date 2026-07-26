@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 type DashboardMetricProps = {
   detail?: string;
   featured?: boolean;
@@ -14,8 +16,8 @@ export function DashboardMetric({
   value,
 }: DashboardMetricProps) {
   return (
-    <a
-      className={`zp-metric${featured ? ' zp-metric--featured' : ''}`}
+    <Link
+      className={`zp-metric${featured ? 'zp-metric--featured' : ''}`}
       href={href}
       aria-label={`${label}: ${value ?? 'Unavailable'}`}
     >
@@ -25,6 +27,6 @@ export function DashboardMetric({
       <span aria-hidden="true" className="zp-metric__arrow">
         ↗
       </span>
-    </a>
+    </Link>
   );
 }

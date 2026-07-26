@@ -1,21 +1,12 @@
 'use client';
 
-import {
-  FieldDescription,
-  FieldError,
-  FieldLabel,
-  useField,
-} from '@payloadcms/ui';
+import { FieldDescription, FieldError, FieldLabel, useField } from '@payloadcms/ui';
 import type { TextareaFieldClientProps } from 'payload';
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import rehypeHighlight from 'rehype-highlight';
 import remarkGfm from 'remark-gfm';
-import {
-  applyMarkdownCommand,
-  countWords,
-  type MarkdownCommand,
-} from './commands';
+import { applyMarkdownCommand, countWords, type MarkdownCommand } from './commands';
 
 type EditorMode = 'edit' | 'preview';
 
@@ -65,11 +56,7 @@ const toolbar: Array<{
   { command: 'list', label: 'List', symbol: '—' },
 ];
 
-export function MarkdownField({
-  field,
-  path,
-  readOnly,
-}: TextareaFieldClientProps) {
+export function MarkdownField({ field, path, readOnly }: TextareaFieldClientProps) {
   const [mode, setMode] = React.useState<EditorMode>('edit');
   const textareaRef = React.useRef<HTMLTextAreaElement>(null);
   const { errorMessage, setValue, showError, value = '' } = useField<string>({ path });
@@ -85,7 +72,7 @@ export function MarkdownField({
         value,
         textarea.selectionStart,
         textarea.selectionEnd,
-        command,
+        command
       );
       setValue(edit.value);
       requestAnimationFrame(() => {
@@ -93,11 +80,11 @@ export function MarkdownField({
         textarea.setSelectionRange(edit.selectionStart, edit.selectionEnd);
       });
     },
-    [readOnly, setValue, value],
+    [readOnly, setValue, value]
   );
 
   return (
-    <div className={`field-type textarea zp-markdown${showError ? ' error' : ''}`}>
+    <div className={`field-type textarea zp-markdown${showError ? 'error' : ''}`}>
       <div className="zp-markdown__heading">
         <div>
           <FieldLabel
@@ -166,10 +153,7 @@ export function MarkdownField({
         <div className="zp-markdown__preview" id={`${inputID}-preview`} role="tabpanel">
           {value.trim() ? (
             <PreviewBoundary key={value} onReturnToEdit={() => setMode('edit')}>
-              <ReactMarkdown
-                rehypePlugins={[rehypeHighlight]}
-                remarkPlugins={[remarkGfm]}
-              >
+              <ReactMarkdown rehypePlugins={[rehypeHighlight]} remarkPlugins={[remarkGfm]}>
                 {value}
               </ReactMarkdown>
             </PreviewBoundary>

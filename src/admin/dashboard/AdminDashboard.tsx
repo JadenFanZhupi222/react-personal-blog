@@ -1,5 +1,6 @@
 import type { AdminViewServerProps } from 'payload';
 import { Gutter } from '@payloadcms/ui';
+import Link from 'next/link';
 import { DashboardMetric } from './DashboardMetric';
 import { loadDashboardData } from './data';
 import { QuickCreate } from './QuickCreate';
@@ -21,10 +22,10 @@ export async function AdminDashboard({ payload }: AdminViewServerProps) {
               : 'Your published content is up to date.'}
           </p>
         </div>
-        <a className="zp-primary-action" href="/admin/collections/cms-posts/create">
+        <Link className="zp-primary-action" href="/admin/collections/cms-posts/create">
           <span aria-hidden="true">+</span>
           Create content
-        </a>
+        </Link>
       </header>
 
       <section aria-label="Content summary" className="zp-dashboard__metrics">

@@ -26,7 +26,12 @@ export const Projects: CollectionConfig = {
       admin: { position: 'sidebar' },
       fields: [{ name: 'value', type: 'text', required: true }],
     },
-    { name: 'highlights', type: 'array', localized: true, fields: [{ name: 'value', type: 'text', required: true }] },
+    {
+      name: 'highlights',
+      type: 'array',
+      localized: true,
+      fields: [{ name: 'value', type: 'text', required: true }],
+    },
     { name: 'url', type: 'text', admin: { position: 'sidebar' } },
     {
       name: 'order',

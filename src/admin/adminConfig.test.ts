@@ -15,7 +15,7 @@ describe('Payload admin UI configuration', () => {
       Logo: '@/admin/branding/AdminLogo#AdminLogo',
     });
     expect(config.admin?.components?.views?.dashboard?.Component).toBe(
-      '@/admin/dashboard/AdminDashboard#AdminDashboard',
+      '@/admin/dashboard/AdminDashboard#AdminDashboard'
     );
   });
 
@@ -43,16 +43,16 @@ describe('Payload admin UI configuration', () => {
   });
 
   it('presents site settings in readable collapsible sections', () => {
-    const sections = global('site-settings').fields
-      .filter((candidate) => candidate.type === 'collapsible')
+    const sections = global('site-settings')
+      .fields.filter((candidate) => candidate.type === 'collapsible')
       .map((candidate) => candidate.label);
 
     expect(sections).toEqual(['Skills', 'GitHub', 'Emails', 'Social profiles']);
     expect(arrayField('site-settings', 'emails').admin?.components?.RowLabel).toBe(
-      '@/admin/rows/ContactRowLabel#ContactRowLabel',
+      '@/admin/rows/ContactRowLabel#ContactRowLabel'
     );
     expect(arrayField('site-settings', 'socials').admin?.components?.RowLabel).toBe(
-      '@/admin/rows/ContactRowLabel#ContactRowLabel',
+      '@/admin/rows/ContactRowLabel#ContactRowLabel'
     );
   });
 });
@@ -73,14 +73,14 @@ function flatten(fields: Field[]): Field[] {
   return fields.flatMap((candidate) =>
     'fields' in candidate && Array.isArray(candidate.fields)
       ? [candidate, ...flatten(candidate.fields)]
-      : [candidate],
+      : [candidate]
   );
 }
 
 function field(containerSlug: string, fieldName: string, isGlobal = false) {
   const fields = isGlobal ? global(containerSlug).fields : collection(containerSlug).fields;
   const result = flatten(fields).find(
-    (candidate) => 'name' in candidate && candidate.name === fieldName,
+    (candidate) => 'name' in candidate && candidate.name === fieldName
   );
   if (!result || !('admin' in result)) {
     throw new Error(`Missing field: ${containerSlug}.${fieldName}`);
@@ -90,6 +90,7 @@ function field(containerSlug: string, fieldName: string, isGlobal = false) {
 
 function arrayField(containerSlug: string, fieldName: string) {
   const result = field(containerSlug, fieldName, true);
-  if (result.type !== 'array') throw new Error(`Expected array field: ${containerSlug}.${fieldName}`);
+  if (result.type !== 'array')
+    throw new Error(`Expected array field: ${containerSlug}.${fieldName}`);
   return result;
 }

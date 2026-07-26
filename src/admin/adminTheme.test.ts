@@ -20,6 +20,7 @@ describe('Payload admin theme contract', () => {
     expect(css).toContain('.table');
     expect(css).toContain('.drawer');
     expect(css).toContain('.modal');
+    expect(css).toContain('min-height: 44px');
   });
 
   it('avoids brittle DOM-depth and positional selectors', () => {

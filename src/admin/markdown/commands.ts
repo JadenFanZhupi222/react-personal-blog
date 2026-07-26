@@ -17,7 +17,7 @@ export function applyMarkdownCommand(
   value: string,
   selectionStart: number,
   selectionEnd: number,
-  command: MarkdownCommand,
+  command: MarkdownCommand
 ): MarkdownEdit {
   if (command in wrappers) {
     const [before, after] = wrappers[command as keyof typeof wrappers];

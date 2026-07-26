@@ -26,9 +26,13 @@ export const SiteSettings: GlobalConfig = {
       admin: { initCollapsed: false },
       fields: [
         {
-          name: 'skills', type: 'group', fields: [
-            stringList('frontend', true), stringList('backend', true),
-            stringList('devops', true), stringList('tools', true),
+          name: 'skills',
+          type: 'group',
+          fields: [
+            stringList('frontend', true),
+            stringList('backend', true),
+            stringList('devops', true),
+            stringList('tools', true),
           ],
         },
       ],
@@ -39,7 +43,9 @@ export const SiteSettings: GlobalConfig = {
       admin: { initCollapsed: true },
       fields: [
         {
-          name: 'github', type: 'group', fields: [
+          name: 'github',
+          type: 'group',
+          fields: [
             { name: 'label', type: 'text', required: true },
             { name: 'username', type: 'text', required: true },
             { name: 'link', type: 'text', required: true },

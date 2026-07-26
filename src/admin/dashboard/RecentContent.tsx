@@ -1,4 +1,5 @@
 import type { RecentItem } from './data';
+import Link from 'next/link';
 
 type RecentContentProps = {
   items: RecentItem[];
@@ -24,12 +25,12 @@ export function RecentContent({ items }: RecentContentProps) {
       {items.length === 0 ? (
         <div className="zp-recent__empty">
           <p>No content has been updated yet.</p>
-          <a href="/admin/collections/cms-posts/create">Create your first post</a>
+          <Link href="/admin/collections/cms-posts/create">Create your first post</Link>
         </div>
       ) : (
         <div className="zp-recent__list">
           {items.map((item) => (
-            <a
+            <Link
               className="zp-recent__item"
               href={`/admin/collections/${item.collection}/${item.id}`}
               key={`${item.collection}-${item.id}`}
@@ -52,7 +53,7 @@ export function RecentContent({ items }: RecentContentProps) {
                   →
                 </span>
               )}
-            </a>
+            </Link>
           ))}
         </div>
       )}

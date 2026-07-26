@@ -14,7 +14,9 @@ import { SiteSettings } from '@/globals/SiteSettings';
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 const databaseURL = process.env.DATABASE_URL ?? process.env.MONGODB_URI;
-const payloadSecret = process.env.PAYLOAD_SECRET ?? (process.env.NODE_ENV === 'production' ? undefined : 'development-only-payload-secret-change-me');
+const payloadSecret =
+  process.env.PAYLOAD_SECRET ??
+  (process.env.NODE_ENV === 'production' ? undefined : 'development-only-payload-secret-change-me');
 
 if (!databaseURL) throw new Error('Missing DATABASE_URL or MONGODB_URI for Payload CMS');
 if (!payloadSecret) throw new Error('Missing PAYLOAD_SECRET for Payload CMS');

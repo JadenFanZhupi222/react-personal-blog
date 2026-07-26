@@ -52,8 +52,8 @@ export async function loadDashboardData(payload: Pick<Payload, 'find'>): Promise
         locale: 'en',
         overrideAccess: false,
         sort: '-updatedAt',
-      }),
-    ),
+      })
+    )
   );
 
   const failures: DashboardFailure[] = [];
@@ -98,9 +98,7 @@ export async function loadDashboardData(payload: Pick<Payload, 'find'>): Promise
             ? document._status
             : undefined,
         updatedAt:
-          typeof document.updatedAt === 'string'
-            ? document.updatedAt
-            : new Date(0).toISOString(),
+          typeof document.updatedAt === 'string' ? document.updatedAt : new Date(0).toISOString(),
       });
     });
   });

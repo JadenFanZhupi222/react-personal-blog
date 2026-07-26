@@ -12,7 +12,12 @@ export const Posts: CollectionConfig = {
     description: 'Write, localize, and publish long-form Markdown articles.',
   },
   versions: { drafts: true },
-  access: { read: publishedOrAuthenticated, create: authenticated, update: authenticated, delete: authenticated },
+  access: {
+    read: publishedOrAuthenticated,
+    create: authenticated,
+    update: authenticated,
+    delete: authenticated,
+  },
   hooks: {
     afterChange: [async ({ doc }) => revalidateSource('posts', doc)],
     afterDelete: [async ({ doc }) => revalidateSource('posts', doc)],

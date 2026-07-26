@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 const actions = [
   ['New post', '/admin/collections/cms-posts/create', 'P'],
   ['New project', '/admin/collections/cms-projects/create', 'J'],
@@ -19,10 +21,10 @@ export function QuickCreate() {
       </header>
       <nav aria-label="Create content">
         {actions.map(([label, href, shortcut]) => (
-          <a href={href} key={href}>
+          <Link href={href} key={href}>
             <span>{label}</span>
             <kbd>{shortcut}</kbd>
-          </a>
+          </Link>
         ))}
       </nav>
     </section>

@@ -17,13 +17,25 @@ export const Experiences: CollectionConfig = {
     afterDelete: [async ({ doc }) => revalidateSource('experiences', doc)],
   },
   fields: [
-    { name: 'legacyKey', type: 'text', required: true, unique: true, index: true, admin: { hidden: true } },
+    {
+      name: 'legacyKey',
+      type: 'text',
+      required: true,
+      unique: true,
+      index: true,
+      admin: { hidden: true },
+    },
     { name: 'title', type: 'text', required: true, localized: true },
     { name: 'company', type: 'text', required: true, localized: true },
     { name: 'startDate', type: 'text', required: true, admin: { position: 'sidebar' } },
     { name: 'endDate', type: 'text', admin: { position: 'sidebar' } },
     { name: 'description', type: 'textarea', required: true, localized: true },
-    { name: 'achievements', type: 'array', localized: true, fields: [{ name: 'value', type: 'text', required: true }] },
+    {
+      name: 'achievements',
+      type: 'array',
+      localized: true,
+      fields: [{ name: 'value', type: 'text', required: true }],
+    },
     {
       name: 'order',
       type: 'number',

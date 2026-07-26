@@ -15,18 +15,16 @@ describe('Payload admin dashboard components', () => {
 
   it('links metrics to their source collection and handles unavailable values', () => {
     const { rerender } = render(
-      <DashboardMetric href="/admin/collections/cms-posts" label="Posts" value={18} />,
+      <DashboardMetric href="/admin/collections/cms-posts" label="Posts" value={18} />
     );
 
     expect(screen.getByRole('link', { name: /Posts/i })).toHaveAttribute(
       'href',
-      '/admin/collections/cms-posts',
+      '/admin/collections/cms-posts'
     );
     expect(screen.getByText('18')).toBeInTheDocument();
 
-    rerender(
-      <DashboardMetric href="/admin/collections/cms-posts" label="Posts" value={null} />,
-    );
+    rerender(<DashboardMetric href="/admin/collections/cms-posts" label="Posts" value={null} />);
     expect(screen.getByText('Unavailable')).toBeInTheDocument();
   });
 
@@ -46,17 +44,17 @@ describe('Payload admin dashboard components', () => {
           ]}
         />
         <QuickCreate />
-      </>,
+      </>
     );
 
     expect(screen.getByRole('link', { name: /Calmer frontend/i })).toHaveAttribute(
       'href',
-      '/admin/collections/cms-posts/post-1',
+      '/admin/collections/cms-posts/post-1'
     );
     expect(screen.getByText('Draft')).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /New project/i })).toHaveAttribute(
       'href',
-      '/admin/collections/cms-projects/create',
+      '/admin/collections/cms-projects/create'
     );
   });
 });
