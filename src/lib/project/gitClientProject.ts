@@ -44,3 +44,75 @@ export const GIT_CLIENT_PROJECT: GitClientProjectDefinition = {
     },
   },
 };
+
+export function gitClientProjectData(locale: Locale) {
+  const copy = GIT_CLIENT_PROJECT.locales[locale];
+
+  return {
+    title: copy.title,
+    slug: GIT_CLIENT_PROJECT.slug,
+    description: copy.description,
+    tags: GIT_CLIENT_PROJECT.tags.map((value) => ({ value })),
+    highlights: copy.highlights.map((value) => ({ value })),
+    url: GIT_CLIENT_PROJECT.url,
+    order: GIT_CLIENT_PROJECT.order,
+  };
+}
+
+type ProjectId = string | number;
+type GitClientProjectData = ReturnType<typeof gitClientProjectData>;
+
+interface GitClientProjectPayload {
+  find(args: {
+    collection: 'cms-projects';
+    where: { slug: { equals: string } };
+    limit: number;
+    overrideAccess: true;
+  }): Promise<{ docs: Array<{ id: ProjectId }> }>;
+  create(args: {
+    collection: 'cms-projects';
+    locale: Locale;
+    data: GitClientProjectData;
+    overrideAccess: true;
+  }): Promise<{ id: ProjectId }>;
+  update(args: {
+    collection: 'cms-projects';
+    id: ProjectId;
+    locale: Locale;
+    data: GitClientProjectData;
+    overrideAccess: true;
+  }): Promise<unknown>;
+}
+
+export async function upsertGitClientProject(payload: GitClientProjectPayload) {
+  const existing = await payload.find({
+    collection: 'cms-projects',
+    where: { slug: { equals: GIT_CLIENT_PROJECT.slug } },
+    limit: 1,
+    overrideAccess: true,
+  });
+  let id = existing.docs[0]?.id;
+
+  for (const locale of ['en', 'zh'] as const) {
+    const data = gitClientProjectData(locale);
+    if (id !== undefined) {
+      await payload.update({
+        collection: 'cms-projects',
+        id,
+        locale,
+        data,
+        overrideAccess: true,
+      });
+    } else {
+      const created = await payload.create({
+        collection: 'cms-projects',
+        locale,
+        data,
+        overrideAccess: true,
+      });
+      id = created.id;
+    }
+  }
+
+  return id;
+}
