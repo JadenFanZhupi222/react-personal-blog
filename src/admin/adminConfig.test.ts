@@ -42,6 +42,11 @@ describe('Payload admin UI configuration', () => {
     expect(field('cms-experiences', 'order').admin?.position).toBe('sidebar');
   });
 
+  it('localizes post metadata that is displayed to readers', () => {
+    expect(field('cms-posts', 'readTime')).toMatchObject({ localized: true });
+    expect(field('cms-posts', 'tags')).toMatchObject({ localized: true });
+  });
+
   it('presents site settings in readable collapsible sections', () => {
     const sections = global('site-settings')
       .fields.filter((candidate) => candidate.type === 'collapsible')

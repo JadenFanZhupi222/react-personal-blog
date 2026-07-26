@@ -50,11 +50,13 @@ export const Posts: CollectionConfig = {
       name: 'readTime',
       type: 'text',
       required: true,
+      localized: true,
       admin: { description: 'Displayed beside the publication date.', position: 'sidebar' },
     },
     {
       name: 'tags',
       type: 'array',
+      localized: true,
       admin: { position: 'sidebar' },
       fields: [{ name: 'value', type: 'text', required: true }],
     },
