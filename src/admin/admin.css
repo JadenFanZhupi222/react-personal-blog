@@ -1,0 +1,25 @@
+:root {
+  --zp-admin-accent: #e9bd43;
+  --zp-admin-accent-strong: #f4cf62;
+  --zp-admin-radius-shell: 1.0625rem;
+  --zp-admin-radius-panel: 0.75rem;
+  --zp-admin-radius-control: 0.5625rem;
+}
+
+[data-theme='dark'] {
+  --zp-admin-canvas: #0d0d0b;
+  --zp-admin-surface: #151512;
+  --zp-admin-surface-raised: #1b1a17;
+  --zp-admin-text: #f3efe5;
+  --zp-admin-muted: #918d83;
+  --zp-admin-border: rgb(255 255 255 / 9%);
+}
+
+[data-theme='light'] {
+  --zp-admin-canvas: #f2efe7;
+  --zp-admin-surface: #fbf9f3;
+  --zp-admin-surface-raised: #fffdf8;
+  --zp-admin-text: #1b1a17;
+  --zp-admin-muted: #6f6a61;
+  --zp-admin-border: rgb(35 31 24 / 14%);
+}

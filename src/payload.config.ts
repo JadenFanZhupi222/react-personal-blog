@@ -20,7 +20,22 @@ if (!databaseURL) throw new Error('Missing DATABASE_URL or MONGODB_URI for Paylo
 if (!payloadSecret) throw new Error('Missing PAYLOAD_SECRET for Payload CMS');
 
 export default buildConfig({
-  admin: { user: Users.slug, importMap: { baseDir: path.resolve(dirname) } },
+  admin: {
+    user: Users.slug,
+    importMap: { baseDir: path.resolve(dirname) },
+    meta: { titleSuffix: '— Zhupi CMS' },
+    components: {
+      graphics: {
+        Icon: '@/admin/branding/AdminIcon#AdminIcon',
+        Logo: '@/admin/branding/AdminLogo#AdminLogo',
+      },
+      views: {
+        dashboard: {
+          Component: '@/admin/dashboard/AdminDashboard#AdminDashboard',
+        },
+      },
+    },
+  },
   routes: {
     admin: '/admin',
     api: '/cms-api',
