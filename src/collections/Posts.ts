@@ -16,7 +16,19 @@ export const Posts: CollectionConfig = {
     { name: 'title', type: 'text', required: true, localized: true },
     { name: 'slug', type: 'text', required: true, unique: true, index: true },
     { name: 'description', type: 'textarea', required: true, localized: true },
-    { name: 'content', type: 'textarea', required: true, localized: true, admin: { rows: 30 } },
+    {
+      name: 'content',
+      type: 'textarea',
+      required: true,
+      localized: true,
+      admin: {
+        description: 'Markdown with GFM and fenced code blocks.',
+        components: {
+          Field: '@/admin/markdown/MarkdownField#MarkdownField',
+        },
+        rows: 30,
+      },
+    },
     { name: 'date', type: 'date', required: true, index: true },
     { name: 'readTime', type: 'text', required: true },
     { name: 'tags', type: 'array', fields: [{ name: 'value', type: 'text', required: true }] },

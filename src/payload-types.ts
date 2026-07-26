@@ -190,6 +190,9 @@ export interface CmsPost {
   title: string;
   slug: string;
   description: string;
+  /**
+   * Markdown with GFM and fenced code blocks.
+   */
   content: string;
   date: string;
   readTime: string;

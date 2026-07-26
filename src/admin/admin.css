@@ -404,9 +404,252 @@ body,
   font-size: 0.72rem;
 }
 
+.zp-markdown {
+  margin-bottom: var(--base);
+}
+
+.zp-markdown__heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.6rem;
+}
+
+.zp-markdown__modes {
+  display: inline-flex;
+  flex: none;
+  gap: 0.2rem;
+  border: 1px solid var(--zp-admin-border);
+  border-radius: var(--zp-admin-radius-control);
+  padding: 0.2rem;
+  background: color-mix(in srgb, var(--zp-admin-surface-raised) 84%, transparent);
+}
+
+.zp-markdown__modes button {
+  min-width: 4rem;
+  min-height: 2rem;
+  border: 0;
+  border-radius: 0.4rem;
+  padding: 0.35rem 0.7rem;
+  background: transparent;
+  color: var(--zp-admin-muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.72rem;
+}
+
+.zp-markdown__modes button.is-active {
+  background: color-mix(in srgb, var(--zp-admin-text) 8%, transparent);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 3%);
+  color: var(--zp-admin-text);
+}
+
+.zp-markdown__editor,
+.zp-markdown__preview {
+  overflow: hidden;
+  border: 1px solid var(--zp-admin-border);
+  border-radius: var(--zp-admin-radius-panel);
+  background: color-mix(in srgb, var(--zp-admin-canvas) 80%, var(--zp-admin-surface));
+  box-shadow:
+    inset 0 1px rgb(255 255 255 / 2.5%),
+    0 0.75rem 2rem rgb(0 0 0 / 5%);
+}
+
+.zp-markdown__toolbar {
+  display: flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid var(--zp-admin-border);
+  padding: 0.35rem 0.55rem;
+  background: color-mix(in srgb, var(--zp-admin-surface-raised) 88%, transparent);
+}
+
+.zp-markdown__toolbar > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+}
+
+.zp-markdown__toolbar button {
+  display: inline-grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  border: 0;
+  border-radius: 0.4rem;
+  background: transparent;
+  color: color-mix(in srgb, var(--zp-admin-text) 78%, var(--zp-admin-muted));
+  cursor: pointer;
+  font-family: var(--font-geist-mono), 'Geist Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 620;
+}
+
+.zp-markdown__toolbar button:hover {
+  background: color-mix(in srgb, var(--zp-admin-accent) 10%, transparent);
+  color: var(--zp-admin-text);
+}
+
+.zp-markdown__toolbar button:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.zp-markdown__toolbar > span {
+  flex: none;
+  color: var(--zp-admin-muted);
+  font-family: var(--font-geist-mono), 'Geist Mono', monospace;
+  font-size: 0.6rem;
+}
+
+.zp-markdown__editor textarea {
+  display: block;
+  width: 100%;
+  min-height: 30rem;
+  resize: vertical;
+  border: 0;
+  border-radius: 0;
+  padding: 1.15rem;
+  background: transparent;
+  color: var(--zp-admin-text);
+  font-family: var(--font-geist-mono), 'Geist Mono', monospace;
+  font-size: 0.82rem;
+  line-height: 1.72;
+  outline: 0;
+  tab-size: 2;
+}
+
+.zp-markdown__preview {
+  min-height: 30rem;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  color: var(--zp-admin-text);
+  font-size: 0.94rem;
+  line-height: 1.72;
+}
+
+.zp-markdown__preview > :first-child,
+.zp-markdown__preview > * > :first-child {
+  margin-top: 0;
+}
+
+.zp-markdown__preview h1,
+.zp-markdown__preview h2,
+.zp-markdown__preview h3 {
+  margin: 1.7em 0 0.65em;
+  font-weight: 650;
+  letter-spacing: -0.04em;
+  line-height: 1.12;
+}
+
+.zp-markdown__preview h1 {
+  font-size: 2.2rem;
+}
+
+.zp-markdown__preview h2 {
+  font-size: 1.65rem;
+}
+
+.zp-markdown__preview h3 {
+  font-size: 1.3rem;
+}
+
+.zp-markdown__preview p,
+.zp-markdown__preview ul,
+.zp-markdown__preview ol,
+.zp-markdown__preview blockquote,
+.zp-markdown__preview pre,
+.zp-markdown__preview table {
+  margin: 0 0 1.15rem;
+}
+
+.zp-markdown__preview a {
+  color: var(--zp-admin-accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+.zp-markdown__preview blockquote {
+  border-left: 3px solid var(--zp-admin-accent);
+  border-radius: 0 var(--zp-admin-radius-control) var(--zp-admin-radius-control) 0;
+  padding: 0.85rem 1rem;
+  background: color-mix(in srgb, var(--zp-admin-accent) 6%, transparent);
+  color: var(--zp-admin-muted);
+}
+
+.zp-markdown__preview code {
+  border: 1px solid var(--zp-admin-border);
+  border-radius: 0.35rem;
+  padding: 0.12rem 0.32rem;
+  background: color-mix(in srgb, var(--zp-admin-canvas) 78%, var(--zp-admin-surface));
+  font-family: var(--font-geist-mono), 'Geist Mono', monospace;
+  font-size: 0.86em;
+}
+
+.zp-markdown__preview pre {
+  overflow-x: auto;
+  border: 1px solid var(--zp-admin-border);
+  border-radius: var(--zp-admin-radius-control);
+  padding: 1rem;
+  background: color-mix(in srgb, var(--zp-admin-canvas) 88%, black 8%);
+}
+
+.zp-markdown__preview pre code {
+  border: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.zp-markdown__preview table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.zp-markdown__preview th,
+.zp-markdown__preview td {
+  border-bottom: 1px solid var(--zp-admin-border);
+  padding: 0.65rem;
+  text-align: left;
+}
+
+.zp-markdown__empty {
+  display: grid;
+  min-height: 24rem;
+  place-content: center;
+  justify-items: center;
+  padding: 2rem;
+  color: var(--zp-admin-muted);
+  text-align: center;
+}
+
+.zp-markdown__empty strong {
+  color: var(--zp-admin-text);
+  font-size: 1rem;
+}
+
+.zp-markdown__empty span {
+  margin-top: 0.35rem;
+  font-size: 0.76rem;
+}
+
+.zp-markdown__empty button {
+  margin-top: 1rem;
+  border: 1px solid var(--zp-admin-border);
+  border-radius: var(--zp-admin-radius-control);
+  padding: 0.6rem 0.8rem;
+  background: var(--zp-admin-surface-raised);
+  color: var(--zp-admin-text);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.72rem;
+}
+
 .zp-dashboard :focus-visible,
 .zp-admin-logo:focus-visible,
-.zp-admin-mark:focus-visible {
+.zp-admin-mark:focus-visible,
+.zp-markdown :focus-visible {
   outline: 2px solid var(--zp-admin-accent-strong);
   outline-offset: 3px;
 }
@@ -442,6 +685,30 @@ body,
 
   .zp-metric {
     min-height: 7.5rem;
+  }
+
+  .zp-markdown__heading {
+    display: grid;
+    align-items: start;
+  }
+
+  .zp-markdown__modes {
+    position: sticky;
+    z-index: 2;
+    top: 0.5rem;
+  }
+
+  .zp-markdown__modes button {
+    min-height: 2.75rem;
+  }
+
+  .zp-markdown__toolbar {
+    align-items: flex-start;
+  }
+
+  .zp-markdown__editor textarea,
+  .zp-markdown__preview {
+    min-height: 20rem;
   }
 }
 
