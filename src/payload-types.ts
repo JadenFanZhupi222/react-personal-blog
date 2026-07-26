@@ -153,6 +153,8 @@ export interface User {
   collection: 'users';
 }
 /**
+ * Upload and maintain reusable site imagery.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
@@ -182,6 +184,8 @@ export interface Media {
   };
 }
 /**
+ * Write, localize, and publish long-form Markdown articles.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "cms-posts".
  */
@@ -195,6 +199,9 @@ export interface CmsPost {
    */
   content: string;
   date: string;
+  /**
+   * Displayed beside the publication date.
+   */
   readTime: string;
   tags?:
     | {
@@ -207,6 +214,8 @@ export interface CmsPost {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Maintain localized portfolio projects and their key outcomes.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "cms-projects".
  */
@@ -228,11 +237,16 @@ export interface CmsProject {
       }[]
     | null;
   url?: string | null;
+  /**
+   * Lower values appear first.
+   */
   order: number;
   updatedAt: string;
   createdAt: string;
 }
 /**
+ * Manage localized roles, achievements, and career dates.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "cms-experiences".
  */
@@ -250,6 +264,9 @@ export interface CmsExperience {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Lower values appear first.
+   */
   order: number;
   updatedAt: string;
   createdAt: string;
@@ -502,6 +519,8 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   createdAt?: T;
 }
 /**
+ * Shared skills, contact details, and social profiles.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-settings".
  */
@@ -542,6 +561,9 @@ export interface SiteSetting {
     | {
         label: string;
         value: string;
+        /**
+         * Icon identifier consumed by the public contact UI.
+         */
         iconKey: string;
         id?: string | null;
       }[]
@@ -551,6 +573,9 @@ export interface SiteSetting {
         label: string;
         value: string;
         link: string;
+        /**
+         * Icon identifier consumed by the public contact UI.
+         */
         iconKey: string;
         id?: string | null;
       }[]
