@@ -7,6 +7,10 @@ interface ProjectArtworkProps {
 }
 
 export function ProjectArtwork({ slug, title, order }: ProjectArtworkProps) {
+  if (slug === 'git-client') {
+    return <GitClientArtwork title={title} />;
+  }
+
   if (slug === 'ai-photo-booth-desktop' || slug === 'zoda-ai-photo-booth') {
     return <PhotoBoothArtwork title={title} />;
   }
@@ -27,6 +31,65 @@ function ArtworkFrame({ children, label }: { children: ReactNode; label: string 
       </span>
       {children}
     </div>
+  );
+}
+
+function GitClientArtwork({ title }: { title: string }) {
+  const commits = [
+    ['bg-[#ffc500]', 'Release hardening'],
+    ['bg-[#72d49b]', 'Merge feature/diff'],
+    ['bg-[#8aa7ff]', 'Add commit graph'],
+    ['bg-white/45', 'Initial commit'],
+  ];
+
+  return (
+    <ArtworkFrame label="Repository graph / 00">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_28%_72%,rgba(255,197,0,0.24),transparent_36%)]" />
+      <div className="absolute top-[14%] left-[8%] w-[62%] border border-white/15 bg-[#090909] p-5 shadow-2xl sm:p-7">
+        <div className="flex items-center justify-between border-b border-white/12 pb-4">
+          <div>
+            <p className="font-mono text-[8px] tracking-[0.18em] text-white/40 uppercase">
+              Repository
+            </p>
+            <p className="mt-1 text-sm font-black text-white sm:text-xl">{title}</p>
+          </div>
+          <div className="flex gap-2 font-mono text-[8px] font-bold">
+            <span className="bg-[#ffc500] px-2 py-1 text-black">main</span>
+            <span className="border border-white/18 px-2 py-1 text-white/55">feature</span>
+          </div>
+        </div>
+        <div className="mt-5 space-y-4">
+          {commits.map(([color, message], index) => (
+            <div key={message} className="grid grid-cols-[1rem_1fr] items-center gap-3">
+              <div className="relative grid place-items-center self-stretch">
+                {index < commits.length - 1 && (
+                  <span className="absolute top-1/2 bottom-[-1rem] w-px bg-white/18" />
+                )}
+                <span className={`relative z-10 h-2.5 w-2.5 rounded-full ${color}`} />
+              </div>
+              <div>
+                <p className="font-mono text-[9px] font-bold text-white/80 sm:text-[11px]">
+                  {message}
+                </p>
+                <div className="mt-1.5 h-1 w-2/3 bg-white/10" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="absolute right-[7%] bottom-[10%] w-[35%] rotate-2 border border-white/15 bg-[#151515] p-4 shadow-2xl sm:p-5">
+        <div className="mb-4 flex items-center justify-between font-mono text-[8px]">
+          <span className="text-white/45">DiffView.tsx</span>
+          <span className="text-[#72d49b]">+24 −7</span>
+        </div>
+        <div className="space-y-2 font-mono text-[8px]">
+          <p className="bg-[#72d49b]/12 px-2 py-1.5 text-[#72d49b]">+ const graph = buildGraph()</p>
+          <p className="bg-[#ff7777]/10 px-2 py-1.5 text-[#ff8d8d]">− renderLegacyRows()</p>
+          <p className="bg-white/[0.04] px-2 py-1.5 text-white/38"> commit.history.map(...)</p>
+          <p className="bg-[#72d49b]/12 px-2 py-1.5 text-[#72d49b]">+ preserveLaneColors()</p>
+        </div>
+      </div>
+    </ArtworkFrame>
   );
 }
 
