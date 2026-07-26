@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  applyFeaturedProjectOrder,
   GIT_CLIENT_PROJECT,
   gitClientProjectData,
   upsertGitClientProject,
@@ -80,5 +81,24 @@ describe('GIT_CLIENT_PROJECT', () => {
     expect(creates[0]?.locale).toBe('en');
     expect(updates).toHaveLength(1);
     expect(updates[0]?.locale).toBe('zh');
+  });
+
+  it('places AI Photo Booth before Git Client', async () => {
+    const updates: Array<Record<string, unknown>> = [];
+    const payload = {
+      find: async ({ where }: { where: { slug: { equals: string } } }) => ({
+        docs: [{ id: `${where.slug.equals}-id` }],
+      }),
+      update: async (args: Record<string, unknown>) => {
+        updates.push(args);
+        return args;
+      },
+    };
+
+    await applyFeaturedProjectOrder(payload);
+
+    expect(
+      updates.map(({ data }) => (data as { order: number }).order)
+    ).toEqual([-20, -10]);
   });
 });

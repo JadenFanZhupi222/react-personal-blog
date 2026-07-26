@@ -1,7 +1,8 @@
 import { getPayload } from 'payload';
 import config from '../src/payload.config';
 import {
-  GIT_CLIENT_PROJECT,
+  applyFeaturedProjectOrder,
+  FEATURED_PROJECT_ORDER,
   upsertGitClientProject,
 } from '../src/lib/project/gitClientProject';
 
@@ -11,6 +12,7 @@ async function main() {
   try {
     if (!process.argv.includes('--verify')) {
       await upsertGitClientProject(payload);
+      await applyFeaturedProjectOrder(payload);
     }
 
     for (const locale of ['en', 'zh'] as const) {
@@ -18,22 +20,32 @@ async function main() {
         collection: 'cms-projects',
         locale,
         fallbackLocale: false,
-        where: { slug: { equals: GIT_CLIENT_PROJECT.slug } },
-        limit: 1,
+        where: {
+          slug: {
+            in: FEATURED_PROJECT_ORDER.map((project) => project.slug),
+          },
+        },
+        sort: 'order',
+        limit: FEATURED_PROJECT_ORDER.length,
         overrideAccess: true,
       });
-      const project = result.docs[0];
+      const expectedSlugs = FEATURED_PROJECT_ORDER.map((project) => project.slug);
+      const actualSlugs = result.docs.map((project) => project.slug);
 
-      if (!project) {
-        throw new Error(`Missing ${locale} Git Client project`);
+      if (actualSlugs.join(',') !== expectedSlugs.join(',')) {
+        throw new Error(
+          `Unexpected ${locale} project order: ${actualSlugs.join(',')}`
+        );
       }
 
       console.log({
         locale,
-        id: project.id,
-        slug: project.slug,
-        title: project.title,
-        order: project.order,
+        projects: result.docs.map((project) => ({
+          id: project.id,
+          slug: project.slug,
+          title: project.title,
+          order: project.order,
+        })),
       });
     }
   } finally {

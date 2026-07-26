@@ -62,6 +62,26 @@ export function gitClientProjectData(locale: Locale) {
 type ProjectId = string | number;
 type GitClientProjectData = ReturnType<typeof gitClientProjectData>;
 
+export const FEATURED_PROJECT_ORDER = [
+  { slug: 'ai-photo-booth-desktop', order: -20 },
+  { slug: 'git-client', order: -10 },
+] as const;
+
+interface FeaturedOrderPayload {
+  find(args: {
+    collection: 'cms-projects';
+    where: { slug: { equals: string } };
+    limit: number;
+    overrideAccess: true;
+  }): Promise<{ docs: Array<{ id: ProjectId }> }>;
+  update(args: {
+    collection: 'cms-projects';
+    id: ProjectId;
+    data: { order: number };
+    overrideAccess: true;
+  }): Promise<unknown>;
+}
+
 interface GitClientProjectPayload {
   find(args: {
     collection: 'cms-projects';
@@ -82,6 +102,29 @@ interface GitClientProjectPayload {
     data: GitClientProjectData;
     overrideAccess: true;
   }): Promise<unknown>;
+}
+
+export async function applyFeaturedProjectOrder(payload: FeaturedOrderPayload) {
+  for (const project of FEATURED_PROJECT_ORDER) {
+    const existing = await payload.find({
+      collection: 'cms-projects',
+      where: { slug: { equals: project.slug } },
+      limit: 1,
+      overrideAccess: true,
+    });
+    const id = existing.docs[0]?.id;
+
+    if (id === undefined) {
+      throw new Error(`Missing project: ${project.slug}`);
+    }
+
+    await payload.update({
+      collection: 'cms-projects',
+      id,
+      data: { order: project.order },
+      overrideAccess: true,
+    });
+  }
 }
 
 export async function upsertGitClientProject(payload: GitClientProjectPayload) {
