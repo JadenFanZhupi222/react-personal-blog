@@ -66,6 +66,118 @@ body,
   color: var(--zp-admin-text);
 }
 
+.btn {
+  border-radius: var(--zp-admin-radius-control);
+  font-weight: 580;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.btn--style-primary {
+  border-color: transparent;
+  background: linear-gradient(145deg, var(--zp-admin-accent-strong), var(--zp-admin-accent));
+  box-shadow:
+    0 0.55rem 1.6rem color-mix(in srgb, var(--zp-admin-accent) 12%, transparent),
+    inset 0 1px rgb(255 255 255 / 36%);
+  color: #17150e;
+}
+
+.btn--style-primary:hover {
+  transform: translateY(-1px);
+}
+
+.field-type input:not([type='checkbox']):not([type='radio']),
+.field-type textarea,
+.field-type select {
+  border-color: var(--zp-admin-border);
+  border-radius: var(--zp-admin-radius-control);
+  background: color-mix(in srgb, var(--zp-admin-surface-raised) 84%, transparent);
+  color: var(--zp-admin-text);
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.field-type input:not([type='checkbox']):not([type='radio']):focus,
+.field-type textarea:focus,
+.field-type select:focus {
+  border-color: color-mix(in srgb, var(--zp-admin-accent) 48%, var(--zp-admin-border));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--zp-admin-accent) 9%, transparent);
+}
+
+.field-type .field-label {
+  font-size: 0.76rem;
+  font-weight: 580;
+  letter-spacing: -0.012em;
+}
+
+.field-type .field-description {
+  color: var(--zp-admin-muted);
+}
+
+.collapsible {
+  overflow: hidden;
+  border-color: var(--zp-admin-border);
+  border-radius: var(--zp-admin-radius-panel);
+  background: color-mix(in srgb, var(--zp-admin-surface) 82%, transparent);
+}
+
+.table {
+  overflow: hidden;
+  border: 1px solid var(--zp-admin-border);
+  border-radius: var(--zp-admin-radius-panel);
+  background: color-mix(in srgb, var(--zp-admin-surface) 88%, transparent);
+}
+
+.table table {
+  border-collapse: collapse;
+}
+
+.table th {
+  color: var(--zp-admin-muted);
+  font-family: var(--font-geist-mono), 'Geist Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.table th,
+.table td {
+  border-bottom-color: var(--zp-admin-border);
+}
+
+.table tbody tr {
+  transition: background-color 140ms ease;
+}
+
+.table tbody tr:hover {
+  background: color-mix(in srgb, var(--zp-admin-accent) 5%, transparent);
+}
+
+.drawer,
+.modal {
+  border-color: var(--zp-admin-border);
+  background: var(--zp-admin-surface);
+  color: var(--zp-admin-text);
+  box-shadow: 0 1.5rem 5rem rgb(0 0 0 / 30%);
+}
+
+.drawer {
+  border-left: 1px solid var(--zp-admin-border);
+}
+
+.modal {
+  border: 1px solid var(--zp-admin-border);
+  border-radius: var(--zp-admin-radius-shell);
+}
+
+.document-fields__sidebar {
+  border-left-color: var(--zp-admin-border);
+  background: color-mix(in srgb, var(--zp-admin-surface) 60%, transparent);
+}
+
 .zp-admin-mark {
   display: inline-grid;
   width: 2rem;
@@ -667,6 +779,12 @@ body,
 }
 
 @media (max-width: 520px) {
+  .btn,
+  .field-type input:not([type='checkbox']):not([type='radio']),
+  .field-type select {
+    min-height: 2.75rem;
+  }
+
   .zp-dashboard {
     padding-top: 1.5rem;
   }
