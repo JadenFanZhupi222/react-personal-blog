@@ -7,8 +7,8 @@ interface ProjectArtworkProps {
 }
 
 export function ProjectArtwork({ slug, title, order }: ProjectArtworkProps) {
-  if (slug === 'zoda-plus-frontend') {
-    return <ZodaPlusArtwork title={title} />;
+  if (slug === 'multi-terminal-capture-print-system') {
+    return <MultiTerminalArtwork title={title} />;
   }
 
   if (slug === 'git-client') {
@@ -38,7 +38,7 @@ function ArtworkFrame({ children, label }: { children: ReactNode; label: string 
   );
 }
 
-function ZodaPlusArtwork({ title }: { title: string }) {
+function MultiTerminalArtwork({ title }: { title: string }) {
   return (
     <ArtworkFrame label="Three-terminal flow / 01">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_48%,rgba(255,197,0,0.2),transparent_42%)]" />

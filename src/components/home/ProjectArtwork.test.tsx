@@ -3,12 +3,12 @@ import { describe, expect, it } from 'vitest';
 import { ProjectArtwork } from './ProjectArtwork';
 
 describe('ProjectArtwork', () => {
-  it('renders the three-terminal system artwork for Zoda Plus', () => {
+  it('renders the dedicated artwork for the multi-terminal system', () => {
     const artwork = renderToStaticMarkup(
       <ProjectArtwork
-        slug="zoda-plus-frontend"
+        slug="multi-terminal-capture-print-system"
         order={-15}
-        title="Zoda Plus"
+        title="Multi-Terminal Capture & Print System"
       />
     );
 

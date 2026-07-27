@@ -2,13 +2,13 @@
 
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
-import { ExternalLink } from 'lucide-react';
 import { LazyMotion, domAnimation, m } from 'framer-motion';
 import { useTranslations } from '@/lib/hooks/useTranslations';
 import { Badge } from '@/components/ui/Badge';
 import type { Locale } from '@/i18n/types';
 import type { Project } from '@/lib/project/types';
 import { containerVariants, itemVariants } from '@/lib/animations';
+import { ProjectTitleLink } from './ProjectTitleLink';
 
 export function ProjectListPage({ projects }: { projects: Record<Locale, Project[]> }) {
   const { t, locale } = useTranslations();
@@ -35,17 +35,7 @@ export function ProjectListPage({ projects }: { projects: Record<Locale, Project
                 <Card className="group bg-card hover:border-primary/70 h-full rounded-lg transition-all duration-300 hover:-translate-y-1">
                   <CardHeader className="gap-4">
                     <CardTitle className="group-hover:text-primary-hover text-2xl tracking-[-0.025em] transition-colors">
-                      <a
-                        href={project.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="focus-visible:ring-ring rounded-md focus-visible:ring-2 focus-visible:outline-none"
-                      >
-                        <span className="inline-flex items-center gap-2">
-                          {project.title}
-                          <ExternalLink className="text-primary h-4 w-4" />
-                        </span>
-                      </a>
+                      <ProjectTitleLink title={project.title} url={project.url} />
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
