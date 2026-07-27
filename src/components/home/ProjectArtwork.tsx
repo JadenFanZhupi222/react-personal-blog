@@ -15,7 +15,7 @@ export function ProjectArtwork({ slug, title, order }: ProjectArtworkProps) {
     return <GitClientArtwork title={title} />;
   }
 
-  if (slug === 'ai-photo-booth-desktop' || slug === 'zoda-ai-photo-booth') {
+  if (slug === 'ai-photo-booth-desktop') {
     return <PhotoBoothArtwork title={title} />;
   }
 
