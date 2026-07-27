@@ -4,14 +4,14 @@ import {
   applyFeaturedProjectOrder,
   FEATURED_PROJECT_ORDER,
 } from '../src/lib/project/gitClientProject';
-import { upsertZodaPlusProject } from '../src/lib/project/zodaPlusProject';
+import { upsertMultiTerminalProject } from '../src/lib/project/multiTerminalProject';
 
 async function main() {
   const payload = await getPayload({ config });
 
   try {
     if (!process.argv.includes('--verify')) {
-      await upsertZodaPlusProject(payload);
+      await upsertMultiTerminalProject(payload);
       await applyFeaturedProjectOrder(payload);
     }
 

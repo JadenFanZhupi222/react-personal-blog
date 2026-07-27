@@ -64,7 +64,7 @@ type GitClientProjectData = ReturnType<typeof gitClientProjectData>;
 
 export const FEATURED_PROJECT_ORDER = [
   { slug: 'ai-photo-booth-desktop', order: -20 },
-  { slug: 'zoda-plus-frontend', order: -15 },
+  { slug: 'multi-terminal-capture-print-system', order: -15 },
   { slug: 'git-client', order: -10 },
   { slug: 'family-meal-planner', order: 1 },
 ] as const;

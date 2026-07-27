@@ -13,7 +13,7 @@
     "test:run": "vitest run",
     "cms:generate": "payload generate:types && payload generate:importmap",
     "cms:upsert:git-client": "tsx --env-file=.env.local scripts/upsert-git-client-project.ts",
-    "cms:upsert:zoda-plus": "tsx --env-file=.env.local scripts/upsert-zoda-plus-project.ts",
+    "cms:upsert:multi-terminal": "tsx --env-file=.env.local scripts/upsert-multi-terminal-project.ts",
     "cms:migrate": "tsx --env-file=.env.local scripts/migrate-to-payload.ts",
     "cms:migrate:dry-run": "tsx --env-file=.env.local scripts/migrate-to-payload.ts --dry-run",
     "cms:migrate:verify": "tsx --env-file=.env.local scripts/migrate-to-payload.ts --verify"
