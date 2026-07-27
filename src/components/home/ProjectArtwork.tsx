@@ -53,7 +53,9 @@ function ZodaPlusArtwork({ title }: { title: string }) {
           <span className="font-mono text-[8px] font-bold tracking-[0.16em] text-[#ffc500]">
             ENTRANCE
           </span>
-          <span className="font-mono text-[7px] text-white/35">iPAD / 01</span>
+          <span className="hidden font-mono text-[7px] text-white/35 sm:inline">
+            iPAD / 01
+          </span>
         </div>
         <div className="relative mx-auto mt-5 aspect-square w-[58%] rounded-full border-[7px] border-[#252525] bg-[#040404] sm:border-[10px]">
           <span className="absolute inset-[20%] rounded-full bg-[radial-gradient(circle_at_38%_34%,#85919c_0%,#1d2428_24%,#020202_68%)]" />

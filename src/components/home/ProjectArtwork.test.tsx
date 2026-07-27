@@ -16,6 +16,7 @@ describe('ProjectArtwork', () => {
     expect(artwork).toContain('ENTRANCE');
     expect(artwork).toContain('PHONE WEB');
     expect(artwork).toContain('EXIT PRINT');
+    expect(artwork).toContain('hidden font-mono');
     expect(artwork).not.toContain('Date system / 03');
   });
 
