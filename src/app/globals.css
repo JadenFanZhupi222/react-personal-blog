@@ -350,6 +350,12 @@
   --accent: oklch(0.225 0.018 82);
 }
 
+.home-activity-shell .observatory-panel {
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--foreground) 9%, transparent),
+    0 8px 18px rgb(0 0 0 / 42%);
+}
+
 .observatory-panel::after {
   content: '';
   position: absolute;

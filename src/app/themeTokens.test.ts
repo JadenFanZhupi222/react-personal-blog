@@ -57,4 +57,14 @@ describe('theme tokens', () => {
     expect(dark).toContain('--background: oklch(0.105 0.008 85)');
     expect(globalsCss).toContain('.editorial-panel');
   });
+
+  it('uses a compact dark shadow for observatory panels in the home activity section', () => {
+    const activityPanel = cssBlock('.home-activity-shell .observatory-panel');
+
+    expect(activityPanel).toContain(
+      'inset 0 1px 0 color-mix(in srgb, var(--foreground) 9%, transparent)'
+    );
+    expect(activityPanel).toContain('0 8px 18px rgb(0 0 0 / 42%)');
+    expect(activityPanel).not.toContain('var(--background)');
+  });
 });
