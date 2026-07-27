@@ -24,7 +24,7 @@ describe('home typography', () => {
     expect(homeSource).not.toContain('xl:text-8xl');
   });
 
-  it('uses a media-led hero and a manual three-project showcase', () => {
+  it('uses a media-led hero and a manual four-project showcase', () => {
     expect(homeSource).toContain("from 'next/image'");
     expect(homeSource).toContain('/images/developer-editorial-hero.png');
     expect(homeSource).not.toContain('editorial-panel');
@@ -35,7 +35,7 @@ describe('home typography', () => {
     expect(homePageSource).toContain('getAllProjects');
     expect(homePageSource).toContain('getAllBlogs');
     expect(homePageSource).toContain("item.slug !== 'personal-homepage'");
-    expect(homePageSource).toContain('.slice(0, 3)');
+    expect(homePageSource).toContain('.slice(0, 4)');
     expect(carouselSource).toContain('Swiper');
     expect(carouselSource).toContain('Keyboard');
     expect(carouselSource).toContain('A11y');

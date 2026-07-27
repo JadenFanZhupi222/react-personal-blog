@@ -7,6 +7,10 @@ interface ProjectArtworkProps {
 }
 
 export function ProjectArtwork({ slug, title, order }: ProjectArtworkProps) {
+  if (slug === 'zoda-plus-frontend') {
+    return <ZodaPlusArtwork title={title} />;
+  }
+
   if (slug === 'git-client') {
     return <GitClientArtwork title={title} />;
   }
@@ -31,6 +35,86 @@ function ArtworkFrame({ children, label }: { children: ReactNode; label: string 
       </span>
       {children}
     </div>
+  );
+}
+
+function ZodaPlusArtwork({ title }: { title: string }) {
+  return (
+    <ArtworkFrame label="Three-terminal flow / 01">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_48%,rgba(255,197,0,0.2),transparent_42%)]" />
+      <div className="absolute top-1/2 right-[12%] left-[12%] h-px -translate-y-1/2 bg-white/16">
+        <span className="absolute top-1/2 left-[18%] h-2 w-2 -translate-y-1/2 rotate-45 bg-[#ffc500]" />
+        <span className="absolute top-1/2 left-1/2 h-2 w-2 -translate-1/2 rotate-45 bg-[#ffc500]" />
+        <span className="absolute top-1/2 right-[18%] h-2 w-2 -translate-y-1/2 rotate-45 bg-[#ffc500]" />
+      </div>
+
+      <div className="absolute top-[22%] left-[7%] w-[29%] border border-white/16 bg-[#090909] p-3 shadow-2xl sm:p-5">
+        <div className="flex items-center justify-between">
+          <span className="font-mono text-[8px] font-bold tracking-[0.16em] text-[#ffc500]">
+            ENTRANCE
+          </span>
+          <span className="font-mono text-[7px] text-white/35">iPAD / 01</span>
+        </div>
+        <div className="relative mx-auto mt-5 aspect-square w-[58%] rounded-full border-[7px] border-[#252525] bg-[#040404] sm:border-[10px]">
+          <span className="absolute inset-[20%] rounded-full bg-[radial-gradient(circle_at_38%_34%,#85919c_0%,#1d2428_24%,#020202_68%)]" />
+          <span className="absolute top-[26%] left-[30%] h-[11%] w-[11%] rounded-full bg-white/50" />
+        </div>
+        <div className="mt-5 grid grid-cols-[1fr_auto] items-end gap-3">
+          <div className="space-y-1.5">
+            <span className="block h-1.5 w-full bg-white/14" />
+            <span className="block h-1.5 w-2/3 bg-white/8" />
+          </div>
+          <div className="grid h-7 w-7 grid-cols-3 gap-px bg-white p-1">
+            {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((cell) => (
+              <span
+                key={cell}
+                className={cell === 4 || cell === 7 ? 'bg-white' : 'bg-black'}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="absolute top-[15%] left-1/2 w-[21%] -translate-x-1/2 rounded-[1.6rem] border-[5px] border-[#080808] bg-[#e9e5da] p-3 text-black shadow-2xl sm:border-[7px] sm:p-4">
+        <div className="mx-auto h-1 w-7 rounded-full bg-black/20" />
+        <p className="mt-4 text-center font-mono text-[7px] font-bold tracking-[0.13em] text-black/48">
+          PHONE WEB
+        </p>
+        <div className="mx-auto mt-4 grid aspect-square w-[66%] place-items-center rounded-full bg-[#ffc500]">
+          <div className="grid place-items-center">
+            <span className="h-4 w-0.5 bg-black sm:h-6" />
+            <span className="-mt-4 h-2.5 w-2.5 rotate-45 border-t-2 border-l-2 border-black sm:-mt-6" />
+          </div>
+        </div>
+        <div className="mt-5 space-y-1.5">
+          <span className="block h-1.5 w-full bg-black/16" />
+          <span className="block h-1.5 w-3/5 bg-black/10" />
+        </div>
+      </div>
+
+      <div className="absolute top-[24%] right-[6%] w-[30%] border border-white/16 bg-[#111] p-3 shadow-2xl sm:p-5">
+        <div className="flex items-center justify-between">
+          <span className="font-mono text-[8px] font-bold tracking-[0.15em] text-[#ffc500]">
+            EXIT PRINT
+          </span>
+          <span className="h-2 w-2 rounded-full bg-[#72d49b]" />
+        </div>
+        <div className="mt-5 border border-white/12 bg-[#070707] p-3 sm:p-4">
+          <div className="mx-auto h-2 w-[72%] bg-white/12" />
+          <div className="relative mx-auto mt-2 h-16 w-[62%] overflow-hidden bg-[#f1ede2] shadow-xl sm:h-24">
+            <span className="absolute inset-x-0 top-0 h-[42%] bg-[linear-gradient(135deg,#1a1a1a_0_58%,#ffc500_58%_75%,#e3ded2_75%)]" />
+            <span className="absolute right-[12%] bottom-[18%] left-[12%] h-1.5 bg-black/18" />
+            <span className="absolute right-[28%] bottom-[9%] left-[12%] h-1 bg-black/10" />
+          </div>
+          <div className="mx-auto mt-2 h-2 w-[78%] bg-[#ffc500]" />
+        </div>
+      </div>
+
+      <div className="absolute right-[7%] bottom-[7%] left-[7%] flex items-center justify-between border-t border-white/12 pt-3 font-mono text-[8px] tracking-[0.12em] text-white/38 uppercase">
+        <span>Wristband → capture → print</span>
+        <span className="text-white/55">{title}</span>
+      </div>
+    </ArtworkFrame>
   );
 }
 

@@ -26,7 +26,7 @@ async function PrefetchedHome() {
             item.slug !== 'personal-homepage' && !item.url.includes('react-personal-blog')
         )
         .sort((a, b) => a.order - b.order)
-        .slice(0, 3);
+        .slice(0, 4);
       const latestArticles = blogs[locale].slice(0, 3);
 
       return [

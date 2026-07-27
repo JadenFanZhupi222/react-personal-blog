@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   applyFeaturedProjectOrder,
+  FEATURED_PROJECT_ORDER,
   GIT_CLIENT_PROJECT,
   gitClientProjectData,
   upsertGitClientProject,
@@ -83,7 +84,14 @@ describe('GIT_CLIENT_PROJECT', () => {
     expect(updates[0]?.locale).toBe('zh');
   });
 
-  it('places AI Photo Booth before Git Client', async () => {
+  it('applies the four-project featured order', async () => {
+    expect(FEATURED_PROJECT_ORDER).toEqual([
+      { slug: 'ai-photo-booth-desktop', order: -20 },
+      { slug: 'zoda-plus-frontend', order: -15 },
+      { slug: 'git-client', order: -10 },
+      { slug: 'family-meal-planner', order: 1 },
+    ]);
+
     const updates: Array<Record<string, unknown>> = [];
     const payload = {
       find: async ({ where }: { where: { slug: { equals: string } } }) => ({
@@ -99,6 +107,6 @@ describe('GIT_CLIENT_PROJECT', () => {
 
     expect(
       updates.map(({ data }) => (data as { order: number }).order)
-    ).toEqual([-20, -10]);
+    ).toEqual([-20, -15, -10, 1]);
   });
 });
