@@ -10,19 +10,13 @@ import {
 describe('GIT_CLIENT_PROJECT', () => {
   it('defines a public bilingual portfolio entry selected ahead of existing projects', () => {
     expect(GIT_CLIENT_PROJECT.slug).toBe('git-client');
-    expect(GIT_CLIENT_PROJECT.url).toBe(
-      'https://github.com/JadenFanZhupi222/git-client'
-    );
+    expect(GIT_CLIENT_PROJECT.url).toBe('https://github.com/JadenFanZhupi222/git-client');
     expect(GIT_CLIENT_PROJECT.order).toBe(-10);
-    expect(GIT_CLIENT_PROJECT.tags).toEqual([
-      'Tauri 2',
-      'Rust',
-      'React 19',
-      'TypeScript',
-      'Git',
-    ]);
+    expect(GIT_CLIENT_PROJECT.tags).toEqual(['Tauri 2', 'Rust', 'React 19', 'TypeScript', 'Git']);
     expect(GIT_CLIENT_PROJECT.locales.en.highlights).toHaveLength(4);
     expect(GIT_CLIENT_PROJECT.locales.zh.highlights).toHaveLength(4);
+    expect(GIT_CLIENT_PROJECT.locales.en.title).toBe('Strata');
+    expect(GIT_CLIENT_PROJECT.locales.zh.title).toBe('Strata');
     expect(GIT_CLIENT_PROJECT.locales.en.description).toContain('desktop Git client');
     expect(GIT_CLIENT_PROJECT.locales.zh.description).toContain('桌面 Git 客户端');
   });
@@ -32,7 +26,7 @@ describe('GIT_CLIENT_PROJECT', () => {
 
     expect(zh).toMatchObject({
       slug: 'git-client',
-      title: 'Git Client',
+      title: 'Strata',
       order: -10,
       url: 'https://github.com/JadenFanZhupi222/git-client',
     });
@@ -105,8 +99,8 @@ describe('GIT_CLIENT_PROJECT', () => {
 
     await applyFeaturedProjectOrder(payload);
 
-    expect(
-      updates.map(({ data }) => (data as { order: number }).order)
-    ).toEqual([-20, -15, -10, 1]);
+    expect(updates.map(({ data }) => (data as { order: number }).order)).toEqual([
+      -20, -15, -10, 1,
+    ]);
   });
 });
