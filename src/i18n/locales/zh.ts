@@ -35,8 +35,8 @@ const zh: Translations = {
           description: '覆盖拍摄、AI 生成、支付、打印与离线运行的可配置桌面系统',
         },
         {
-          title: 'Git Client',
-          description: '基于 Tauri 2、React 19 与 Rust 分层工作区构建的跨平台 Git 客户端',
+          title: 'Strata',
+          description: '一款聚焦历史、Diff 与日常仓库操作的跨平台桌面 Git 客户端',
         },
         {
           title: '家庭食谱小程序',

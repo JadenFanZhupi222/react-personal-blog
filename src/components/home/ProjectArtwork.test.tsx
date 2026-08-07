@@ -20,9 +20,9 @@ describe('ProjectArtwork', () => {
     expect(artwork).not.toContain('Date system / 03');
   });
 
-  it('renders repository artwork for the Git Client project', () => {
+  it('renders repository artwork for the Strata project', () => {
     const artwork = renderToStaticMarkup(
-      <ProjectArtwork slug="git-client" order={-10} title="Git Client" />
+      <ProjectArtwork slug="git-client" order={-10} title="Strata" />
     );
 
     expect(artwork).toContain('Repository graph / 00');

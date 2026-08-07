@@ -36,9 +36,9 @@ const en: Translations = {
             'A configurable desktop system for capture, AI generation, payment, printing, and offline operation.',
         },
         {
-          title: 'Git Client',
+          title: 'Strata',
           description:
-            'A cross-platform Git client built with Tauri 2, React 19, and a layered Rust workspace.',
+            'A cross-platform desktop Git client with focused history, diffs, and everyday repository workflows.',
         },
         {
           title: 'Family Meal Planner',

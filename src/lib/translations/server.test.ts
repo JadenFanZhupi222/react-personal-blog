@@ -42,12 +42,16 @@ describe('getTranslations', () => {
   });
 
   it('uses the same featured project order in both welcome locales', () => {
-    expect(
-      getTranslations('en').welcome.projects.items.map((project) => project.title)
-    ).toEqual(['AI Photo Booth', 'Git Client', 'Family Meal Planner']);
-    expect(
-      getTranslations('zh').welcome.projects.items.map((project) => project.title)
-    ).toEqual(['AI 拍照亭桌面应用', 'Git Client', '家庭食谱小程序']);
+    expect(getTranslations('en').welcome.projects.items.map((project) => project.title)).toEqual([
+      'AI Photo Booth',
+      'Strata',
+      'Family Meal Planner',
+    ]);
+    expect(getTranslations('zh').welcome.projects.items.map((project) => project.title)).toEqual([
+      'AI 拍照亭桌面应用',
+      'Strata',
+      '家庭食谱小程序',
+    ]);
   });
 
   it('keeps Welcome contact actions limited to GitHub and email', () => {
